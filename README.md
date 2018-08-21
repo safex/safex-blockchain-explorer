@@ -1,6 +1,6 @@
 # Safex Blockchain Explorer
 
-This is the Safex blockchain explorer. It is 
+This is the Safex blockchain explorer. This is a fork of [Onion Monero Blockchain Explorer](https://github.com/moneroexamples/onion-monero-blockchain-explorer)
 
 
 
