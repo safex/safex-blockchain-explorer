@@ -380,9 +380,7 @@ summary_of_in_out_rct(
     // Process inputs
 
     for (auto const &txin: tx.vin) {
-        if ((txin.type() != typeid(txin_to_key) && txin.type() != typeid(txin_token_to_key))) {
-            continue;
-        }
+
         if (txin.type() == typeid(txin_to_key)) {
             auto input = boost::get<txin_to_key>(txin);
             xmr_inputs += input.amount;
@@ -401,6 +399,12 @@ summary_of_in_out_rct(
             if (token_mixin_no == 0) {
                 token_mixin_no = input.key_offsets.size();
             }
+            input_key_imgs.emplace_back(input);
+        }
+
+        if (txin.type() == typeid(txin_token_migration)) {
+            auto input = boost::get<txin_token_migration>(txin);
+            token_inputs += input.token_amount;
             input_key_imgs.emplace_back(input);
         }
     }

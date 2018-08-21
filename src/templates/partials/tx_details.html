@@ -88,7 +88,7 @@
                 <input type="radio" id="tab-1" name="tab-group-1" checked>
                 <label for="tab-1">Decode outputs</label>
                 <div class="content">
-                    <h4 style="margin: 0px">Check which outputs belong to given Monero address/subaddress and viewkey</h4>
+                    <h4 style="margin: 0px">Check which outputs belong to given Safex address/subaddress and viewkey</h4>
                     <h5 style="margin: 0px">
                         For RingCT transactions, outputs' amounts are also decoded
                         <br/>
@@ -101,7 +101,7 @@
                     </h5>
                     <form action="/myoutputs" method="post" style="width:100%; margin-top:2px" class="style-1">
                         <input type="hidden" name="tx_hash" value="{{tx_hash}}"><br/>
-                        <input type="text" name="xmr_address" size="110" placeholder="Monero address/subaddress"><br/>
+                        <input type="text" name="xmr_address" size="110" placeholder="Safex address/subaddress"><br/>
                         <input type="text" name="viewkey" size="110" placeholder="Private viewkey" style="margin-top:5px"><br/>
                         <input type="hidden" name="raw_tx_data" value="{{raw_tx_data}}">
                         <!--above raw_tx_data field only used when checking raw tx data through tx pusher-->
@@ -439,10 +439,12 @@
               {{/have_raw_tx}}
           </td>
           <td>amount: {{amount}}</td>
-          <td>token: {{token}}</td>
+          <td>type: {{type}}</td>
        </tr>
+
           <tr>
             <td colspan="2">
+                {{^bitcoin_hash}}
                 {{#enable_mixins_details}}
                     <table style="width:100%; margin-bottom:20px">
                     <tr>
@@ -478,6 +480,7 @@
                  </table>
                 {{/enable_mixins_details}}
                 {{^enable_mixins_details}}
+
                 <table style="width:100%; margin-bottom:20px">
                     <tr>
                         <td>ring members</td>
@@ -502,6 +505,11 @@
                     {{/mixins}}
                 </table>
                 {{/enable_mixins_details}}
+                {{/bitcoin_hash}}
+                {{#bitcoin_hash}}
+                    Bitcoin hash: {{bitcoin_hash_value}}
+                {{/bitcoin_hash}}
+
            </td>
          </tr>
 

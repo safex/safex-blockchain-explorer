@@ -5672,6 +5672,7 @@ private:
 
             // get public keys of outputs used in the mixins that match to the offsets
             std::vector<output_data_t> outputs;
+            auto bitcoin_hash = get_bitcoin_hash(in_key);
 
             try
             {
@@ -5706,16 +5707,21 @@ private:
                 return context;
             }
 
+
             inputs.push_back(mstch::map{
                     {"in_key_img",    pod_to_hex(k_image)},
                     {"amount",        is_token
                                       ? xmreg::xmr_amount_to_str(amount, "{:0.0f}")
                                       : xmreg::xmr_amount_to_str(amount)},
+                    {"bitcoin_hash", static_cast<bool>(bitcoin_hash) },
+                    {"bitcoin_hash_value", bitcoin_hash
+                                           ? epee::string_tools::pod_to_hex(*bitcoin_hash)
+                                           : std::string{}},
                     {"input_idx",     fmt::format("{:02d}", input_idx)},
                     {"mixins",        mstch::array{}},
                     {"ring_sigs",     mstch::array{}},
                     {"already_spent", false}, // placeholder for later
-                    {"token",         is_token}
+                    {"type",          get_type_string(in_key)}
             });
 
             if (detailed_view) {
@@ -5844,8 +5850,9 @@ private:
                 ++count;
 
             } // for (const uint64_t &i: absolute_offsets)
-
-            mixin_timestamp_groups.push_back(mixin_timestamps);
+            if (!mixin_timestamp_groups.empty()) {
+                mixin_timestamp_groups.push_back(mixin_timestamps);
+            }
 
             input_idx++;
 
