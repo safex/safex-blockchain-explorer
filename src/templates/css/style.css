@@ -1,84 +1,223 @@
+html {
+    height: 100%;
+}
 body {
     margin: 0;
     padding: 0;
     color: white;
-    background-color: black;
+    background-color: rgba(0,0,0,.9);
+    height: 100%;
+    font-family: "Lucida Console", Monaco, monospace;
 }
-
 h1, h2, h3, h4, h5, h6 {
     text-align: center;
+}
+main {
+    padding: 30px 15px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 1024px;
+}
+.header{
+    width: 100%;
+    text-align: center;
+}
+.header .logo-wrap {
+    width: 100%;
+    text-align: center;
+}
+.header .logo-wrap a {
+    display: inline-block;
+}
+.header h1 {
+    text-align: center;
+}
+
+.mempool-info {
+    padding: 25px 0;
+}
+.mempool-info h3 {
+    font-size: 14px;
+    margin: 5px 0;
+}
+.mempool-info .network-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 30px 0;
+}
+.mempool-info .network-wrap .column {
+    display: inline-block;
+    width: 18%;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.mempool-info .network-wrap h3 {
+    font-size: 12px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 5px 0;
+    background: #395f76;
+    color: #3cd2f7;
+}
+.mempool-info .network-wrap h4 {
+    color: #fff;
+    background: rgba(57, 95, 118, .52);
+    margin: 0;
+    padding: 15px 0px;
+}
+
+.table-head-wrap {
+    border-left: 3px solid #00deff;
+    padding-left: 10px;
+    margin: 0 0 15px;
+}
+.table-head-wrap h3 {
+    margin-top: 0;
+    margin-bottom: 3px;
+    color: #00deff;
+    text-transform: uppercase;
+    text-align: left;
+    line-height: 1;
+    letter-spacing: 1px;
+}
+.table-head-wrap h4 {
+    font-size: 12px;
+    margin-top: 0px;
+    margin-bottom: 0;
+    text-align: left;
+}
+.table-wrap {
+    border-radius: 6px;
+    border: 1px solid #15dbf9;
+    overflow: hidden;
+    padding: 10px 0;
+    margin-bottom: 40px;
+}
+.table-wrap table {
+    margin: auto;
+}
+.table-wrap table thead {
+    border-bottom: 1px solid rgba(0, 210, 255, 1);
+}
+.table-wrap table thead tr th {
+    color: #00d2ff;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+.table-wrap table tr td {
+    padding: 5px;
+}
+.table-wrap table tr:nth-child(even) {
+    background: rgba(0, 210, 255, .2);
 }
 
 .center {
     margin: auto;
-    width: 96%;
     /*border: 1px solid #73AD21;
     padding: 10px;*/
 }
-
 tr, li, #pages, .info {
-    font-family: "Lucida Console", Monaco, monospace;
     font-size  : 12px;
     height: 22px;
 }
-
-#pages
-{
+#pages {
     margin-top: 15px;
 }
-
 td {
     text-align: center;
 }
-
 a:link {
     text-decoration: none;
     color: white;
 }
-
 a:visited {
     text-decoration: none;
     color: white;
 }
-
 a:hover {
     text-decoration: underline;
     color: white;
 }
-
 a:active {
     text-decoration: none;
     color: white;
 }
-
-form {
+.search-form {
     display: inline-block;
     text-align: center;
+    width: auto;
+    margin-top: 15px;
+    background: #12bedd;
+    border-radius: 8px;
+    overflow: hidden;
 }
-
-.style-1 input[type="text"] {
-    padding: 2px;
-    border: solid 1px #dcdcdc;
+.search-form input {
+    background: transparent;
+    font-family: "Lucida Console", Monaco, monospace;
+    padding: 10px;
+    text-indent: 10px;
+    border: solid 1px transparent;
     transition: box-shadow 0.3s, border 0.3s;
+    color: #fff;
+    overflow: hidden;
 }
-.style-1 input[type="text"]:focus,
-.style-1 input[type="text"].focus {
-    border: solid 1px #707070;
+.search-form input:focus,
+.search-form input.focus {
+    border: solid 1px transparent;
     box-shadow: 0 0 5px 1px #969696;
+    outline: none;
+    letter-spacing: -.5px;
 }
-
-
+.search-form input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    opacity: .8;
+    color: #fff;
+    font-size: 14px;
+}
+.search-form input::-moz-placeholder { /* Firefox 19+ */
+    opacity: .8;
+    color: #fff;
+    font-size: 14px;
+}
+.search-form input:-moz-placeholder { /* Firefox 18- */
+    opacity: .8;
+    color: #fff;
+    font-size: 14px;
+}
+.search-form input:-ms-input-placeholder { /* IE 10+ */
+    opacity: .8;
+    color: #fff;
+    font-size: 14px;
+}
+.search-form input:-webkit-autofill,
+.search-form input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 30px #12bedd inset;
+    -webkit-text-fill-color: #fff;
+    border: 1px solid #54BCD9;
+    caret-color: #fff;
+    transition: none;
+}
+.search-form .submit-btn {
+    margin-right: 8px;
+    background: #6abbde;
+    border: 0px none;
+    border-radius: 6px;
+    padding: 5px 15px 7px;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 11px;
+}
 .tabs {
     position: relative;
     min-height: 220px; /* This part sucks */
     clear: both;
     margin: 25px 0;
 }
-
 .tab {
     float: left;
 }
-
 .tab label {
     background: black;
     padding: 10px;
@@ -87,11 +226,9 @@ form {
     position: relative;
     left: 1px;
 }
-
 .tab [type=radio] {
     display: none;
 }
-
 .content {
     position: absolute;
     top: 28px;
@@ -102,22 +239,18 @@ form {
     padding: 20px;
     border: 1px solid #ccc;
 }
-
 [type=radio]:checked ~ label {
     background: #505050 ;
     border-bottom: 1px solid white;
     z-index: 2;
 }
-
 [type=radio]:checked ~ label ~ .content {
     z-index: 1;
 }
-
 input#toggle-1[type=checkbox] {
     position: absolute;
     /*top: -9999px;*/
     left: -9999px;
-
 }
 label#show-decoded-inputs {
     /*-webkit-appearance: push-button;*/
@@ -130,11 +263,9 @@ label#show-decoded-inputs {
     width: 100%;
     text-align: center;
 }
-
 div#decoded-inputs{
     display: none;
 }
-
 /* Toggled State */
 input#toggle-1[type=checkbox]:checked ~ div#decoded-inputs {
     display: block;

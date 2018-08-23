@@ -18,18 +18,18 @@
 <body>
 <main>
 <div>
-    <div class="center">
-        <h1 class="center"><a href="/">Safex Blockchain Explorer</a></h1>
-        <h4 style="font-size: 15px; margin: 0px">({{^enable_js}}no javascript - {{/enable_js}}no cookies - no web analytics trackers - no images - open sourced)</h4>
-    </div>
+    <div class="header">
+        <div class="logo-wrap">
+            <a href="/">
+                <img src="images/logo.png" alt="logo" />
+            </a>
+        </div>
 
-
-    <div class="center">
-        <form action="/search" method="get" style="width:100%; margin-top:15px" class="style-1">
-            <input type="text" name="value" size="120"
-                   placeholder="block height, block hash, transaction hash">
-            <input type="submit" value="Search">
+        <form action="/search" method="get" class="search-form">
+            <input type="text" name="value" size="120" placeholder="block height, block hash, transaction hash">
+            <button type="submit" class="submit-btn">
+                Search
+            </button>
         </form>
     </div>
-
 </div>
