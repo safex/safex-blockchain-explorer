@@ -94,6 +94,7 @@ main {
 }
 .table-wrap {
     border-radius: 6px;
+    background: rgba(26, 42, 59, .52);
     border: 1px solid #15dbf9;
     overflow: hidden;
     padding: 15px;
@@ -133,6 +134,9 @@ main {
 }
 .td-120 {
     width: 120px;
+}
+.td-upp {
+    text-transform: uppercase;
 }
 .red {
     color: #ff6b62;
@@ -324,7 +328,7 @@ a:active {
 .content form {
     padding-top: 20px;
 }
-.content input {
+.content .form-input {
     background: #12bedd;
     font-family: "Lucida Console", Monaco, monospace;
     padding: 11px 10px 8px;
@@ -336,47 +340,47 @@ a:active {
     margin-bottom: 10px;
     width: calc(100% - 25px);
 }
-.content input:focus,
-.content input.focus {
+.content .form-input:focus,
+.content .form-input.focus {
     border: solid 1px transparent;
     box-shadow: 0 0 5px 1px #969696;
     outline: none;
 }
-.content input::selection {
+.content .form-input::selection {
     background: #eee;
 }
-.content input::-moz-selection {
+.content .form-input::-moz-selection {
     background: #eee;
 }
-.content input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+.content .form-input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     opacity: .8;
     color: #fff;
     font-size: 14px;
 }
-.content input::-moz-placeholder { /* Firefox 19+ */
+.content .form-input::-moz-placeholder { /* Firefox 19+ */
     opacity: .8;
     color: #fff;
     font-size: 14px;
 }
-.content input:-moz-placeholder { /* Firefox 18- */
+.content .form-input:-moz-placeholder { /* Firefox 18- */
     opacity: .8;
     color: #fff;
     font-size: 14px;
 }
-.content input:-ms-input-placeholder { /* IE 10+ */
+.content .form-input:-ms-input-placeholder { /* IE 10+ */
     opacity: .8;
     color: #fff;
     font-size: 14px;
 }
-.content input:-webkit-autofill,
-.content input:-webkit-autofill:focus {
+.content .form-input:-webkit-autofill,
+.content .form-input:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0 30px #12bedd inset;
     -webkit-text-fill-color: #fff;
     border: 1px solid #54BCD9;
     caret-color: #fff;
     transition: none;
 }
-.content button {
+.content .submit-btn {
     background: #6abbde;
     border: 0px none;
     border-radius: 6px;
@@ -402,7 +406,6 @@ input#toggle-1[type=checkbox] {
 label#show-decoded-inputs {
     display: inline-block;
     cursor: pointer;
-    background-color: black;;
     color: white;
     width: 100%;
     text-align: center;
@@ -413,4 +416,12 @@ div#decoded-inputs{
 /* Toggled State */
 input#toggle-1[type=checkbox]:checked ~ div#decoded-inputs {
     display: block;
+    background: rgba(26, 42, 59, .52);
+    border-radius: 6px;
+    padding: 15px;
+    word-break: break-all;
+}
+.code {
+    white-space: pre-wrap;
+    font-size: 14px;
 }
