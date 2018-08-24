@@ -71,7 +71,7 @@
 
 
     {{#network_info}}
-        <div class="network-wrap">
+        <div class="data-wrap">
             <div class="column">
                 <h3>
                     Network difficulty
@@ -168,40 +168,42 @@
             </tr>
         </thead>
 
-        {{#txs}}
-        <tr>
-            <td><a href="/block/{{height}}">{{height}}</a></td>
-            <td>{{age}}<!--{{time_delta}}--></td>
-            <td>{{blk_size}}</td>
-            <td><a href="/tx/{{hash}}">{{hash}}</a></td>
-            <td>{{tx_fee_short}}</td>
-            <td>{{sum_outputs_short}}</td>
-            <td>{{sum_outputs_token_short}}</td>
-            <td>{{no_inputs}}/{{no_outputs}}/{{pID}}</td>
-            <td>{{mixin}}</td>
-            <td>{{tx_size_short}}</td>
-        </tr>
-        {{/txs}}
+        <tbody>
+            {{#txs}}
+                <tr>
+                    <td class="td-60"><a href="/block/{{height}}">{{height}}</a></td>
+                    <td class="td-120">{{age}}<!--{{time_delta}}--></td>
+                    <td>{{blk_size}}</td>
+                    <td><a href="/tx/{{hash}}">{{hash}}</a></td>
+                    <td>{{tx_fee_short}}</td>
+                    <td class="td-120">{{sum_outputs_short}}</td>
+                    <td>{{sum_outputs_token_short}}</td>
+                    <td>{{no_inputs}}/{{no_outputs}}/{{pID}}</td>
+                    <td>{{mixin}}</td>
+                    <td>{{tx_size_short}}</td>
+                </tr>
+            {{/txs}}
+        </tbody>
     </table>
 
     <div id="pages" class="center" style="text-align: center;">
         {{^is_page_zero}}
-        <a href="/page/{{prev_page}}">previous page</a> |
-        <a href="/">first page</a> |
+            <a href="/page/{{prev_page}}">previous page</a> |
+            <a href="/">first page</a> |
         {{/is_page_zero}}
         current page: {{page_no}}/<a href="/page/{{total_page_no}}">{{total_page_no}}</a>
-        | <a href="/page/{{next_page}}">next page</a>
+        | <a href="/page/{{next_page}}" class="next-page">next page</a>
     </div>
 </div>
 
 
 {{#show_cache_times}}
-<div class="center">
-    <h6 style="margin-top: 1px;color:#949490">
-        Tx details construction time: {{construction_time_total}} s
-        <br/>
-        includes {{construction_time_cached}} s from block cache ({{cache_hits}} hits)
-        and {{construction_time_non_cached}} s from non cache ({{cache_misses}} misses)
-    </h6>
-</div>
+    <div class="center">
+        <h6 style="margin-top: 1px;color:#949490">
+            Tx details construction time: {{construction_time_total}} s
+            <br/>
+            includes {{construction_time_cached}} s from block cache ({{cache_hits}} hits)
+            and {{construction_time_non_cached}} s from non cache ({{cache_misses}} misses)
+        </h6>
+    </div>
 {{/show_cache_times}}
