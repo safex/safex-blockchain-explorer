@@ -44,6 +44,7 @@ main(int ac, const char* av[])
     }
 
     auto port_opt                      = opts.get_option<string>("port");
+    auto bind_host_opt                 = opts.get_option<string>("bind-host");
     auto bc_path_opt                   = opts.get_option<string>("bc-path");
     auto deamon_url_opt                = opts.get_option<string>("deamon-url");
     auto ssl_crt_file_opt              = opts.get_option<string>("ssl-crt-file");
@@ -67,7 +68,6 @@ main(int ac, const char* av[])
     auto enable_block_cache_opt        = opts.get_option<bool>("enable-block-cache");
     auto show_cache_times_opt          = opts.get_option<bool>("show-cache-times");
     auto enable_emission_monitor_opt   = opts.get_option<bool>("enable-emission-monitor");
-
 
 
     bool testnet                      {*testnet_opt};
@@ -94,6 +94,8 @@ main(int ac, const char* av[])
     bool enable_block_cache           {*enable_block_cache_opt};
     bool enable_emission_monitor      {*enable_emission_monitor_opt};
     bool show_cache_times             {*show_cache_times_opt};
+
+    string bind_host                  {*bind_host_opt};
 
 
     // set  monero log output level
@@ -762,21 +764,28 @@ main(int ac, const char* av[])
     }
 
     // run the crow http server
-
     if (use_ssl)
     {
         cout << "Staring in ssl mode" << endl;
-        app.port(app_port).ssl_file(ssl_crt_file, ssl_key_file)
-                .multithreaded().run();
+        app
+            .bindaddr(bind_host)
+            .port(app_port)
+            .ssl_file(ssl_crt_file, ssl_key_file)
+            .multithreaded()
+            .run();
     }
     else
     {
         cout << "Staring in non-ssl mode" << endl;
-        app.port(app_port).multithreaded().run();
+        app
+            .bindaddr(bind_host)
+            .port(app_port)
+            .multithreaded()
+            .run();
     }
 
 
-    if (enable_emission_monitor == true)
+    if (enable_emission_monitor)
     {
         // finish Emission monitoring thread in a cotrolled manner.
 

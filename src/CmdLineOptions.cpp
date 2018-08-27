@@ -51,6 +51,8 @@ namespace xmreg
                  "enable Monero total emission monitoring thread")
                 ("port,p", value<string>()->default_value("8081"),
                  "default explorer port")
+                ("bind-host", value<string>()->default_value("0.0.0.0")->default_value("127.0.0.1"),
+                 "default bind host")
                 ("testnet-url", value<string>()->default_value(""),
                  "you can specify testnet url, if you run it on mainnet or stagenet. link will show on front page to testnet explorer")
                 ("stagenet-url", value<string>()->default_value(""),
@@ -64,13 +66,13 @@ namespace xmreg
                 ("mempool-refresh-time", value<string>()->default_value("5"),
                  "time, in seconds, for each refresh of mempool state")
                 ("bc-path,b", value<string>(),
-                 "path to lmdb folder of the blockchain, e.g., ~/.bitmonero/lmdb")
+                 "path to lmdb folder of the blockchain, e.g., ~/.safex/lmdb")
                 ("ssl-crt-file", value<string>(),
                  "path to crt file for ssl (https) functionality")
                 ("ssl-key-file", value<string>(),
                  "path to key file for ssl (https) functionality")
-                ("deamon-url,d", value<string>()->default_value("http:://127.0.0.1:18081"),
-                 "Monero deamon url");
+                ("deamon-url,d", value<string>()->default_value("http:://127.0.0.1:29293"),
+                 "Safex deamon url");
 
 
         store(command_line_parser(acc, avv)
