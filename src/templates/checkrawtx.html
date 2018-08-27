@@ -1,12 +1,10 @@
 <div>
-
     <div class="center">
         <br/>
         <h3 class="center">Transaction checking</h3>
     </div>
 
     <div class="center">
-
         {{#has_error}}
             <h4 style="color:red">Checking tx failed</h4>
             <h4>{{error_msg}}</h4>
@@ -47,33 +45,32 @@
                         </ul>
                     </div>
 
-
                     <h4>Outputs selected for this tx (total: {{sum_outputs_amounts}})</h4>
                     {{#dest_sources}}
-                                <table style="width: 100%; margin-top:10px">
-                                    <tr>
-                                        <td>Output Index</td>
-                                        <td>Stealth address</td>
-                                        <td>Is this real output</td>
-                                        <td>Age {{age_format}}</td>
-                                        <td>Amount</td>
-                                    </tr>
-                                    {{#outputs}}
-                                        <tr>
-                                            <td>{{out_index}}</td>
-                                            <td><a href="/tx/{{tx_hash}}">{{out_pub_key}}</a></td>
-                                            {{#is_real}}
-                                                <td><span style="color: #008009;font-weight: bold">{{is_real}}</span></td>
-                                            {{/is_real}}
-                                            {{^is_real}}
-                                                <td>{{is_real}}</td>
-                                            {{/is_real}}
-                                            <td>{{output_age}}</td>
-                                            <td>{{output_amount}}</td>
-                                        </tr>
-                                       <!-- <tr><td colspan="3">&nbsp;  &nbsp; ctkey: {{ctkey}}</td></tr>-->
-                                    {{/outputs}}
-                                </table>
+                        <table style="width: 100%; margin-top:10px">
+                            <tr>
+                                <td>Output Index</td>
+                                <td>Stealth address</td>
+                                <td>Is this real output</td>
+                                <td>Age {{age_format}}</td>
+                                <td>Amount</td>
+                            </tr>
+                            {{#outputs}}
+                                <tr>
+                                    <td>{{out_index}}</td>
+                                    <td><a href="/tx/{{tx_hash}}">{{out_pub_key}}</a></td>
+                                    {{#is_real}}
+                                        <td><span style="color: #008009;font-weight: bold">{{is_real}}</span></td>
+                                    {{/is_real}}
+                                    {{^is_real}}
+                                        <td>{{is_real}}</td>
+                                    {{/is_real}}
+                                    <td>{{output_age}}</td>
+                                    <td>{{output_amount}}</td>
+                                </tr>
+                               <!-- <tr><td colspan="3">&nbsp;  &nbsp; ctkey: {{ctkey}}</td></tr>-->
+                            {{/outputs}}
+                        </table>
                     {{/dest_sources}}
                     <h4>Change to be returned to the sender: {{change_amount}}</h4>
                 </div>
@@ -104,10 +101,7 @@
                     </div>
                 {{/tx_json}}
             {{/txs}}
-
         {{/unsigned_tx_given}}
-
-
     </div>
 
     <br/>

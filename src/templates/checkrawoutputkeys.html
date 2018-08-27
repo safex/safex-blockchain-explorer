@@ -1,5 +1,4 @@
 <div>
-
     <div class="center">
         <br/>
         <h3 class="center">Signed Outputs Public Keys Checker</h3>
@@ -11,6 +10,7 @@
         <h4 style="color:red">Attempt failed</h4>
         <h4>{{error_msg}}</h4>
     {{/has_error}}
+
     {{^has_error}}
         <h4>Output keys for address: {{address}}</h4>
         <h4>Viewkey: {{viewkey}}</h4>
@@ -19,7 +19,6 @@
         {{/has_total_xmr}}
 
         <div class="center">
-
             <form method="post" style="width:100%; margin-top:15px" class="style-1">
                 <table class="center" style="width:80%">
                     <tr>
@@ -55,9 +54,6 @@
                 </table>
                 <br/>
             </form>
-
         </div>
-
     {{/has_error}}
-
 </div>

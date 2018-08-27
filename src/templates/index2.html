@@ -1,209 +1,158 @@
-<div class="mempool-info">
-    <h3>
-        Server time: {{server_timestamp}}
-    </h3>
+    <div class="mempool-info">
+        <h3>Server time: {{server_timestamp}}</h3>
 
-    <h3>
-        <a href="/txpool">Transaction pool</a>
-    </h3>
+        <h3><a href="/txpool">Transaction pool</a></h3>
 
-    {{#enable_pusher}}
-        <h3>
-            <a href="/rawtx">Transaction pusher </a>
-        </h3>
-    {{/enable_pusher}}
+        {{#enable_pusher}}
+            <h3><a href="/rawtx">Transaction pusher </a></h3>
+        {{/enable_pusher}}
 
-    {{#enable_key_image_checker}}
-        <h3>
-            <a href="/rawkeyimgs">Key images checker</a>
-        </h3>
-    {{/enable_key_image_checker}}
+        {{#enable_key_image_checker}}
+            <h3><a href="/rawkeyimgs">Key images checker</a></h3>
+        {{/enable_key_image_checker}}
 
+        {{#enable_output_key_checker}}
+            <h3><a href="/rawoutputkeys">Output keys checker</a></h3>
+        {{/enable_output_key_checker}}
 
-    {{#enable_output_key_checker}}
-        <h3>
-            <a href="/rawoutputkeys">Output keys checker</a>
-        </h3>
-    {{/enable_output_key_checker}}
+        {{#enable_autorefresh_option}}
+            {{#refresh}}
+                <h3><a href="/">Autorefresh is ON (10 s)</a></h3>
+            {{/refresh}}
+            {{^refresh}}
+                <h3><a href="/autorefresh">Autorefresh is OFF</a></h3>
+            {{/refresh}}
+        {{/enable_autorefresh_option}}
 
-    {{#enable_autorefresh_option}}
-        {{#refresh}}
-            <h3>
-                <a href="/">Autorefresh is ON (10 s)</a>
-            </h3>
-        {{/refresh}}
-        {{^refresh}}
-            <h3>
-                <a href="/autorefresh">Autorefresh is OFF</a>
-            </h3>
-        {{/refresh}}
-    {{/enable_autorefresh_option}}
+        {{#stagenet_url}}
+            <h3><a href="{{stagenet_url}}">Go to stagenet explorer</a></h3>
+        {{/stagenet_url}}
 
-    {{#stagenet_url}}
-        <h3>
-            <a href="{{stagenet_url}}">Go to stagenet explorer</a>
-        </h3>
-    {{/stagenet_url}}
+        {{#mainnet_url}}
+            <h3><a href="{{mainnet_url}}">Go to mainnet explorer</a></h3>
+        {{/mainnet_url}}
 
-    {{#mainnet_url}}
-        <h3>
-            <a href="{{mainnet_url}}">Go to mainnet explorer</a>
-        </h3>
-    {{/mainnet_url}}
+        {{#stagenet}}
+            <h3>This is <span style="color:#ff6b62">stagenet</span> blockchain</h3>
+        {{/stagenet}}
 
-    {{#stagenet}}
-        <h3>
-            This is <span style="color:#ff6b62">stagenet</span> blockchain
-        </h3>
-    {{/stagenet}}
+        {{#testnet_url}}
+            <h3><a href="{{testnet_url}}">Go to testnet explorer</a></h3>
+        {{/testnet_url}}
 
-    {{#testnet_url}}
-        <h3>
-            <a href="{{testnet_url}}">Go to testnet explorer</a>
-        </h3>
-    {{/testnet_url}}
+        {{#testnet}}
+            <h3>This is <span style="color:#ff6b62">testnet</span> blockchain</h3>
+        {{/testnet}}
 
-    {{#testnet}}
-        <h3>
-            This is <span style="color:#ff6b62">testnet</span> blockchain
-        </h3>
-    {{/testnet}}
-
-
-    {{#network_info}}
-        <div class="data-wrap">
-            <div class="column">
-                <h3>
-                    Network difficulty
-                </h3>
-                <h4>
-                    {{difficulty}}
-                </h4>
-            </div>
-
-            <div class="column">
-                <h3>
-                    Hard fork
-                </h3>
-                <h4>
-                    v{{current_hf_version}}
-                </h4>
-            </div>
-
-            <div class="column">
-                <h3>
-                    Hash rate
-                </h3>
-                <h4>
-                    {{hash_rate}}
-                </h4>
-            </div>
-
-            <div class="column">
-                <h3>
-                    Fee per kb
-                </h3>
-                <h4>
-                    {{fee_per_kb}}
-                </h4>
-            </div>
-
-            <div class="column">
-                <h3>
-                    Median block size limit
-                </h3>
-                <h4>
-                    {{block_size_limit}} kB
-                </h4>
-            </div>
-
-            {{^is_current_info}}
+        {{#network_info}}
+            <div class="data-wrap">
                 <div class="column">
-                    <h3>
-                        Data from {{age}}
-                    </h3>
-                    <h4>
-                        {{age_format}} ago
-                    </h4>
+                    <h3>Network difficulty</h3>
+                    <h4>{{difficulty}}</h4>
                 </div>
-            {{/is_current_info}}
-        </div>
-    {{/network_info}}
 
-    {{#emission}}
-        <h3 style="font-size: 12px; margin-top: 2px">
-            Safex emission (fees) is {{amount}} ({{fee_amount}}) as of {{blk_no}} block
-        </h3>
-    {{/emission}}
-</div>
+                <div class="column">
+                    <h3>Hard fork</h3>
+                    <h4>v{{current_hf_version}}</h4>
+                </div>
 
-{{{mempool_info}}}
+                <div class="column">
+                    <h3>Hash rate</h3>
+                    <h4>{{hash_rate}}</h4>
+                </div>
 
-<div class="table-head-wrap">
-    {{#is_page_zero}}
-        <h3>Transactions in the last {{no_of_last_blocks}} blocks</h3>
-    {{/is_page_zero}}
-    {{^is_page_zero}}
-        <h3>Transactions in older blocks<!--(height: {{height}})--></h3>
-    {{/is_page_zero}}
-    <h4>
-        (Median size of 100 blocks: {{blk_size_median}} kB)
-    </h4>
-</div>
+                <div class="column">
+                    <h3>Fee per kb</h3>
+                    <h4>{{fee_per_kb}}</h4>
+                </div>
 
-<div class="table-wrap">
-    <table>
-        <thead>
-            <tr>
-                <th>height</th>
-                <th>age {{age_format}}<!--(Δm)--></th>
-                <th>size [kB]<!--(Δm)--></th>
-                <th>transaction hash</th>
-                <th>fee</th>
-                <th>cash outputs</th>
-                <th>token outputs</th>
-                <th>in/out/pID</th>
-                <th>ring size</th>
-                <th>tx size [kB]</th>
-            </tr>
-        </thead>
+                <div class="column">
+                    <h3>Median block size limit</h3>
+                    <h4>{{block_size_limit}} kB</h4>
+                </div>
 
-        <tbody>
-            {{#txs}}
-                <tr>
-                    <td class="td-60"><a href="/block/{{height}}">{{height}}</a></td>
-                    <td class="td-120">{{age}}<!--{{time_delta}}--></td>
-                    <td>{{blk_size}}</td>
-                    <td><a href="/tx/{{hash}}">{{hash}}</a></td>
-                    <td>{{tx_fee_short}}</td>
-                    <td class="td-120">{{sum_outputs_short}}</td>
-                    <td>{{sum_outputs_token_short}}</td>
-                    <td>{{no_inputs}}/{{no_outputs}}/{{pID}}</td>
-                    <td>{{mixin}}</td>
-                    <td>{{tx_size_short}}</td>
-                </tr>
-            {{/txs}}
-        </tbody>
-    </table>
+                {{^is_current_info}}
+                    <div class="column">
+                        <h3>Data from {{age}}</h3>
+                        <h4>{{age_format}} ago</h4>
+                    </div>
+                {{/is_current_info}}
+            </div>
+        {{/network_info}}
 
-    <div id="pages" class="center" style="text-align: center;">
-        {{^is_page_zero}}
-            <a href="/page/{{prev_page}}">previous page</a> |
-            <a href="/">first page</a> |
+        {{#emission}}
+            <h3 style="font-size: 12px; margin-top: 2px">
+                Safex emission (fees) is {{amount}} ({{fee_amount}}) as of {{blk_no}} block
+            </h3>
+        {{/emission}}
+    </div>
+
+    {{{mempool_info}}}
+
+    <div class="table-head-wrap">
+        {{#is_page_zero}}
+            <h3>Transactions in the last {{no_of_last_blocks}} blocks</h3>
         {{/is_page_zero}}
-        current page: {{page_no}}/<a href="/page/{{total_page_no}}">{{total_page_no}}</a>
-        | <a href="/page/{{next_page}}" class="next-page">next page</a>
+        {{^is_page_zero}}
+            <h3>Transactions in older blocks<!--(height: {{height}})--></h3>
+        {{/is_page_zero}}
+        <h4>
+            (Median size of 100 blocks: {{blk_size_median}} kB)
+        </h4>
     </div>
-</div>
 
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>height</th>
+                    <th>age {{age_format}}<!--(Δm)--></th>
+                    <th>size [kB]<!--(Δm)--></th>
+                    <th>transaction hash</th>
+                    <th>fee</th>
+                    <th>cash outputs</th>
+                    <th>token outputs</th>
+                    <th>in/out/pID</th>
+                    <th>ring size</th>
+                    <th>tx size [kB]</th>
+                </tr>
+            </thead>
 
-{{#show_cache_times}}
-    <div class="center">
-        <h6 style="margin-top: 1px;color:#949490">
-            Tx details construction time: {{construction_time_total}} s
-            <br/>
-            includes {{construction_time_cached}} s from block cache ({{cache_hits}} hits)
-            and {{construction_time_non_cached}} s from non cache ({{cache_misses}} misses)
-        </h6>
+            <tbody>
+                {{#txs}}
+                    <tr>
+                        <td class="td-50"><a href="/block/{{height}}">{{height}}</a></td>
+                        <td class="td-120">{{age}}<!--{{time_delta}}--></td>
+                        <td>{{blk_size}}</td>
+                        <td><a href="/tx/{{hash}}">{{hash}}</a></td>
+                        <td>{{tx_fee_short}}</td>
+                        <td class="td-120">{{sum_outputs_short}}</td>
+                        <td>{{sum_outputs_token_short}}</td>
+                        <td>{{no_inputs}}/{{no_outputs}}/{{pID}}</td>
+                        <td>{{mixin}}</td>
+                        <td>{{tx_size_short}}</td>
+                    </tr>
+                {{/txs}}
+            </tbody>
+        </table>
+
+        <div id="pages" class="center" style="text-align: center;">
+            {{^is_page_zero}}
+                <a href="/page/{{prev_page}}">previous page</a> |
+                <a href="/">first page</a> |
+            {{/is_page_zero}}
+            current page: {{page_no}}/<a href="/page/{{total_page_no}}">{{total_page_no}}</a>
+            | <a href="/page/{{next_page}}" class="next-page">next page</a>
+        </div>
     </div>
-{{/show_cache_times}}
+
+    {{#show_cache_times}}
+        <div class="center">
+            <h6 style="margin-top: 1px;color:#949490">
+                Tx details construction time: {{construction_time_total}} s
+                <br/>
+                includes {{construction_time_cached}} s from block cache ({{cache_hits}} hits)
+                and {{construction_time_non_cached}} s from non cache ({{cache_misses}} misses)
+            </h6>
+        </div>
+    {{/show_cache_times}}
