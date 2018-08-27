@@ -1,7 +1,5 @@
-
 <div class="center">
-     <h3 style="font-size: 12px; margin-top: 20px">
-
+    <h3 style="font-size: 12px; margin-top: 20px">
         Server time: {{server_timestamp}} |
 
         {{#refresh}}
@@ -10,33 +8,31 @@
         {{^refresh}}
             <a href="/autorefresh">Autorefresh is OFF</a>
         {{/refresh}}
-        </h3>
+    </h3>
 </div>
 
-    {{{mempool_info}}}
-
+{{{mempool_info}}}
     {{#is_page_zero}}
-      <h2>100 recent blocks<!--(height: {{height}})--></h2>
+        <h2>100 recent blocks<!--(height: {{height}})--></h2>
     {{/is_page_zero}}
     {{^is_page_zero}}
-      <h2>older blocks<!--(height: {{height}})--></h2>
+        <h2>older blocks<!--(height: {{height}})--></h2>
     {{/is_page_zero}}
 
     <div class="center">
-
-            <table class="center">
-                <tr>
-                    <td>height</td>
-                    <td>age {{age_format}} (Δm)</td>
-                    <td>block hash</td>
-                    <td>txs</td>
-                    <td>fees</td>
-                    <td>cash outputs</td>
-                    <td>token outputs</td>
-                    <td>ring size</td>
-                    <td>size [kB]</td>
-                </tr>
-                {{#blocks}}
+        <table class="center">
+            <tr>
+                <td>height</td>
+                <td>age {{age_format}} (Δm)</td>
+                <td>block hash</td>
+                <td>txs</td>
+                <td>fees</td>
+                <td>cash outputs</td>
+                <td>token outputs</td>
+                <td>ring size</td>
+                <td>size [kB]</td>
+            </tr>
+            {{#blocks}}
                 <tr>
                     <td><a href="/block/{{height}}">{{height}}</a></td>
                     <td>{{age}} ({{time_delta}})</td>
@@ -48,16 +44,15 @@
                     <td>{{mixin_range}}</td>
                     <td>{{blksize}}</td>
                 </tr>
-                {{/blocks}}
-            </table>
+            {{/blocks}}
+        </table>
 
-            <div class="center" style="text-align: center;">
-             {{^is_page_zero}}
-               <a href="/page/{{prev_page}}">previous page</a> |
-               <a href="/">first page</a> |
-             {{/is_page_zero}}
-                current page: {{page_no}}/<a href="/page/{{total_page_no}}">{{total_page_no}}</a>
-                | <a href="/page/{{next_page}}">next page</a>
-            </div>
-
+        <div class="center" style="text-align: center;">
+            {{^is_page_zero}}
+                <a href="/page/{{prev_page}}">previous page</a> |
+                <a href="/">first page</a> |
+            {{/is_page_zero}}
+            current page: {{page_no}}/<a href="/page/{{total_page_no}}">{{total_page_no}}</a>
+            | <a href="/page/{{next_page}}">next page</a>
+        </div>
     </div>

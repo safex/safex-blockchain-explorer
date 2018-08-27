@@ -1,73 +1,92 @@
-
 <div>
+    <div class="tx-details-head">
+        <h4>Tx hash: <a href="/tx/{{tx_hash}}">{{tx_hash}}</a></h4>
+        <h5>Tx public key: {{tx_pub_key}}</h5>
 
-    <H4 style="margin:5px">Tx hash: <a href="/tx/{{tx_hash}}">{{tx_hash}}</a></H4>
-    <H5 style="margin:5px">Tx public key: {{tx_pub_key}}</H5>
+        {{#has_payment_id}}
+            <h5>Payment id: {{payment_id}}</h5>
+        {{/has_payment_id}}
 
+        {{#has_payment_id8}}
+            {{^decrypted_payment_id8}}
+                <h5>Payment id (encrypted): {{payment_id8}}</h5>
+            {{/decrypted_payment_id8}}
+            {{#decrypted_payment_id8}}
+                <h5>Payment id (decrypted): {{decrypted_payment_id8}} (value incorrect if you are not the recipient of the tx)</h5>
+            {{/decrypted_payment_id8}}
+        {{/has_payment_id8}}
+    </div>
 
-    {{#has_payment_id}}
-        <H5 style="margin:5px">Payment id: {{payment_id}}</H5>
-    {{/has_payment_id}}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Block</th>
+                    <th>Timestamp [UCT]</th>
+                    <th>Age</th>
+                    <th>Fee</th>
+                    <th>Tx size</th>
+                </tr>
+            </thead>
 
-    {{#has_payment_id8}}
-        {{^decrypted_payment_id8}}
-            <H5 style="margin:5px">Payment id (encrypted): {{payment_id8}}</H5>
-        {{/decrypted_payment_id8}}
-        {{#decrypted_payment_id8}}
-            <H5 style="margin:5px">Payment id (decrypted): {{decrypted_payment_id8}}
-                (value incorrect if you are not the recipient of the tx)</H5>
-        {{/decrypted_payment_id8}}
-    {{/has_payment_id8}}
-
-
-    <table class="center" style="width: 80%; margin-top:10px">
-        <tr>
-            <td>Block: {{blk_height}}</td>
-            <td>Timestamp [UCT]: {{blk_timestamp}}</td>
-            <td>Age [y:d:h:m:s]: {{delta_time}}</td>
-            <td>Fee: {{tx_fee}}</td>
-            <td>Tx size: {{tx_size}} kB</td>
-        </tr>
-
-    </table>
-
-    {{^tx_prove}}
-        <h3>Checking which outputs belong to the given address and viewkey</h3>
-        <h5>address: {{xmr_address}}</h5>
-        <h5>viewkey: {{viewkey}}</h5>
-    {{/tx_prove}}
-    {{#tx_prove}}
-        <h3>Prove that you send this tx to the given address</h3>
-        <h5>address: {{xmr_address}}</h5>
-        <h5>Tx private key: {{viewkey}}</h5>
-    {{/tx_prove}}
-
-    <h3>Outputs ({{outputs_no}})</h3>
-    <div class="center">
-        <table class="center" >
-            <tr>
-                <td>output public key</td>
-                <td>amount</td>
-                <td>output match?</td>
-            </tr>
-            {{#outputs}}
-            <tr>
-                <td>{{output_idx}}: {{out_pub_key}}</td>
-                <td>{{amount}}</td>
-                {{#mine_output}}
-                <td>
-                        <span style="color: #008009;font-weight: bold">
-                        {{mine_output}}
-                        </span>
-                </td>
-                {{/mine_output}}
-                {{^mine_output}}
-                    <td>{{mine_output}}</td>
-                {{/mine_output}}
-            </tr>
-            {{/outputs}}
+            <tbody>
+                <tr>
+                    <td>{{blk_height}}</td>
+                    <td>{{blk_timestamp}}</td>
+                    <td>[y:d:h:m:s]: {{delta_time}}</td>
+                    <td>{{tx_fee}}</td>
+                    <td>{{tx_size}} kB</td>
+                </tr>
+            </tbody>
         </table>
+    </div>
 
+    <div class="tx-details-head">
+        {{^tx_prove}}
+            <h3>Checking which outputs belong to the given address and viewkey</h3>
+            <h5>address: {{xmr_address}}</h5>
+            <h5>viewkey: {{viewkey}}</h5>
+        {{/tx_prove}}
+
+        {{#tx_prove}}
+            <h3>Prove that you send this tx to the given address</h3>
+            <h5>address: {{xmr_address}}</h5>
+            <h5>Tx private key: {{viewkey}}</h5>
+        {{/tx_prove}}
+    </div>
+
+    <div class="table-head-wrap">
+        <h3>Outputs ({{outputs_no}})</h3>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>output public key</th>
+                    <th>amount</th>
+                    <th>output match?</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {{#outputs}}
+                    <tr>
+                        <td>{{output_idx}}: {{out_pub_key}}</td>
+                        <td>{{amount}}</td>
+                        {{#mine_output}}
+                            <td class="green">{{mine_output}}</td>
+                        {{/mine_output}}
+                        {{^mine_output}}
+                            <td class="red">{{mine_output}}</td>
+                        {{/mine_output}}
+                    </tr>
+                {{/outputs}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="center">
         <h3>
             Sum XMR from matched outputs (i.e., incoming XMR):
             {{#found_our_outputs}}
@@ -80,42 +99,58 @@
         <h4>
             <a href="{{shortcut_url}}" target="_blank">link to this page</a>
         </h4>
-
     </div>
 
     {{#show_inputs}}
-    <br/>
-    <label id="show-decoded-inputs" for="toggle-1">Show decoded inputs</label>
-    <input type="checkbox" id="toggle-1">
+        <br/>
+        <label id="show-decoded-inputs" for="toggle-1">Show decoded inputs</label>
+        <input type="checkbox" id="toggle-1">
 
-    <div id="decoded-inputs">
-    <h3>Inputs ({{inputs_no}})</h3>
-        <div class="center">
+        <div id="decoded-inputs">
+            <div class="table-head-wrap">
+                <h3>Inputs ({{inputs_no}})</h3>
+            </div>
+
             {{#inputs}}
-                <h4>Key image: {{key_image}}, amount {{key_image_amount}}</h4>
-                {{#mixins}}
-                    {{#has_mixin_outputs}}
-                        {{#mixin_outputs}}
-                        <div class="center">
-                            <table class="center">
-                              <tr>
-                                  <td style="text-align: center;">
-                                      Ring member {{mixin_pub_key}} might use your outputs
-                                      <br/>
-                                      from tx of hash: <a href="/tx/{{mix_tx_hash}}">{{mix_tx_hash}}</a>
-                                      <br/>(tx public key: {{mix_tx_pub_key}})
-                                  </td>
-                              </tr>
-                            {{#has_found_outputs}}
-                                <tr><td>
-                                    <div class="center">
-                                        <table class="center">
+                <div class="table-wrap">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Key image:</td>
+                                <td>{{key_image}}</td>
+                            </tr>
+                            <tr>
+                                <td>Amount:</td>
+                                <td>{{key_image_amount}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {{#mixins}}
+                        {{#has_mixin_outputs}}
+                            {{#mixin_outputs}}
+                                <table class="center">
+                                    <tr>
+                                        <td style="text-align: center;">
+                                            Ring member {{mixin_pub_key}} might use your outputs
+                                            <br/>
+                                            from tx of hash: <a href="/tx/{{mix_tx_hash}}">{{mix_tx_hash}}</a>
+                                            <br/>(tx public key: {{mix_tx_pub_key}})
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                {{#has_found_outputs}}
+                                    <table class="center">
+                                        <thead>
                                             <tr>
-                                                <td>output public key</td>
-                                                <td>amount</td>
-                                                <td>output match?</td>
+                                                <th>output public key</th>
+                                                <th>amount</th>
+                                                <th>output match?</th>
                                             </tr>
-                                        {{#found_outputs}}
+                                        </thead>
+
+                                        <tbody>
+                                            {{#found_outputs}}
                                                 <tr>
                                                     <td>{{my_public_key}}</td>
                                                     <td>{{amount}}</td>
@@ -128,35 +163,32 @@
                                                         {{/mine_output}}
                                                     </td>
                                                 </tr>
-                                        {{/found_outputs}}
-                                        </table>
-                                    </div>
-                                </td></tr>
-                            {{/has_found_outputs}}
-                           </table>
-                        </div>
-                        {{/mixin_outputs}}
-                    {{/has_mixin_outputs}}
-                {{/mixins}}
+                                            {{/found_outputs}}
+                                        </tbody>
+                                    </table>
+                                {{/has_found_outputs}}
+                            {{/mixin_outputs}}
+                        {{/has_mixin_outputs}}
+                    {{/mixins}}
+                </div>
             {{/inputs}}
 
-        </div>
-        <h3>
-            Sum XMR from matched and marked by * ring member's outputs: {{sum_mixin_xmr}}
-            <br/>
-            <span style="font-size: 16px"> Possible spending is:
-                {{possible_spending}} (tx fee included)
-            </span>
+            <h3>
+                Sum XMR from matched and marked by * ring member's outputs: {{sum_mixin_xmr}}
                 <br/>
-            <span style="font-size: 14px">Note: without private spendkey,
-                it is impossible to know whether this is your real spending. <br/>
-                So do not take this number seriously.
-                It is probably totally wrong anyway.</span>
-        </h3>
-    </div>
-
+                <span style="font-size: 16px"> Possible spending is:
+                    {{possible_spending}} (tx fee included)
+                </span>
+                <br/>
+                <span style="font-size: 14px">
+                    Note: without private spendkey,
+                    it is impossible to know whether this is your real spending. <br/>
+                    So do not take this number seriously.
+                    It is probably totally wrong anyway.
+                </span>
+            </h3>
+        </div>
     {{/show_inputs}}
-
 
 </div>
 <br/>

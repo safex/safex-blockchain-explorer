@@ -1,38 +1,33 @@
-
 <div>
     <br/>
-    <H4 style="margin:5px">Address:<br/>{{xmr_address}}</H4>
+    <h4 style="margin:5px">Address:<br/>{{xmr_address}}</h4>
     <br/>
 
     {{#testnet}}
-        <H4 style="margin:5px">Network type: Testnet</H4>
+        <h4 style="margin:5px">Network type: Testnet</h4>
     {{/testnet}}
     {{#stagenet}}
-        <H4 style="margin:5px">Network type: Stagenet</H4>
+        <h4 style="margin:5px">Network type: Stagenet</h4>
     {{/stagenet}}
     {{^testnet}}{{^stagenet}}
-        <H4 style="margin:5px">Network type: Mainnet</H4>
+        <h4 style="margin:5px">Network type: Mainnet</h4>
     {{/stagenet}}{{/testnet}}
 
     <br/>
-    <H4 style="margin:5px">Associated public keys</H4>
+    <h4 style="margin:5px">Associated public keys</h4>
 
-    <H4 style="margin:5px">View key: {{public_viewkey}}</H4>
-    <H4 style="margin:5px">Spend key: {{public_spendkey}}</H4>
+    <h4 style="margin:5px">View key: {{public_viewkey}}</h4>
+    <h4 style="margin:5px">Spend key: {{public_spendkey}}</h4>
     <br/>
 
     {{#is_integrated_addr}}
-        <H4 style="margin:5px">Payment id: {{encrypted_payment_id}}</H4>
+        <h4 style="margin:5px">Payment id: {{encrypted_payment_id}}</h4>
     {{/is_integrated_addr}}
 
-
-    <H4 style="margin:5px">
+    <h4 style="margin:5px">
         Transactions:<br/> Sorry, its not possible to find txs associated with
         normal addresses in Safex
-    </H4>
-
+    </h4>
     <br/>
-
 </div>
 <br/>
-

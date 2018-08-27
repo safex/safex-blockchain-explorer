@@ -1,8 +1,7 @@
-
 <div>
-
     {{#has_error}}
         <h4 style="color:red">Attempt failed</h4>
+
         {{#error_tx_not_found}}
             <h4>Tx {{tx_hash}} not found. </h4>
             <div class="center" style="text-align: center;width:80%">
@@ -14,6 +13,7 @@
             </div>
         {{/error_tx_not_found}}
     {{/has_error}}
+
     {{^has_error}}
         {{#txs}}
             {{>tx_details}}
