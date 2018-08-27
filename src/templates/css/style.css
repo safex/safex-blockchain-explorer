@@ -366,7 +366,6 @@ a:active {
     padding-top: 20px;
 }
 .content .form-input {
-    background: url('/static/images/search-btn-bg.png')no-repeat scroll top left / cover;
     font-family: "Lucida Console", Monaco, monospace;
     padding: 11px 10px 8px;
     border: solid 1px transparent;
@@ -376,6 +375,8 @@ a:active {
     border-radius: 6px;
     margin-bottom: 10px;
     width: calc(100% - 25px);
+    font-size: 14px;
+    background: linear-gradient(to right, rgba(120,206,241,0.74) 0%,rgba(120,206,241,0.74) 1%,rgba(120,206,241,0.3) 100%);
 }
 .content .form-input:focus,
 .content .form-input.focus {
@@ -411,9 +412,9 @@ a:active {
 }
 .content .form-input:-webkit-autofill,
 .content .form-input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 30px #12bedd inset;
+    -webkit-box-shadow: 0 0 0 30px #395f76 inset;
     -webkit-text-fill-color: #fff;
-    border: 1px solid #54BCD9;
+    border: 1px solid #395f76;
     caret-color: #fff;
     transition: none;
 }
