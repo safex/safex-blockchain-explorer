@@ -368,7 +368,7 @@ a:active {
 .content .form-input {
     font-family: "Lucida Console", Monaco, monospace;
     padding: 11px 10px 8px;
-    border: solid 1px transparent;
+    border: 0px none;
     transition: box-shadow 0.3s, border 0.3s;
     color: #fff;
     overflow: hidden;
@@ -380,7 +380,7 @@ a:active {
 }
 .content .form-input:focus,
 .content .form-input.focus {
-    border: solid 1px transparent;
+    border: 0px none;
     box-shadow: 0 0 5px 1px #969696;
     outline: none;
 }
@@ -414,7 +414,7 @@ a:active {
 .content .form-input:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0 30px #395f76 inset;
     -webkit-text-fill-color: #fff;
-    border: 1px solid #395f76;
+    border: 0px none;
     caret-color: #fff;
     transition: none;
 }
