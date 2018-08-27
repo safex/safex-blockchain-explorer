@@ -243,7 +243,7 @@ a:active {
     border-radius: 8px;
     overflow: hidden;
     width: 80%;
-    margin: 0 auto;
+    margin: 30px auto;
     background: linear-gradient(to right, rgba(120,206,241,0.74) 0%,rgba(120,206,241,0.74) 1%,rgba(120,206,241,0.3) 100%);
 }
 .search-form input {
@@ -251,7 +251,6 @@ a:active {
     padding: 12px 10px 10px;
     text-indent: 10px;
     border: solid 1px transparent;
-    transition: box-shadow 0.3s, border 0.3s;
     color: #fff;
     overflow: hidden;
     line-height: 1.6;
@@ -290,26 +289,26 @@ a:active {
     color: #fff;
     font-size: 14px;
 }
-/*.search-form input:-webkit-autofill,*/
-/*.search-form input:-webkit-autofill:focus {*/
-    /*-webkit-box-shadow: 0 0 0 30px #12bedd inset;*/
-    /*-webkit-text-fill-color: #fff;*/
-    /*border: 1px solid #54BCD9;*/
-    /*caret-color: #fff;*/
-    /*transition: none;*/
-/*}*/
+.search-form input:-webkit-autofill,
+.search-form input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 30px #395f76 inset;
+    -webkit-text-fill-color: #fff;
+    border: 1px solid #395f76;
+    caret-color: #fff;
+    transition: none;
+}
 .search-form .submit-btn {
     margin-right: 8px;
     background: #6abbde;
     border: 0px none;
     border-radius: 6px;
-    padding: 5px 15px 7px;
+    padding: 4px 15px 7px;
     text-transform: uppercase;
     color: #fff;
     font-weight: 600;
     letter-spacing: 1px;
     font-size: 11px;
-    height: 23px;
+    height: 25px;
 }
 .tabs {
     position: relative;
