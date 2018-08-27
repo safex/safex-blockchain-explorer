@@ -2,7 +2,7 @@ html {
     height: 100%;
 }
 body {
-    background: url('/static/images/main-bg.jpg')no-repeat fixed top left / cover;
+    background: url('/static/images/main-bg.jpg') rgba(0,0,0,.9) no-repeat fixed top left / cover;
     margin: 0;
     padding: 0;
     color: white;
@@ -236,17 +236,19 @@ a:active {
     color: white;
 }
 .search-form {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     text-align: center;
-    width: auto;
-    margin-top: 15px;
-    background: url('/static/images/search-btn-bg.png')no-repeat scroll top left / cover;
     border-radius: 8px;
     overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
+    background: linear-gradient(to right, rgba(120,206,241,0.74) 0%,rgba(120,206,241,0.74) 1%,rgba(120,206,241,0.3) 100%);
 }
 .search-form input {
     font-family: "Lucida Console", Monaco, monospace;
-    padding: 10px;
+    padding: 12px 10px 10px;
     text-indent: 10px;
     border: solid 1px transparent;
     transition: box-shadow 0.3s, border 0.3s;
@@ -254,11 +256,12 @@ a:active {
     overflow: hidden;
     line-height: 1.6;
     letter-spacing: 1px;
+    width: 80%;
+    background: transparent;
 }
 .search-form input:focus,
 .search-form input.focus {
     border: solid 1px transparent;
-    box-shadow: 0 0 5px 1px #969696;
     outline: none;
 }
 .search-form input::selection {
@@ -306,6 +309,7 @@ a:active {
     font-weight: 600;
     letter-spacing: 1px;
     font-size: 11px;
+    height: 23px;
 }
 .tabs {
     position: relative;
