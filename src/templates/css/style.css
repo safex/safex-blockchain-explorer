@@ -2,10 +2,10 @@ html {
     height: 100%;
 }
 body {
+    background: url('/static/images/main-bg.jpg')no-repeat fixed top left / cover;
     margin: 0;
     padding: 0;
     color: white;
-    background-color: rgba(0,0,0,.9);
     height: 100%;
     font-family: "Lucida Console", Monaco, monospace;
 }
@@ -182,6 +182,7 @@ main {
 .single-block-table tr td {
     text-align: left !important;
     font-size: 13px !important;
+    text-transform: capitalize;
 }
 .single-block-table tr td:first-of-type {
     width: 220px;
@@ -239,12 +240,11 @@ a:active {
     text-align: center;
     width: auto;
     margin-top: 15px;
-    background: #12bedd;
+    background: url('/static/images/search-btn-bg.png')no-repeat scroll top left / cover;
     border-radius: 8px;
     overflow: hidden;
 }
 .search-form input {
-    background: transparent;
     font-family: "Lucida Console", Monaco, monospace;
     padding: 10px;
     text-indent: 10px;
@@ -287,14 +287,14 @@ a:active {
     color: #fff;
     font-size: 14px;
 }
-.search-form input:-webkit-autofill,
-.search-form input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 30px #12bedd inset;
-    -webkit-text-fill-color: #fff;
-    border: 1px solid #54BCD9;
-    caret-color: #fff;
-    transition: none;
-}
+/*.search-form input:-webkit-autofill,*/
+/*.search-form input:-webkit-autofill:focus {*/
+    /*-webkit-box-shadow: 0 0 0 30px #12bedd inset;*/
+    /*-webkit-text-fill-color: #fff;*/
+    /*border: 1px solid #54BCD9;*/
+    /*caret-color: #fff;*/
+    /*transition: none;*/
+/*}*/
 .search-form .submit-btn {
     margin-right: 8px;
     background: #6abbde;
@@ -363,7 +363,7 @@ a:active {
     padding-top: 20px;
 }
 .content .form-input {
-    background: #12bedd;
+    background: url('/static/images/search-btn-bg.png')no-repeat scroll top left / cover;
     font-family: "Lucida Console", Monaco, monospace;
     padding: 11px 10px 8px;
     border: solid 1px transparent;
