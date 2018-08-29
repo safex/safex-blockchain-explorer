@@ -137,10 +137,10 @@
                     <label for="tab-2">Prove sending</label>
 
                     <div class="content">
-                        <h4>Prove to someone that you have sent them Monero in this transaction</h4>
+                        <h4>Prove to someone that you have sent them Safex cash or token in this transaction</h4>
                         <h5>
                             Tx private key can be obtained using <i>get_tx_key</i>
-                            command in  <i>monero-wallet-cli</i> command line tool
+                            command in  <i>safex-wallet-cli</i> command line tool
                             <br/>
                             {{#enable_js}}
                                 Note: address/subaddress and tx private key are NOT sent to the server, as the calculations are done on the client side
@@ -153,7 +153,7 @@
                             <input type="hidden" name="txhash" value="{{tx_hash}}">
                             <input type="hidden" name="raw_tx_data" value="{{raw_tx_data}}">
                             <!-- above raw_tx_data field only used when checking raw tx data through tx pusher -->
-                            <input type="text" name="xmraddress" size="120" placeholder="Recipient's monero address/subaddress" class="form-input">
+                            <input type="text" name="xmraddress" size="120" placeholder="Recipient's safex address/subaddress" class="form-input">
                             <input type="text" name="txprvkey" size="120" placeholder="Tx private key" class="form-input">
 
                             {{#enable_js}}
