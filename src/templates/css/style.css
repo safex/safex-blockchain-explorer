@@ -2,7 +2,7 @@ html {
     height: 100%;
 }
 body {
-    background: url('/static/images/main-bg.jpg') rgba(0,0,0,.9) no-repeat fixed top left / cover;
+    background: url('/static/images/main-bg.jpg') rgba(0,0,0,.9) no-repeat fixed top center / cover;
     margin: 0;
     padding: 0;
     color: white;
@@ -133,6 +133,7 @@ main {
     padding: 7px 5px 8px;
     font-size: 11.4px;
     text-align: center;
+    word-break: break-all;
 }
 .table-wrap table tr:nth-child(even) {
     background: rgba(0, 210, 255, .2);
@@ -263,12 +264,6 @@ a:active {
     border: solid 1px transparent;
     outline: none;
 }
-.search-form input::selection {
-    background: #eee;
-}
-.search-form input::-moz-selection {
-    background: #eee;
-}
 .search-form input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     opacity: .8;
     color: #fff;
@@ -383,12 +378,6 @@ a:active {
     border: 0px none;
     box-shadow: 0 0 5px 1px #969696;
     outline: none;
-}
-.content .form-input::selection {
-    background: #eee;
-}
-.content .form-input::-moz-selection {
-    background: #eee;
 }
 .content .form-input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     opacity: .8;
