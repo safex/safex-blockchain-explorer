@@ -153,7 +153,8 @@ MempoolStatus::read_mempool()
         const auto& sum_data = summary_of_in_out_rct(tx, output_pub_keys, input_key_imgs);
 
 
-
+        // {xmr_outputs, token_outputs, xmr_inputs, token_inputs, mixin_no,
+        //        token_mixin_no, num_nonrct_inputs}
         double tx_size =  static_cast<double>(_tx_info.blob_size)/1024.0;
 
         double payed_for_kB = XMR_AMOUNT(_tx_info.fee) / tx_size;
@@ -161,11 +162,11 @@ MempoolStatus::read_mempool()
         last_tx.receive_time = _tx_info.receive_time;
 
         last_tx.sum_outputs       = sum_data[0];
-        last_tx.sum_inputs        = sum_data[1];
+        last_tx.sum_inputs        = sum_data[2];
         last_tx.no_outputs        = output_pub_keys.size();
         last_tx.no_inputs         = input_key_imgs.size();
-        last_tx.mixin_no          = sum_data[2];
-        last_tx.num_nonrct_inputs = sum_data[3];
+        last_tx.mixin_no          = sum_data[4];
+        last_tx.num_nonrct_inputs = sum_data[6];
 
         last_tx.fee_str          = xmreg::xmr_amount_to_str(_tx_info.fee, "{:0.3f}", false);
         last_tx.payed_for_kB_str = fmt::format("{:0.4f}", payed_for_kB);
