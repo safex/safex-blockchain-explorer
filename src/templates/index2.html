@@ -70,12 +70,32 @@
                     <h3>Median block size limit</h3>
                     <h4>{{block_size_limit}} kB</h4>
                 </div>
+            </div>
+
+            <div class="data-wrap">
+
+                <div class="column">
+                    <h3>Issued coins</h3>
+                    <h4>{{issued_coins}}</h4>
+                </div>
+
+                <div class="column">
+                    <h3>Migrated tokens</h3>
+                    <h4>{{migrated_tokens}}</h4>
+                </div>
 
                 {{^is_current_info}}
                     <div class="column">
                         <h3>Data from {{age}}</h3>
                         <h4>{{age_format}} ago</h4>
                     </div>
+                    <div class="column hidden"></div>
+                    <div class="column hidden"></div>
+                {{/is_current_info}}
+                {{#is_current_info}}
+                    <div class="column hidden"></div>
+                    <div class="column hidden"></div>
+                    <div class="column hidden"></div>
                 {{/is_current_info}}
             </div>
         {{/network_info}}

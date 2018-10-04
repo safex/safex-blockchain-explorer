@@ -49,6 +49,11 @@ main {
     margin: 30px 0 0;
     flex-wrap: wrap;
 }
+
+.data-wrap + .data-wrap {
+    margin: 0;
+ }
+
 .data-wrap .column {
     display: inline-block;
     width: 18%;
@@ -56,6 +61,11 @@ main {
     overflow: hidden;
     margin-bottom: 25px;
 }
+
+.data-wrap .column.hidden {
+    opacity: 0;
+}
+
 .data-wrap h3 {
     font-size: 12px;
     margin-top: 0;

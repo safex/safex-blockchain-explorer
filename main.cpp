@@ -64,6 +64,7 @@ main(int ac, const char* av[])
     auto enable_js_opt                 = opts.get_option<bool>("enable-js");
     auto enable_mixin_details_opt      = opts.get_option<bool>("enable-mixin-details");
     auto enable_json_api_opt           = opts.get_option<bool>("enable-json-api");
+    auto enable_network_info_opt       = opts.get_option<bool>("enable-network-info");
     auto enable_tx_cache_opt           = opts.get_option<bool>("enable-tx-cache");
     auto enable_block_cache_opt        = opts.get_option<bool>("enable-block-cache");
     auto show_cache_times_opt          = opts.get_option<bool>("show-cache-times");
@@ -90,6 +91,7 @@ main(int ac, const char* av[])
     bool enable_output_key_checker    {*enable_output_key_checker_opt};
     bool enable_mixin_details         {*enable_mixin_details_opt};
     bool enable_json_api              {*enable_json_api_opt};
+    bool enable_network_info          {*enable_network_info_opt};
     bool enable_tx_cache              {*enable_tx_cache_opt};
     bool enable_block_cache           {*enable_block_cache_opt};
     bool enable_emission_monitor      {*enable_emission_monitor_opt};
@@ -168,10 +170,10 @@ main(int ac, const char* av[])
 
     string deamon_url {*deamon_url_opt};
 
-    if (testnet && deamon_url == "http:://127.0.0.1:18081")
-        deamon_url = "http:://127.0.0.1:28081";
-    if (stagenet && deamon_url == "http:://127.0.0.1:18081")
-        deamon_url = "http:://127.0.0.1:38081";
+    if (testnet && deamon_url == "http:://127.0.0.1:17402")
+        deamon_url = "http:://127.0.0.1:29393";
+    if (stagenet && deamon_url == "http:://127.0.0.1:17402")
+        deamon_url = "http:://127.0.0.1:31183";
 
     uint64_t mempool_info_timeout {5000};
 
@@ -751,7 +753,15 @@ main(int ac, const char* av[])
             return r;
         });
 
-    } // if (enable_json_api)
+    } else if (enable_network_info) {
+        CROW_ROUTE(app, "/api/networkinfo")
+            ([&](const crow::request &req) {
+
+                myxmr::jsonresponse r{xmrblocks.json_networkinfo()};
+
+                return r;
+        });
+    }// if (enable_json_api)
 
     if (enable_autorefresh_option)
     {

@@ -32,7 +32,7 @@ set(LIBS common;blocks;cryptonote_basic;cryptonote_core;multisig;
 		cryptonote_protocol;daemonizer;mnemonics;epee;lmdb;device;
 		blockchain_db;ringct;wallet;cncrypto;easylogging;version;checkpoints)
 
-set(Xmr_INCLUDE_DIRS "${CPP_MONERO_DIR}")
+	set(Xmr_INCLUDE_DIRS "${CPP_MONERO_DIR}")
 
 # if the project is a subset of main cpp-ethereum project
 # use same pattern for variables as Boost uses

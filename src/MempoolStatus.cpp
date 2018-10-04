@@ -265,7 +265,8 @@ MempoolStatus::read_network_info()
     local_copy.block_size_limit           = rpc_network_info.block_size_limit;
     local_copy.block_size_median          = rpc_network_info.block_size_median;
     local_copy.start_time                 = rpc_network_info.start_time;
-
+    local_copy.migrated_tokens            = rpc_network_info.migrated_tokens;
+    local_copy.issued_coins               = rpc_network_info.issued_coins;
 
     strncpy(local_copy.block_size_limit_str, fmt::format("{:0.2f}",
                                              static_cast<double>(

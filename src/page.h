@@ -547,7 +547,7 @@ public:
                 {"enable_key_image_checker" , enable_key_image_checker},
                 {"enable_output_key_checker", enable_output_key_checker},
                 {"enable_autorefresh_option", enable_autorefresh_option},
-                {"show_cache_times"         , show_cache_times}
+                {"show_cache_times"         , show_cache_times},
         };
 
         context.emplace("txs", mstch::array()); // will keep tx to show
@@ -857,6 +857,8 @@ public:
                 {"current_hf_version", current_network_info.current_hf_version},
                 {"age"               , network_info_age.first},
                 {"age_format"        , network_info_age.second},
+                {"issued_coins"      , xmreg::xmr_amount_to_str(current_network_info.issued_coins, "{:0.2f}", true)},
+                {"migrated_tokens"    , current_network_info.migrated_tokens},
         };
 
         // median size of 100 blocks
@@ -6268,7 +6270,9 @@ private:
            {"block_size_median"         , local_copy_network_info.block_size_median},
            {"start_time"                , local_copy_network_info.start_time},
            {"fee_per_kb"                , local_copy_network_info.fee_per_kb},
-           {"current_hf_version"        , local_copy_network_info.current_hf_version}
+           {"current_hf_version"        , local_copy_network_info.current_hf_version},
+           {"issued_coins"              , local_copy_network_info.issued_coins},
+           {"migrated_tokens"           , local_copy_network_info.migrated_tokens}
         };
 
         return local_copy_network_info.current;

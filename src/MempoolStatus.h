@@ -81,6 +81,9 @@ struct MempoolStatus
         uint64_t fee_per_kb  {0};
         uint64_t info_timestamp  {0};
 
+        uint64_t issued_coins{0};
+        uint64_t migrated_tokens{0};
+
         bool current {false};
 
         static uint64_t
