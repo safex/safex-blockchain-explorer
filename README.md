@@ -15,8 +15,8 @@ The key features of the Safex Blockchain Explorer are:
  - showing encrypted payments ID,
  - showing ring signatures,
  - showing transaction extra field,
- - showing public components of Monero addresses,
- - decoding which outputs and mixins belong to the given Monero address and viewkey,
+ - showing public components of Safex addresses,
+ - decoding which outputs and mixins belong to the given Safex address and viewkey,
  - can prove that you send Safex cash to someone,
  - detailed information about ring members, such as, their age, timescale and their ring sizes,
  - showing number of amount output indices,
@@ -31,7 +31,7 @@ The key features of the Safex Blockchain Explorer are:
 
 ## Compilation on Ubuntu 18.04
 
-##### Compile latest Monero development version
+##### Compile latest Safex development version
 
 Download and compile recent safexcore into your home folder:
 
@@ -56,17 +56,17 @@ make
 
 ##### Compile and run the explorer
 
-Once the Monero is compiles, the explorer can be downloaded and compiled
+Once the Safex is compiles, the explorer can be downloaded and compiled
 as follows:
 
 ```bash
 cd ~
 
 # download the source code
-git clone https://github.com/hitripekac/onion-monero-blockchain-explorer.git
+git clone https://github.com/safex/safex-blockchain-explorer.git
 
 # enter the downloaded sourced code folder
-cd onion-monero-blockchain-explorer
+cd safex-blockchain-explorer
 
 # make a build folder and enter it
 mkdir build && cd build
@@ -75,7 +75,6 @@ mkdir build && cd build
 cmake ..
 
 # altearnatively can use: cmake -DMONERO_DIR=/path/to/safexcore_folder ..
-# if monero is not in ~/monero
 #
 # also can build with ASAN (sanitizers), for example
 # cmake -DSANITIZE_ADDRESS=On ..
@@ -96,13 +95,13 @@ You can use `-b` option if its in different location.
 For example:
 
 ```bash
-./xmrblocks -b /home/mwo/non-defult-safex-location/lmdb/
+./xmrblocks -b /home/user/non-defult-safex-location/lmdb/
 ```
 
 Example output:
 
 ```bash
-[mwo@arch onion-monero-blockchain-explorer]$ ./xmrblocks
+$ ./xmrblocks
 2016-May-28 10:04:49.160280 Blockchain initialized. last block: 1056761, d0.h0.m12.s47 time ago, current difficulty: 1517857750
 (2016-05-28 02:04:49) [INFO    ] Crow/0.1 server is running, local port 8081
 ```
@@ -112,7 +111,7 @@ Go to your browser: http://127.0.0.1:8081
 ## The explorer's command line options
 
 ```
-xmrblocks, Onion Monero Blockchain Explorer:
+xmrblocks, Safex Blockchain Explorer:
   -h [ --help ] [=arg(=1)] (=0)         produce help message
   -t [ --testnet ] [=arg(=1)] (=0)      use testnet blockchain
   -s [ --stagenet ] [=arg(=1)] (=0)     use stagenet blockchain
@@ -136,7 +135,7 @@ xmrblocks, Onion Monero Blockchain Explorer:
                                         enable users to have the index page on
                                         autorefresh
   --enable-emission-monitor [=arg(=1)] (=0)
-                                        enable Monero total emission monitoring
+                                        enable Safex total emission monitoring
                                         thread
   -p [ --port ] arg (=8081)             default explorer port
   --testnet-url arg                     you can specify testnet url, if you run
@@ -161,17 +160,17 @@ xmrblocks, Onion Monero Blockchain Explorer:
   --ssl-key-file arg                    path to key file for ssl (https)
                                         functionality
   -d [ --deamon-url ] arg (=http:://127.0.0.1:18081)
-                                        Monero deamon url
+                                        Safex deamon url
 ```
 
 Example usage, defined as bash aliases.
 
 ```bash
 # for mainnet explorer
-alias xmrblocksmainnet='~/onion-monero-blockchain-explorer/build/xmrblocks    --port 8081 --testnet-url "http://127.0.0.1:8082" --enable-pusher --enable-emission-monitor'
+alias xmrblocksmainnet='~/safex-blockchain-explorer/build/safex-explorer --port 8081 --testnet-url "http://127.0.0.1:8082" --enable-pusher --enable-emission-monitor'
 
 # for testnet explorer
-alias xmrblockstestnet='~/onion-monero-blockchain-explorer/build/xmrblocks -t --port 8082 --mainnet-url "http://127.0.0.1:8081" --enable-pusher --enable-emission-monitor'
+alias xmrblockstestnet='~/safex-blockchain-explorer/build/safex-explorer -t --port 8082 --mainnet-url "http://127.0.0.1:8081" --enable-pusher --enable-emission-monitor'
 ```
 
 These are aliases similar to those used for http://127.0.0.1:8081/ and http://127.0.0.1:8082/, respectively.
