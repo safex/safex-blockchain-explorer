@@ -5247,6 +5247,19 @@ public:
         return j_response;
     }
 
+    uint64_t get_total_SFT() {
+      MempoolStatus::network_info local_copy_network_info
+      = MempoolStatus::current_network_info;
+      return local_copy_network_info.migrated_tokens;
+
+    }
+
+    uint64_t get_total_SFX() {
+      MempoolStatus::network_info local_copy_network_info
+      = MempoolStatus::current_network_info;
+      return local_copy_network_info.issued_coins;
+    }
+
 
 private:
 

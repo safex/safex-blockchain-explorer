@@ -763,6 +763,20 @@ main(int ac, const char* av[])
         });
     }// if (enable_json_api)
 
+    /********* Total coins API *******/
+    CROW_ROUTE(app, "/api/totalsft")
+    ([&]() {
+      uint64_t amount = xmrblocks.get_total_SFT();
+      return std::to_string(amount);
+    });
+
+    CROW_ROUTE(app, "/api/totalsfx")
+    ([&]() {
+      uint64_t amount = xmrblocks.get_total_SFX();
+      return xmreg::xmr_amount_to_str(amount, "{:0.2f}", true);
+    });
+    /********* End Total coins API ***/
+
     if (enable_autorefresh_option)
     {
         CROW_ROUTE(app, "/autorefresh")
