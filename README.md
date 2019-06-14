@@ -86,7 +86,7 @@ make
 
 To run it:
 ```
-./xmrblocks
+./safex-explorer
 ```
 
 By default it will look for blockchain in its default location i.e., `~/.safex/lmdb`.
@@ -95,7 +95,7 @@ You can use `-b` option if its in different location.
 For example:
 
 ```bash
-./xmrblocks -b /home/user/non-defult-safex-location/lmdb/
+./safex-explorer -b /home/user/non-defult-safex-location/lmdb/
 ```
 
 Example output:
@@ -159,7 +159,7 @@ xmrblocks, Safex Blockchain Explorer:
                                         functionality
   --ssl-key-file arg                    path to key file for ssl (https)
                                         functionality
-  -d [ --deamon-url ] arg (=http:://127.0.0.1:18081)
+  -d [ --deamon-url ] arg (=http:://127.0.0.1:8081)
                                         Safex deamon url
 ```
 
