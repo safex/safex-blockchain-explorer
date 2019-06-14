@@ -1945,9 +1945,12 @@ public:
                 if (are_absolute_offsets_good(absolute_offsets, in_key) == false)
                     continue;
 
-                core_storage->get_db().get_output_key(in_key.amount,
-                                                      absolute_offsets,
-                                                      mixin_outputs,tx_out_type::out_cash);
+                for (int i=0; i<absolute_offsets.size(); i++) {
+                    output_data_t temp =  core_storage->get_db().get_output_key(in_key.amount, absolute_offsets[i], tx_out_type::out_cash);
+                    mixin_outputs.push_back(temp);
+                }
+
+                
             }
             catch (const OUTPUT_DNE& e)
             {
@@ -2443,7 +2446,7 @@ public:
 
                         tx_out_index real_toi;
 
-                        uint64_t tx_source_amount = (tx_source.rct ? 0 : tx_source.amount);
+                        uint64_t tx_source_amount =  tx_source.amount;
 
                         try
                         {
@@ -2821,7 +2824,7 @@ public:
 
                     uint64_t index_of_real_output = tx_source.outputs[tx_source.real_output].first;
 
-                    uint64_t tx_source_amount = (tx_source.rct ? 0 : tx_source.amount);
+                    uint64_t tx_source_amount = tx_source.amount;
 
                     tx_out_index real_toi;
 
@@ -4054,7 +4057,11 @@ public:
                 if (!are_absolute_offsets_good(absolute_offsets, in_key))
                     continue;
 
-                core_storage->get_db().get_output_key(amount, absolute_offsets, outputs, output_type);
+                for (int i=0; i<absolute_offsets.size(); i++) {
+                    output_data_t temp = core_storage->get_db().get_output_key(amount, absolute_offsets[i], output_type);
+                    outputs.push_back(temp);
+
+                }
             }
             catch (const OUTPUT_DNE &e)
             {
@@ -5699,8 +5706,12 @@ private:
 
                 // offsets seems good, so try to get the outputs for the amount and
                 // offsets given
-                core_storage->get_db().get_output_key(
-                        amount, absolute_offsets, outputs, output_type);
+                for (int i=0; i<absolute_offsets.size();i++) {
+                    output_data_t temp = core_storage->get_db().get_output_key(amount, absolute_offsets[i], output_type);
+                    outputs.push_back(temp);
+
+                }
+                
             }
             catch (const std::exception& e)
             {

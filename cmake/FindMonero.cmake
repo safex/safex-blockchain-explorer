@@ -29,10 +29,10 @@
 #------------------------------------------------------------------------------
 
 set(LIBS common;blocks;cryptonote_basic;cryptonote_core;multisig;
-		cryptonote_protocol;daemonizer;mnemonics;epee;lmdb;device;
+		cryptonote_protocol;safex_core;daemonizer;mnemonics;epee;lmdb;device;
 		blockchain_db;ringct;wallet;cncrypto;easylogging;version;checkpoints)
 
-	set(Xmr_INCLUDE_DIRS "${CPP_MONERO_DIR}")
+	set(Safex_INCLUDE_DIRS "${CPP_SAFEX_DIR}")
 
 # if the project is a subset of main cpp-ethereum project
 # use same pattern for variables as Boost uses
@@ -41,19 +41,19 @@ foreach (l ${LIBS})
 
 	string(TOUPPER ${l} L)
 
-	find_library(Xmr_${L}_LIBRARY
+	find_library(Safex_${L}_LIBRARY
 		NAMES ${l}
-		PATHS ${CMAKE_LIBRARY_PATH} ${CPP_MONERO_DIR}
-		PATH_SUFFIXES "/src/${l}" "/src/" "/external/db_drivers/lib${l}" "/lib" "/src/crypto" "/contrib/epee/src" "/external/easylogging++/"
+		PATHS ${CMAKE_LIBRARY_PATH} ${CPP_SAFEX_DIR}
+		PATH_SUFFIXES "/src/${l}" "/src/" "/external/db_drivers/lib${l}" "/lib" "/src/crypto" "/contrib/epee/src" "/external/easylogging++/" "/src/safex/"
 		NO_DEFAULT_PATH
 	)
 
-	set(Xmr_${L}_LIBRARIES ${Xmr_${L}_LIBRARY})
+	set(Safex_${L}_LIBRARIES ${Safex_${L}_LIBRARY})
 
-	message(STATUS FindMonero " Xmr_${L}_LIBRARIES ${Xmr_${L}_LIBRARY}")
+	message(STATUS FindMonero " Safex_${L}_LIBRARIES ${Safex_${L}_LIBRARY}")
 
 	add_library(${l} STATIC IMPORTED)
-	set_property(TARGET ${l} PROPERTY IMPORTED_LOCATION ${Xmr_${L}_LIBRARIES})
+	set_property(TARGET ${l} PROPERTY IMPORTED_LOCATION ${Safex_${L}_LIBRARIES})
 
 endforeach()
 
