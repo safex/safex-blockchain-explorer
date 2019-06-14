@@ -15,13 +15,13 @@ if (WIN32)
 endif()
 
 
-if (NOT MONERO_DIR)
-    set(MONERO_DIR ~/monero)
+if (NOT SAFEX_DIR)
+    set(SAFEX_DIR ~/monero)
 endif()
 
-message(STATUS MONERO_DIR ": ${MONERO_DIR}")
+message(STATUS SAFEX_DIR ": ${SAFEX_DIR}")
 
-set(MONERO_SOURCE_DIR ${MONERO_DIR}
+set(MONERO_SOURCE_DIR ${SAFEX_DIR}
         CACHE PATH "Path to the root directory for Monero")
 
 # set location of monero build tree
@@ -112,6 +112,7 @@ set(LIBRARIES
         cryptonote_core
         cryptonote_protocol
         cryptonote_basic
+        safex_core
         multisig
         daemonizer
         cncrypto
