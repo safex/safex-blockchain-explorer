@@ -242,17 +242,17 @@ get_default_lmdb_folder(cryptonote::network_type nettype)
 {
     // default path to monero folder
     // on linux this is /home/<username>/.bitmonero
-    string default_monero_dir = tools::get_default_data_dir();
+    string default_safex_dir = tools::get_default_data_dir();
 
     if (nettype == cryptonote::network_type::TESTNET)
-        default_monero_dir += "/testnet";
+        default_safex_dir += "/testnet";
     if (nettype == cryptonote::network_type::STAGENET)
-        default_monero_dir += "/stagenet";
+        default_safex_dir += "/stagenet";
 
 
     // the default folder of the lmdb blockchain database
     // is therefore as follows
-    return default_monero_dir + string("/lmdb");
+    return default_safex_dir + string("/lmdb");
 }
 
 

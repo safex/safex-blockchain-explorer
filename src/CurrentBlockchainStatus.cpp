@@ -135,7 +135,7 @@ CurrentBlockchainStatus::calculate_emission_in_blocks(
 
         mcore->get_block_by_height(start_blk, blk);
 
-        uint64_t coinbase_amount = get_outs_money_amount(blk.miner_tx);
+        uint64_t coinbase_amount = get_outs_cash_amount(blk.miner_tx);
 
         std::list<transaction> txs;
         std::list<crypto::hash> missed_txs;

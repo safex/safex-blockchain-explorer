@@ -74,7 +74,7 @@ mkdir build && cd build
 # create the makefile
 cmake ..
 
-# altearnatively can use: cmake -DMONERO_DIR=/path/to/safexcore_folder ..
+# altearnatively can use: cmake -DSAFEX_DIR=/path/to/safexcore_folder ..
 #
 # also can build with ASAN (sanitizers), for example
 # cmake -DSANITIZE_ADDRESS=On ..
