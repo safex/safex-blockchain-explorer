@@ -15,7 +15,7 @@
 #include <mutex>
 #include <atomic>
 
-namespace xmreg
+namespace safexeg
 {
 
 using namespace std;
