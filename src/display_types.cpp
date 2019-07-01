@@ -4,7 +4,7 @@
 
 #include "display_types.h"
 
-namespace xmreg {
+namespace safexeg {
 
 public_key const &get_public_key(displayable_output const &d_out)
 {

@@ -11,7 +11,7 @@
 #include <regex>
 
 using boost::filesystem::path;
-using xmreg::remove_bad_chars;
+using safexeg::remove_bad_chars;
 
 using namespace std;
 
@@ -33,7 +33,7 @@ int
 main(int ac, const char* av[])
 {
     // get command line options
-    xmreg::CmdLineOptions opts {ac, av};
+    safexeg::CmdLineOptions opts {ac, av};
 
     auto help_opt                      = opts.get_option<bool>("help");
 
@@ -146,7 +146,7 @@ main(int ac, const char* av[])
     // get blockchain path
     path blockchain_path;
 
-    if (!xmreg::get_blockchain_path(bc_path_opt, blockchain_path, nettype))
+    if (!safexeg::get_blockchain_path(bc_path_opt, blockchain_path, nettype))
     {
         cerr << "Error getting blockchain path." << endl;
         return EXIT_FAILURE;
@@ -157,11 +157,11 @@ main(int ac, const char* av[])
 
     // create instance of our MicroCore
     // and make pointer to the Blockchain
-    xmreg::MicroCore mcore;
+    safexeg::MicroCore mcore;
     cryptonote::Blockchain* core_storage;
 
     // initialize mcore and core_storage
-    if (!xmreg::init_blockchain(blockchain_path.string(),
+    if (!safexeg::init_blockchain(blockchain_path.string(),
                                mcore, core_storage, nettype))
     {
         cerr << "Error accessing blockchain." << endl;
@@ -205,36 +205,36 @@ main(int ac, const char* av[])
         // the thread is initalized with the values
         // found in emission_amount.txt file.
 
-        xmreg::CurrentBlockchainStatus::blockchain_path
+        safexeg::CurrentBlockchainStatus::blockchain_path
                 = blockchain_path;
-        xmreg::CurrentBlockchainStatus::nettype
+        safexeg::CurrentBlockchainStatus::nettype
                 = nettype;
-        xmreg::CurrentBlockchainStatus::deamon_url
+        safexeg::CurrentBlockchainStatus::deamon_url
                 = deamon_url;
-        xmreg::CurrentBlockchainStatus::set_blockchain_variables(
+        safexeg::CurrentBlockchainStatus::set_blockchain_variables(
                 &mcore, core_storage);
 
         // launch the status monitoring thread so that it keeps track of blockchain
         // info, e.g., current height. Information from this thread is used
         // by tx searching threads that are launched for each user independently,
         // when they log back or create new account.
-        xmreg::CurrentBlockchainStatus::start_monitor_blockchain_thread();
+        safexeg::CurrentBlockchainStatus::start_monitor_blockchain_thread();
     }
 
 
-    xmreg::MempoolStatus::blockchain_path
+    safexeg::MempoolStatus::blockchain_path
             = blockchain_path;
-    xmreg::MempoolStatus::nettype
+    safexeg::MempoolStatus::nettype
             = nettype;
-    xmreg::MempoolStatus::deamon_url
+    safexeg::MempoolStatus::deamon_url
             = deamon_url;
-    xmreg::MempoolStatus::set_blockchain_variables(
+    safexeg::MempoolStatus::set_blockchain_variables(
             &mcore, core_storage);
 
-    xmreg::MempoolStatus::network_info initial_info;
+    safexeg::MempoolStatus::network_info initial_info;
     strcpy(initial_info.block_size_limit_str, "0.0");
     strcpy(initial_info.block_size_median_str, "0.0");
-    xmreg::MempoolStatus::current_network_info = initial_info;
+    safexeg::MempoolStatus::current_network_info = initial_info;
 
     try
     {
@@ -252,12 +252,12 @@ main(int ac, const char* av[])
     // info, e.g., current height. Information from this thread is used
     // by tx searching threads that are launched for each user independently,
     // when they log back or create new account.
-    xmreg::MempoolStatus::mempool_refresh_time = mempool_refresh_time;
-    xmreg::MempoolStatus::start_mempool_status_thread();
+    safexeg::MempoolStatus::mempool_refresh_time = mempool_refresh_time;
+    safexeg::MempoolStatus::start_mempool_status_thread();
 
     // create instance of page class which
     // contains logic for the website
-    xmreg::page xmrblocks(&mcore,
+    safexeg::page xmrblocks(&mcore,
                           core_storage,
                           deamon_url,
                           nettype,
@@ -321,7 +321,7 @@ main(int ac, const char* av[])
      {
 
         map<std::string, std::string> post_body
-                = xmreg::parse_crow_post_data(req.body);
+                = safexeg::parse_crow_post_data(req.body);
 
         if (post_body.count("xmr_address") == 0
             || post_body.count("viewkey") == 0
@@ -363,7 +363,7 @@ main(int ac, const char* av[])
         ([&](const crow::request& req) {
 
             map<std::string, std::string> post_body
-                    = xmreg::parse_crow_post_data(req.body);
+                    = safexeg::parse_crow_post_data(req.body);
 
             if (post_body.count("xmraddress") == 0
                 || post_body.count("txprvkey") == 0
@@ -415,7 +415,7 @@ main(int ac, const char* av[])
         ([&](const crow::request& req) {
 
             map<std::string, std::string> post_body
-                    = xmreg::parse_crow_post_data(req.body);
+                    = safexeg::parse_crow_post_data(req.body);
 
             if (post_body.count("rawtxdata") == 0 || post_body.count("action") == 0)
             {
@@ -445,7 +445,7 @@ main(int ac, const char* av[])
         ([&](const crow::request& req) {
 
             map<std::string, std::string> post_body
-                    = xmreg::parse_crow_post_data(req.body);
+                    = safexeg::parse_crow_post_data(req.body);
 
             if (post_body.count("rawkeyimgsdata") == 0)
             {
@@ -476,7 +476,7 @@ main(int ac, const char* av[])
         ([&](const crow::request& req) {
 
             map<std::string, std::string> post_body
-                    = xmreg::parse_crow_post_data(req.body);
+                    = safexeg::parse_crow_post_data(req.body);
 
             if (post_body.count("rawoutputkeysdata") == 0)
             {
@@ -773,7 +773,7 @@ main(int ac, const char* av[])
     CROW_ROUTE(app, "/api/totalsfx")
     ([&]() {
       uint64_t amount = xmrblocks.get_total_SFX();
-      return xmreg::xmr_amount_to_str(amount, "{:0.2f}", true);
+      return safexeg::xmr_amount_to_str(amount, "{:0.2f}", true);
     });
     /********* End Total coins API ***/
 
@@ -815,8 +815,8 @@ main(int ac, const char* av[])
 
         cout << "Waiting for emission monitoring thread to finish." << endl;
 
-        xmreg::CurrentBlockchainStatus::m_thread.interrupt();
-        xmreg::CurrentBlockchainStatus::m_thread.join();
+        safexeg::CurrentBlockchainStatus::m_thread.interrupt();
+        safexeg::CurrentBlockchainStatus::m_thread.join();
 
         cout << "Emission monitoring thread finished." << endl;
     }
@@ -825,8 +825,8 @@ main(int ac, const char* av[])
 
     cout << "Waiting for mempool monitoring thread to finish." << endl;
 
-    xmreg::MempoolStatus::m_thread.interrupt();
-    xmreg::MempoolStatus::m_thread.join();
+    safexeg::MempoolStatus::m_thread.interrupt();
+    safexeg::MempoolStatus::m_thread.join();
 
     cout << "Mempool monitoring thread finished." << endl;
 

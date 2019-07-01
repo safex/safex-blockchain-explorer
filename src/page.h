@@ -9,7 +9,7 @@
 
 #include "mstch/mstch.hpp"
 
-#include "monero_headers.h"
+#include "safex_headers.h"
 
 #include "../gen/version.h"
 
@@ -113,7 +113,7 @@ struct hash<tx_info_cache::key> {
 }
 
 
-namespace xmreg
+namespace safexeg
 {
 
 
@@ -400,41 +400,41 @@ public:
         // read template files for all the pages
         // into template_file map
 
-        template_file["css_styles"]      = xmreg::read(TMPL_CSS_STYLES);
-        template_file["header"]          = xmreg::read(TMPL_HEADER);
+        template_file["css_styles"]      = safexeg::read(TMPL_CSS_STYLES);
+        template_file["header"]          = safexeg::read(TMPL_HEADER);
         template_file["footer"]          = get_footer();
-        template_file["index2"]          = get_full_page(xmreg::read(TMPL_INDEX2));
-        template_file["mempool"]         = xmreg::read(TMPL_MEMPOOL);
-        template_file["altblocks"]       = get_full_page(xmreg::read(TMPL_ALTBLOCKS));
-        template_file["mempool_error"]   = xmreg::read(TMPL_MEMPOOL_ERROR);
+        template_file["index2"]          = get_full_page(safexeg::read(TMPL_INDEX2));
+        template_file["mempool"]         = safexeg::read(TMPL_MEMPOOL);
+        template_file["altblocks"]       = get_full_page(safexeg::read(TMPL_ALTBLOCKS));
+        template_file["mempool_error"]   = safexeg::read(TMPL_MEMPOOL_ERROR);
         template_file["mempool_full"]    = get_full_page(template_file["mempool"]);
-        template_file["block"]           = get_full_page(xmreg::read(TMPL_BLOCK));
-        template_file["tx"]              = get_full_page(xmreg::read(TMPL_TX));
-        template_file["my_outputs"]      = get_full_page(xmreg::read(TMPL_MY_OUTPUTS));
-        template_file["rawtx"]           = get_full_page(xmreg::read(TMPL_MY_RAWTX));
-        template_file["checkrawtx"]      = get_full_page(xmreg::read(TMPL_MY_CHECKRAWTX));
-        template_file["pushrawtx"]       = get_full_page(xmreg::read(TMPL_MY_PUSHRAWTX));
-        template_file["rawkeyimgs"]      = get_full_page(xmreg::read(TMPL_MY_RAWKEYIMGS));
-        template_file["rawoutputkeys"]   = get_full_page(xmreg::read(TMPL_MY_RAWOUTPUTKEYS));
-        template_file["checkrawkeyimgs"] = get_full_page(xmreg::read(TMPL_MY_CHECKRAWKEYIMGS));
-        template_file["checkoutputkeys"] = get_full_page(xmreg::read(TMPL_MY_CHECKRAWOUTPUTKEYS));
-        template_file["address"]         = get_full_page(xmreg::read(TMPL_ADDRESS));
-        template_file["search_results"]  = get_full_page(xmreg::read(TMPL_SEARCH_RESULTS));
-        template_file["tx_details"]      = xmreg::read(string(TMPL_PARIALS_DIR) + "/tx_details.html");
-        template_file["tx_table_header"] = xmreg::read(string(TMPL_PARIALS_DIR) + "/tx_table_header.html");
-        template_file["tx_table_row"]    = xmreg::read(string(TMPL_PARIALS_DIR) + "/tx_table_row.html");
+        template_file["block"]           = get_full_page(safexeg::read(TMPL_BLOCK));
+        template_file["tx"]              = get_full_page(safexeg::read(TMPL_TX));
+        template_file["my_outputs"]      = get_full_page(safexeg::read(TMPL_MY_OUTPUTS));
+        template_file["rawtx"]           = get_full_page(safexeg::read(TMPL_MY_RAWTX));
+        template_file["checkrawtx"]      = get_full_page(safexeg::read(TMPL_MY_CHECKRAWTX));
+        template_file["pushrawtx"]       = get_full_page(safexeg::read(TMPL_MY_PUSHRAWTX));
+        template_file["rawkeyimgs"]      = get_full_page(safexeg::read(TMPL_MY_RAWKEYIMGS));
+        template_file["rawoutputkeys"]   = get_full_page(safexeg::read(TMPL_MY_RAWOUTPUTKEYS));
+        template_file["checkrawkeyimgs"] = get_full_page(safexeg::read(TMPL_MY_CHECKRAWKEYIMGS));
+        template_file["checkoutputkeys"] = get_full_page(safexeg::read(TMPL_MY_CHECKRAWOUTPUTKEYS));
+        template_file["address"]         = get_full_page(safexeg::read(TMPL_ADDRESS));
+        template_file["search_results"]  = get_full_page(safexeg::read(TMPL_SEARCH_RESULTS));
+        template_file["tx_details"]      = safexeg::read(string(TMPL_PARIALS_DIR) + "/tx_details.html");
+        template_file["tx_table_header"] = safexeg::read(string(TMPL_PARIALS_DIR) + "/tx_table_header.html");
+        template_file["tx_table_row"]    = safexeg::read(string(TMPL_PARIALS_DIR) + "/tx_table_row.html");
 
         if (enable_js) {
             // JavaScript files
-            template_file["jquery.min.js"]   = xmreg::read(JS_JQUERY);
-            template_file["crc32.js"]        = xmreg::read(JS_CRC32);
-            template_file["crypto.js"]       = xmreg::read(JS_CRYPTO);
-            template_file["cn_util.js"]      = xmreg::read(JS_CNUTIL);
-            template_file["base58.js"]       = xmreg::read(JS_BASE58);
-            template_file["nacl-fast-cn.js"] = xmreg::read(JS_NACLFAST);
-            template_file["sha3.js"]         = xmreg::read(JS_SHA3);
-            template_file["config.js"]       = xmreg::read(JS_CONFIG);
-            template_file["biginteger.js"]   = xmreg::read(JS_BIGINT);
+            template_file["jquery.min.js"]   = safexeg::read(JS_JQUERY);
+            template_file["crc32.js"]        = safexeg::read(JS_CRC32);
+            template_file["crypto.js"]       = safexeg::read(JS_CRYPTO);
+            template_file["cn_util.js"]      = safexeg::read(JS_CNUTIL);
+            template_file["base58.js"]       = safexeg::read(JS_BASE58);
+            template_file["nacl-fast-cn.js"] = safexeg::read(JS_NACLFAST);
+            template_file["sha3.js"]         = safexeg::read(JS_SHA3);
+            template_file["config.js"]       = safexeg::read(JS_CONFIG);
+            template_file["biginteger.js"]   = safexeg::read(JS_BIGINT);
 
             // need to set  "testnet: false," flag to reflect
             // if we are running testnet or mainnet explorer
@@ -535,7 +535,7 @@ public:
                 {"mainnet_url"              , mainnet_url},
                 {"refresh"                  , refresh_page},
                 {"height"                   , height},
-                {"server_timestamp"         , xmreg::timestamp_to_str_gm(local_copy_server_timestamp)},
+                {"server_timestamp"         , safexeg::timestamp_to_str_gm(local_copy_server_timestamp)},
                 {"age_format"               , string("[h:m:d]")},
                 {"page_no"                  , page_no},
                 {"total_page_no"            , (height / no_of_last_blocks)},
@@ -800,7 +800,7 @@ public:
         } // while (i <= end_height)
 
         // calculate median size of the blocks shown
-        //double blk_size_median = xmreg::calc_median(blk_sizes.begin(), blk_sizes.end());
+        //double blk_size_median = safexeg::calc_median(blk_sizes.begin(), blk_sizes.end());
 
         // save computational times for disply in the frontend
 
@@ -857,7 +857,7 @@ public:
                 {"current_hf_version", current_network_info.current_hf_version},
                 {"age"               , network_info_age.first},
                 {"age_format"        , network_info_age.second},
-                {"issued_coins"      , xmreg::xmr_amount_to_str(current_network_info.issued_coins, "{:0.2f}", true)},
+                {"issued_coins"      , safexeg::xmr_amount_to_str(current_network_info.issued_coins, "{:0.2f}", true)},
                 {"migrated_tokens"    , current_network_info.migrated_tokens},
         };
 
@@ -1151,7 +1151,7 @@ public:
         string blk_hash_str  = pod_to_hex(blk_hash);
 
         // get block timestamp in user friendly format
-        string blk_timestamp = xmreg::timestamp_to_str_gm(blk.timestamp);
+        string blk_timestamp = safexeg::timestamp_to_str_gm(blk.timestamp);
 
         // get age of the block relative to the server time
         pair<string, string> age = get_age(server_timestamp, blk.timestamp);
@@ -1252,7 +1252,7 @@ public:
 
 
             // get mixins in time scale for visual representation
-            //string mixin_times_scale = xmreg::timestamps_time_scale(mixin_timestamps,
+            //string mixin_times_scale = safexeg::timestamps_time_scale(mixin_timestamps,
             //                                                        server_timestamp);
 
 
@@ -1263,11 +1263,11 @@ public:
 
         // add total fees in the block to the context
         context["sum_fees"]
-                = xmreg::xmr_amount_to_str(sum_fees, "{:0.6f}", false);
+                = safexeg::xmr_amount_to_str(sum_fees, "{:0.6f}", false);
 
         // get xmr in the block reward
         context["blk_reward"]
-                = xmreg::xmr_amount_to_str(txd_coinbase.cash_outputs - sum_fees, "{:0.6f}");
+                = safexeg::xmr_amount_to_str(txd_coinbase.cash_outputs - sum_fees, "{:0.6f}");
 
         add_css_style(context);
 
@@ -1281,7 +1281,7 @@ public:
     {
         crypto::hash blk_hash;
 
-        if (!xmreg::parse_str_secret_key(_blk_hash, blk_hash))
+        if (!safexeg::parse_str_secret_key(_blk_hash, blk_hash))
         {
             cerr << "Cant parse blk hash: " << blk_hash << endl;
             return fmt::format("Cant get block {:s} due to block hash parse error!", blk_hash);
@@ -1309,7 +1309,7 @@ public:
         // parse tx hash string to hash object
         crypto::hash tx_hash;
 
-        if (!xmreg::parse_str_secret_key(tx_hash_str, tx_hash))
+        if (!safexeg::parse_str_secret_key(tx_hash_str, tx_hash))
         {
             cerr << "Cant parse tx hash: " << tx_hash_str << endl;
             return string("Cant get tx hash due to parse error: " + tx_hash_str);
@@ -1345,7 +1345,7 @@ public:
                 uint64_t tx_recieve_timestamp
                         = found_txs.at(0).receive_time;
 
-                blk_timestamp = xmreg::timestamp_to_str_gm(tx_recieve_timestamp);
+                blk_timestamp = safexeg::timestamp_to_str_gm(tx_recieve_timestamp);
 
                 age = get_age(server_timestamp, tx_recieve_timestamp,
                               FULL_AGE_FORMAT);
@@ -1572,7 +1572,7 @@ public:
         // parse tx hash string to hash object
         crypto::hash tx_hash;
 
-        if (!xmreg::parse_str_secret_key(tx_hash_str, tx_hash))
+        if (!safexeg::parse_str_secret_key(tx_hash_str, tx_hash))
         {
             cerr << "Cant parse tx hash: " << tx_hash_str << endl;
             return string("Cant get tx hash due to parse error: " + tx_hash_str);
@@ -1581,7 +1581,7 @@ public:
         // parse string representing given monero address
         cryptonote::address_parse_info address_info;
 
-        if (!xmreg::parse_str_address(xmr_address_str,  address_info, nettype))
+        if (!safexeg::parse_str_address(xmr_address_str,  address_info, nettype))
         {
             cerr << "Cant parse string address: " << xmr_address_str << endl;
             return string("Cant parse xmr address: " + xmr_address_str);
@@ -1592,7 +1592,7 @@ public:
 
         std::vector<crypto::secret_key> multiple_tx_secret_keys;
 
-        if (!xmreg::parse_str_secret_key(viewkey_str, multiple_tx_secret_keys))
+        if (!safexeg::parse_str_secret_key(viewkey_str, multiple_tx_secret_keys))
         {
             cerr << "Cant parse the private key: " << viewkey_str << endl;
             return string("Cant parse private key: " + viewkey_str);
@@ -1667,7 +1667,7 @@ public:
                 uint64_t tx_recieve_timestamp
                         = found_txs.at(0).receive_time;
 
-                blk_timestamp = xmreg::timestamp_to_str_gm(tx_recieve_timestamp);
+                blk_timestamp = safexeg::timestamp_to_str_gm(tx_recieve_timestamp);
 
                 age = get_age(server_timestamp,
                               tx_recieve_timestamp,
@@ -1712,7 +1712,7 @@ public:
             // calculate difference between tx and server timestamps
             age = get_age(server_timestamp, blk.timestamp, FULL_AGE_FORMAT);
 
-            blk_timestamp = xmreg::timestamp_to_str_gm(blk.timestamp);
+            blk_timestamp = safexeg::timestamp_to_str_gm(blk.timestamp);
 
             tx_blk_height_str = std::to_string(tx_blk_height);
         }
@@ -1746,7 +1746,7 @@ public:
                 {"blk_height"           , tx_blk_height_str},
                 {"tx_size"              , fmt::format("{:0.4f}",
                                                       static_cast<double>(txd.size) / 1024.0)},
-                {"tx_fee"               , xmreg::xmr_amount_to_str(txd.fee, "{:0.10f}", true)},
+                {"tx_fee"               , safexeg::xmr_amount_to_str(txd.fee, "{:0.10f}", true)},
                 {"blk_timestamp"        , blk_timestamp},
                 {"delta_time"           , age.first},
                 {"outputs_no"           , static_cast<uint64_t>(txd.output_pub_keys.size())},
@@ -1759,7 +1759,7 @@ public:
                 {"shortcut_url"         , shortcut_url}
         };
 
-        string server_time_str = xmreg::timestamp_to_str_gm(server_timestamp, "%F");
+        string server_time_str = safexeg::timestamp_to_str_gm(server_timestamp, "%F");
 
 
 
@@ -1897,7 +1897,7 @@ public:
 
             outputs.push_back(mstch::map {
                     {"out_pub_key"           , pod_to_hex(get_public_key(outp.first))},
-                    {"amount"                , xmreg::xmr_amount_to_str(outp.second)},
+                    {"amount"                , safexeg::xmr_amount_to_str(outp.second)},
                     {"mine_output"           , mine_output},
                     {"output_idx"            , fmt::format("{:02d}", output_idx)}
             });
@@ -1915,7 +1915,7 @@ public:
 
         mstch::array inputs;
 
-        vector<txin_to_key> input_key_imgs = xmreg::get_key_images(tx);
+        vector<txin_to_key> input_key_imgs = safexeg::get_key_images(tx);
 
         // to hold sum of xmr in matched mixins, those that
         // perfectly match mixin public key with outputs in mixn_tx.
@@ -1960,7 +1960,7 @@ public:
 
             inputs.push_back(mstch::map{
                     {"key_image"       , pod_to_hex(in_key.k_image)},
-                    {"key_image_amount", xmreg::xmr_amount_to_str(in_key.amount)},
+                    {"key_image_amount", safexeg::xmr_amount_to_str(in_key.amount)},
                     make_pair(string("mixins"), mstch::array{})
             });
 
@@ -2053,7 +2053,7 @@ public:
 
 
                 public_key mixin_tx_pub_key
-                        = xmreg::get_tx_pub_key_from_received_outs(mixin_tx);
+                        = safexeg::get_tx_pub_key_from_received_outs(mixin_tx);
                 std::vector<public_key> mixin_additional_tx_pub_keys = cryptonote::get_additional_tx_pub_keys_from_extra(mixin_tx);
 
                 string mixin_tx_pub_key_str = pod_to_hex(mixin_tx_pub_key);
@@ -2086,7 +2086,7 @@ public:
                 //          <public_key  , amount  , out idx>
                 vector<tuple<txout_to_key, uint64_t, uint64_t>> output_pub_keys;
 
-                output_pub_keys = xmreg::get_ouputs_tuple(mixin_tx);
+                output_pub_keys = safexeg::get_ouputs_tuple(mixin_tx);
 
                 mixin_outputs.push_back(mstch::map{
                         {"mix_tx_hash"      , mixin_tx_hash_str},
@@ -2187,7 +2187,7 @@ public:
                             {"out_idx"         , output_idx_in_tx},
                             {"formed_output_pk", out_pub_key_str},
                             {"out_in_match"    , output_match},
-                            {"amount"          , xmreg::xmr_amount_to_str(amount)}
+                            {"amount"          , safexeg::xmr_amount_to_str(amount)}
                     });
 
                     //cout << "txout_k.key == output_data.pubkey" << endl;
@@ -2250,13 +2250,13 @@ public:
         context.emplace("outputs", outputs);
 
         context["found_our_outputs"] = (sum_xmr > 0);
-        context["sum_xmr"]           = xmreg::xmr_amount_to_str(sum_xmr);
+        context["sum_xmr"]           = safexeg::xmr_amount_to_str(sum_xmr);
 
         context.emplace("inputs", inputs);
 
         context["show_inputs"]   = show_key_images;
         context["inputs_no"]     = static_cast<uint64_t>(inputs.size());
-        context["sum_mixin_xmr"] = xmreg::xmr_amount_to_str(
+        context["sum_mixin_xmr"] = safexeg::xmr_amount_to_str(
                 sum_mixin_xmr, "{:0.10f}", false);
 
 
@@ -2272,7 +2272,7 @@ public:
             possible_spending = (sum_mixin_xmr - sum_xmr) - txd.fee;
         }
 
-        context["possible_spending"] = xmreg::xmr_amount_to_str(
+        context["possible_spending"] = safexeg::xmr_amount_to_str(
                 possible_spending, "{:0.10f}", false);
 
         add_css_style(context);
@@ -2321,7 +2321,7 @@ public:
 
         const size_t magiclen = strlen(UNSIGNED_TX_PREFIX);
 
-        string data_prefix = xmreg::make_printable(decoded_raw_tx_data.substr(0, magiclen));
+        string data_prefix = safexeg::make_printable(decoded_raw_tx_data.substr(0, magiclen));
 
         bool unsigned_tx_given {false};
 
@@ -2395,7 +2395,7 @@ public:
                     mstch::map tx_cd_data {
                             {"no_of_sources"      , static_cast<uint64_t>(no_of_sources)},
                             {"use_rct"            , tx_cd.use_rct},
-                            {"change_amount"      , xmreg::xmr_amount_to_str(tx_change.amount)},
+                            {"change_amount"      , safexeg::xmr_amount_to_str(tx_change.amount)},
                             {"has_payment_id"     , (payment_id  != null_hash)},
                             {"has_payment_id8"    , (payment_id8 != null_hash8)},
                             {"payment_id"         , pid_str},
@@ -2412,7 +2412,7 @@ public:
                         mstch::map dest_info {
                                 {"dest_address"  , get_account_address_as_str(
                                         nettype, a_dest.is_subaddress, a_dest.addr)},
-                                {"dest_amount"   , xmreg::xmr_amount_to_str(a_dest.amount)}
+                                {"dest_amount"   , safexeg::xmr_amount_to_str(a_dest.amount)}
                         };
 
                         dest_infos.push_back(dest_info);
@@ -2429,7 +2429,7 @@ public:
                         const tx_source_entry&  tx_source = tx_cd.sources.at(i);
 
                         mstch::map single_dest_source {
-                                {"output_amount"              , xmreg::xmr_amount_to_str(tx_source.amount)},
+                                {"output_amount"              , safexeg::xmr_amount_to_str(tx_source.amount)},
                                 {"real_output"                , static_cast<uint64_t>(tx_source.real_output)},
                                 {"real_out_tx_key"            , pod_to_hex(tx_source.real_out_tx_key)},
                                 {"real_output_in_tx_index"    , static_cast<uint64_t>(tx_source.real_output_in_tx_index)},
@@ -2571,7 +2571,7 @@ public:
                     } //  for (size_t i = 0; i < no_of_sources; ++i)
 
                     tx_cd_data.insert({"sum_outputs_amounts" ,
-                                       xmreg::xmr_amount_to_str(sum_outputs_amounts)});
+                                       safexeg::xmr_amount_to_str(sum_outputs_amounts)});
 
 
                     uint64_t min_mix_timestamp;
@@ -2585,8 +2585,8 @@ public:
                             );
 
                     tx_cd_data.emplace("timescales", mixins_timescales.first);
-                    tx_cd_data["min_mix_time"]     = xmreg::timestamp_to_str_gm(min_mix_timestamp);
-                    tx_cd_data["max_mix_time"]     = xmreg::timestamp_to_str_gm(max_mix_timestamp);
+                    tx_cd_data["min_mix_time"]     = safexeg::timestamp_to_str_gm(min_mix_timestamp);
+                    tx_cd_data["max_mix_time"]     = safexeg::timestamp_to_str_gm(max_mix_timestamp);
                     tx_cd_data["timescales_scale"] = fmt::format("{:0.2f}",
                                                                  mixins_timescales.second
                                                                  / 3600.0 / 24.0); // in days
@@ -2611,7 +2611,7 @@ public:
 
             const size_t magiclen = strlen(SIGNED_TX_PREFIX);
 
-            string data_prefix = xmreg::make_printable(decoded_raw_tx_data.substr(0, magiclen));
+            string data_prefix = safexeg::make_printable(decoded_raw_tx_data.substr(0, magiclen));
 
             if (strncmp(decoded_raw_tx_data.c_str(), SIGNED_TX_PREFIX, magiclen) != 0)
             {
@@ -2756,7 +2756,7 @@ public:
                             mstch::map {
                                     {"dest_address"   , get_account_address_as_str(
                                             nettype, a_dest.is_subaddress, a_dest.addr)},
-                                    {"dest_amount"    , xmreg::xmr_amount_to_str(a_dest.amount)},
+                                    {"dest_amount"    , safexeg::xmr_amount_to_str(a_dest.amount)},
                                     {"is_this_change" , false}
                             }
                     );
@@ -2774,7 +2774,7 @@ public:
                                     {"dest_address"   , get_account_address_as_str(
                                             nettype, ptx.construction_data.change_dts.is_subaddress, ptx.construction_data.change_dts.addr)},
                                     {"dest_amount"    ,
-                                            xmreg::xmr_amount_to_str(ptx.construction_data.change_dts.amount)},
+                                            safexeg::xmr_amount_to_str(ptx.construction_data.change_dts.amount)},
                                     {"is_this_change" , true}
                             }
                     );
@@ -2782,7 +2782,7 @@ public:
                     real_ammounts.push_back(ptx.construction_data.change_dts.amount);
                 };
 
-                tx_context["outputs_xmr_sum"] = xmreg::xmr_amount_to_str(outputs_xmr_sum);
+                tx_context["outputs_xmr_sum"] = safexeg::xmr_amount_to_str(outputs_xmr_sum);
 
                 tx_context.insert({"dest_infos", destination_addresses});
 
@@ -2806,7 +2806,7 @@ public:
                     {
                         if (output_amount == 0)
                         {
-                            out_amount_str = xmreg::xmr_amount_to_str(real_ammounts.at(i));
+                            out_amount_str = safexeg::xmr_amount_to_str(real_ammounts.at(i));
                         }
                     }
                 }
@@ -2872,7 +2872,7 @@ public:
                 tx_context["have_raw_tx"] = true;
 
                 // provide total mount of inputs xmr
-                tx_context["inputs_xmr_sum"] = xmreg::xmr_amount_to_str(inputs_xmr_sum);
+                tx_context["inputs_xmr_sum"] = safexeg::xmr_amount_to_str(inputs_xmr_sum);
 
                 // get reference to inputs array created of the tx
                 mstch::array& inputs = boost::get<mstch::array>(tx_context["inputs"]);
@@ -2890,7 +2890,7 @@ public:
                             boost::get<mstch::map>(input_node)["amount"]
                     );
 
-                    amount = xmreg::xmr_amount_to_str(real_amounts.at(input_idx));
+                    amount = safexeg::xmr_amount_to_str(real_amounts.at(input_idx));
 
                     // check if key images are spend or not
 
@@ -2985,7 +2985,7 @@ public:
 
             const size_t magiclen = strlen(SIGNED_TX_PREFIX);
 
-            string data_prefix = xmreg::make_printable(decoded_raw_tx_data.substr(0, magiclen));
+            string data_prefix = safexeg::make_printable(decoded_raw_tx_data.substr(0, magiclen));
 
             context["data_prefix"] = data_prefix;
 
@@ -3221,7 +3221,7 @@ public:
             return mstch::render(full_page, context);
         }
 
-        if (!xmreg::parse_str_secret_key(viewkey_str, prv_view_key))
+        if (!safexeg::parse_str_secret_key(viewkey_str, prv_view_key))
         {
             string error_msg = fmt::format("Cant parse the private key: " + viewkey_str);
 
@@ -3233,7 +3233,7 @@ public:
 
         const size_t magiclen = strlen(KEY_IMAGE_EXPORT_FILE_MAGIC);
 
-        string data_prefix = xmreg::make_printable(decoded_raw_data.substr(0, magiclen));
+        string data_prefix = safexeg::make_printable(decoded_raw_data.substr(0, magiclen));
 
         context["data_prefix"] = data_prefix;
 
@@ -3248,7 +3248,7 @@ public:
         }
 
         // decrypt key images data using private view key
-        decoded_raw_data = xmreg::decrypt(
+        decoded_raw_data = safexeg::decrypt(
                 std::string(decoded_raw_data, magiclen),
                 prv_view_key, true);
 
@@ -3289,7 +3289,7 @@ public:
 
 
         context.insert({"address"        , REMOVE_HASH_BRAKETS(
-                xmreg::print_address(address_info, nettype))});
+                safexeg::print_address(address_info, nettype))});
         context.insert({"viewkey"        , REMOVE_HASH_BRAKETS(
                 fmt::format("{:s}", prv_view_key))});
         context.insert({"has_total_xmr"  , false});
@@ -3317,7 +3317,7 @@ public:
                     {"key_no"              , fmt::format("{:03d}", n)},
                     {"key_image"           , pod_to_hex(key_image)},
                     {"signature"           , fmt::format("{:s}", signature)},
-                    {"address"             , xmreg::print_address(
+                    {"address"             , safexeg::print_address(
                                                 address_info, nettype)},
                     {"is_spent"            , core_storage->have_tx_keyimg_as_spent(key_image)},
                     {"tx_hash"             , string{}}
@@ -3367,7 +3367,7 @@ public:
             return mstch::render(full_page, context);
         }
 
-        if (!xmreg::parse_str_secret_key(viewkey_str, prv_view_key))
+        if (!safexeg::parse_str_secret_key(viewkey_str, prv_view_key))
         {
             string error_msg = fmt::format("Cant parse the private key: " + viewkey_str);
 
@@ -3379,7 +3379,7 @@ public:
 
         const size_t magiclen = strlen(OUTPUT_EXPORT_FILE_MAGIC);
 
-        string data_prefix = xmreg::make_printable(decoded_raw_data.substr(0, magiclen));
+        string data_prefix = safexeg::make_printable(decoded_raw_data.substr(0, magiclen));
 
         context["data_prefix"] = data_prefix;
 
@@ -3395,7 +3395,7 @@ public:
 
 
         // decrypt key images data using private view key
-        decoded_raw_data = xmreg::decrypt(
+        decoded_raw_data = safexeg::decrypt(
                 std::string(decoded_raw_data, magiclen),
                 prv_view_key, true);
 
@@ -3423,7 +3423,7 @@ public:
         address_parse_info address_info {*xmr_address, false, false, crypto::null_hash8};
 
         context.insert({"address"        , REMOVE_HASH_BRAKETS(
-                xmreg::print_address(address_info, nettype))});
+                safexeg::print_address(address_info, nettype))});
         context.insert({"viewkey"        , pod_to_hex(prv_view_key)});
         context.insert({"has_total_xmr"  , false});
         context.insert({"total_xmr"      , string{}});
@@ -3488,7 +3488,7 @@ public:
                     return mstch::render(full_page, context);
                 }
 
-                public_key tx_pub_key = xmreg::get_tx_pub_key_from_received_outs(tx);
+                public_key tx_pub_key = safexeg::get_tx_pub_key_from_received_outs(tx);
                 std::vector<public_key> additional_tx_pub_keys = cryptonote::get_additional_tx_pub_keys_from_extra(tx);
 
                 // cointbase txs have amounts in plain sight.
@@ -3546,9 +3546,9 @@ public:
             mstch::map output_info {
                     {"output_no"           , fmt::format("{:03d}", output_no)},
                     {"output_pub_key"      , REMOVE_HASH_BRAKETS(fmt::format("{:s}", txout_key.key))},
-                    {"amount"              , xmreg::xmr_amount_to_str(xmr_amount)},
+                    {"amount"              , safexeg::xmr_amount_to_str(xmr_amount)},
                     {"tx_hash"             , REMOVE_HASH_BRAKETS(fmt::format("{:s}", td.m_txid))},
-                    {"timestamp"           , xmreg::timestamp_to_str_gm(blk_timestamp)},
+                    {"timestamp"           , safexeg::timestamp_to_str_gm(blk_timestamp)},
                     {"is_spent"            , is_output_spent},
                     {"is_ringct"           , td.m_rct}
             };
@@ -3566,7 +3566,7 @@ public:
         if (total_xmr > 0)
         {
             context["has_total_xmr"] = true;
-            context["total_xmr"] = xmreg::xmr_amount_to_str(total_xmr);
+            context["total_xmr"] = safexeg::xmr_amount_to_str(total_xmr);
         }
 
         return mstch::render(full_page, context);;
@@ -3647,7 +3647,7 @@ public:
             if (search_text[0] == '5' || search_text[0] == '7')
                 nettype_addr = cryptonote::network_type::STAGENET;
 
-            if (!xmreg::parse_str_address(search_text, address_info, nettype_addr))
+            if (!safexeg::parse_str_address(search_text, address_info, nettype_addr))
             {
                 cerr << "Cant parse string address: " << search_text << endl;
                 return string("Cant parse address (probably incorrect format): ")
@@ -3692,7 +3692,7 @@ public:
     show_address_details(const address_parse_info& address_info, cryptonote::network_type nettype = cryptonote::network_type::MAINNET)
     {
 
-        string address_str      = xmreg::print_address(address_info, nettype);
+        string address_str      = safexeg::print_address(address_info, nettype);
         string pub_viewkey_str  = fmt::format("{:s}", address_info.address.m_view_public_key);
         string pub_spendkey_str = fmt::format("{:s}", address_info.address.m_spend_public_key);
 
@@ -3718,7 +3718,7 @@ public:
                                     cryptonote::network_type nettype = cryptonote::network_type::MAINNET)
     {
 
-        string address_str        = xmreg::print_address(address_info, nettype);
+        string address_str        = safexeg::print_address(address_info, nettype);
         string pub_viewkey_str    = fmt::format("{:s}", address_info.address.m_view_public_key);
         string pub_spendkey_str   = fmt::format("{:s}", address_info.address.m_spend_public_key);
         string enc_payment_id_str = fmt::format("{:s}", encrypted_payment_id);
@@ -3899,7 +3899,7 @@ public:
 
 
                     // add the timestamp to tx mstch map
-                    txd_map.insert({"timestamp", xmreg::timestamp_to_str_gm(blk_timestamp)});
+                    txd_map.insert({"timestamp", safexeg::timestamp_to_str_gm(blk_timestamp)});
 
                     boost::get<mstch::array>((res.first)->second).push_back(txd_map);
 
@@ -3960,7 +3960,7 @@ public:
         // parse tx hash string to hash object
         crypto::hash tx_hash;
 
-        if (!xmreg::parse_str_secret_key(tx_hash_str, tx_hash))
+        if (!safexeg::parse_str_secret_key(tx_hash_str, tx_hash))
         {
             j_data["title"] = fmt::format("Cant parse tx hash: {:s}", tx_hash_str);
             return j_response;
@@ -4013,7 +4013,7 @@ public:
             }
         }
 
-        string blk_timestamp_utc = xmreg::timestamp_to_str_gm(tx_timestamp);
+        string blk_timestamp_utc = safexeg::timestamp_to_str_gm(tx_timestamp);
 
         // get the current blockchain height. Just to check
         uint64_t bc_height = core_storage->get_current_blockchain_height();
@@ -4134,7 +4134,7 @@ public:
         // parse tx hash string to hash object
         crypto::hash tx_hash;
 
-        if (!xmreg::parse_str_secret_key(tx_hash_str, tx_hash))
+        if (!safexeg::parse_str_secret_key(tx_hash_str, tx_hash))
         {
             j_data["title"] = fmt::format("Cant parse tx hash: {:s}", tx_hash_str);
             return j_response;
@@ -4257,7 +4257,7 @@ public:
         else if (block_no_or_hash.length() == 64)
         {
             // this seems to be block hash
-            if (!xmreg::parse_str_secret_key(block_no_or_hash, blk_hash))
+            if (!safexeg::parse_str_secret_key(block_no_or_hash, blk_hash))
             {
                 j_data["title"] = fmt::format("Cant parse blk hash: {:s}", block_no_or_hash);
                 return j_response;
@@ -4329,7 +4329,7 @@ public:
                 {"block_height"  , block_height},
                 {"hash"          , pod_to_hex(blk_hash)},
                 {"timestamp"     , blk.timestamp},
-                {"timestamp_utc" , xmreg::timestamp_to_str_gm(blk.timestamp)},
+                {"timestamp_utc" , safexeg::timestamp_to_str_gm(blk.timestamp)},
                 {"block_height"  , block_height},
                 {"size"          , blk_size},
                 {"txs"           , j_txs},
@@ -4400,7 +4400,7 @@ public:
         else if (block_no_or_hash.length() == 64)
         {
             // this seems to be block hash
-            if (!xmreg::parse_str_secret_key(block_no_or_hash, blk_hash))
+            if (!safexeg::parse_str_secret_key(block_no_or_hash, blk_hash))
             {
                 j_data["title"] = fmt::format("Cant parse blk hash: {:s}", block_no_or_hash);
                 return j_response;
@@ -4521,7 +4521,7 @@ public:
                     {"age"          , age.first},
                     {"size"         , blk_size},
                     {"timestamp"    , blk.timestamp},
-                    {"timestamp_utc", xmreg::timestamp_to_str_gm(blk.timestamp)},
+                    {"timestamp_utc", safexeg::timestamp_to_str_gm(blk.timestamp)},
                     {"txs"          , json::array()}
             });
 
@@ -4788,7 +4788,7 @@ public:
         // parse tx hash string to hash object
         crypto::hash tx_hash;
 
-        if (!xmreg::parse_str_secret_key(tx_hash_str, tx_hash))
+        if (!safexeg::parse_str_secret_key(tx_hash_str, tx_hash))
         {
             j_response["status"]  = "error";
             j_response["message"] = "Cant parse tx hash: " + tx_hash_str;
@@ -4798,7 +4798,7 @@ public:
         // parse string representing given monero address
         address_parse_info address_info;
 
-        if (!xmreg::parse_str_address(address_str,  address_info, nettype))
+        if (!safexeg::parse_str_address(address_str,  address_info, nettype))
         {
             j_response["status"]  = "error";
             j_response["message"] = "Cant parse safex address: " + address_str;
@@ -4809,7 +4809,7 @@ public:
         // parse string representing given private key
         crypto::secret_key prv_view_key;
 
-        if (!xmreg::parse_str_secret_key(viewkey_str, prv_view_key))
+        if (!safexeg::parse_str_secret_key(viewkey_str, prv_view_key))
         {
             j_response["status"]  = "error";
             j_response["message"] = "Cant parse view key or tx private key: "
@@ -5003,7 +5003,7 @@ public:
         // parse string representing given monero address
         address_parse_info address_info;
 
-        if (!xmreg::parse_str_address(address_str, address_info, nettype))
+        if (!safexeg::parse_str_address(address_str, address_info, nettype))
         {
             j_response["status"]  = "error";
             j_response["message"] = "Cant parse safex address: " + address_str;
@@ -5014,7 +5014,7 @@ public:
         // parse string representing given private key
         crypto::secret_key prv_view_key;
 
-        if (!xmreg::parse_str_secret_key(viewkey_str, prv_view_key))
+        if (!safexeg::parse_str_secret_key(viewkey_str, prv_view_key))
         {
             j_response["status"]  = "error";
             j_response["message"] = "Cant parse view key: "
@@ -5572,7 +5572,7 @@ private:
             // calculate difference between tx and server timestamps
             age = get_age(server_timestamp, blk.timestamp, FULL_AGE_FORMAT);
 
-            blk_timestamp = xmreg::timestamp_to_str_gm(blk.timestamp);
+            blk_timestamp = safexeg::timestamp_to_str_gm(blk.timestamp);
 
             tx_blk_height_str = std::to_string(tx_blk_height);
         }
@@ -5601,7 +5601,7 @@ private:
                 {"blk_height"            , tx_blk_height_str},
                 {"tx_blk_height"         , tx_blk_height},
                 {"tx_size"               , fmt::format("{:0.4f}", tx_size)},
-                {"tx_fee"                , xmreg::xmr_amount_to_str(txd.fee, "{:0.10f}", false)},
+                {"tx_fee"                , safexeg::xmr_amount_to_str(txd.fee, "{:0.10f}", false)},
                 {"payed_for_kB"          , fmt::format("{:0.10f}", payed_for_kB)},
                 {"tx_version"            , static_cast<uint64_t>(txd.version)},
                 {"blk_timestamp"         , blk_timestamp},
@@ -5644,7 +5644,7 @@ private:
 
         context["add_tx_pub_keys"] = add_tx_pub_keys;
 
-        string server_time_str = xmreg::timestamp_to_str_gm(server_timestamp, "%F");
+        string server_time_str = safexeg::timestamp_to_str_gm(server_timestamp, "%F");
 
         mstch::array inputs = mstch::array{};
 
@@ -5737,8 +5737,8 @@ private:
             inputs.push_back(mstch::map{
                     {"in_key_img",    pod_to_hex(k_image)},
                     {"amount",        is_token
-                                      ? xmreg::xmr_amount_to_str(amount, "{:0.0f}")
-                                      : xmreg::xmr_amount_to_str(amount)},
+                                      ? safexeg::xmr_amount_to_str(amount, "{:0.0f}")
+                                      : safexeg::xmr_amount_to_str(amount)},
                     {"bitcoin_hash", static_cast<bool>(bitcoin_hash) },
                     {"bitcoin_hash_value", bitcoin_hash
                                            ? epee::string_tools::pod_to_hex(*bitcoin_hash)
@@ -5849,7 +5849,7 @@ private:
                             {"mix_pub_key",    pod_to_hex(output_data.pubkey)},
                             {"mix_tx_hash",    pod_to_hex(tx_out_idx.first)},
                             {"mix_out_indx",   tx_out_idx.second},
-                            {"mix_timestamp",  xmreg::timestamp_to_str_gm(blk.timestamp)},
+                            {"mix_timestamp",  safexeg::timestamp_to_str_gm(blk.timestamp)},
                             {"mix_age",        mixin_age.first},
                             {"mix_mixin_no",   mixin_txd.cash_mixin_no},
                             {"mix_inputs_no",  static_cast<uint64_t>(mixin_txd.input_key_imgs.size())},
@@ -5899,8 +5899,8 @@ private:
                     );
 
 
-            context["min_mix_time"]     = xmreg::timestamp_to_str_gm(min_mix_timestamp);
-            context["max_mix_time"]     = xmreg::timestamp_to_str_gm(max_mix_timestamp);
+            context["min_mix_time"]     = safexeg::timestamp_to_str_gm(min_mix_timestamp);
+            context["max_mix_time"]     = safexeg::timestamp_to_str_gm(max_mix_timestamp);
 
             context.emplace("timescales", mixins_timescales.first);
 
@@ -5915,8 +5915,8 @@ private:
 
         context["have_any_unknown_amount"]  = have_any_unknown_amount;
         context["inputs_xmr_sum_not_zero"]  = (inputs_xmr_sum > 0);
-        context["inputs_xmr_sum"]           = xmreg::xmr_amount_to_str(inputs_xmr_sum);
-        context["inputs_token_sum"]         = xmreg::xmr_amount_to_str(inputs_token_sum,"{:0.0f}", true, "no");
+        context["inputs_xmr_sum"]           = safexeg::xmr_amount_to_str(inputs_xmr_sum);
+        context["inputs_token_sum"]         = safexeg::xmr_amount_to_str(inputs_token_sum,"{:0.0f}", true, "no");
         context["server_time"]              = server_time_str;
         context["enable_mixins_details"]    = detailed_view;
         context["show_part_of_inputs"]      = show_part_of_inputs;
@@ -5984,8 +5984,8 @@ private:
             outputs.push_back(mstch::map{
                     {"out_pub_key", pod_to_hex(get_public_key(output.first))},
                     {"amount", is_token
-                        ? xmreg::xmr_amount_to_str(output.second, "{:0.0f}")
-                        : xmreg::xmr_amount_to_str(output.second) },
+                        ? safexeg::xmr_amount_to_str(output.second, "{:0.0f}")
+                        : safexeg::xmr_amount_to_str(output.second) },
                     {"amount_idx", out_amount_index_str},
                     {"num_outputs", num_outputs_amount},
                     {"unformated_output_idx", output_idx},
@@ -5995,8 +5995,8 @@ private:
 
         } //  for (pair<txout_to_key, uint64_t>& outp: txd.output_pub_keys)
 
-        context["outputs_xmr_sum"] = xmreg::xmr_amount_to_str(outputs_xmr_sum);
-        context["outputs_token_sum"] = xmreg::xmr_amount_to_str(outputs_token_sum, "{:0.0f}", true, "no");
+        context["outputs_xmr_sum"] = safexeg::xmr_amount_to_str(outputs_xmr_sum);
+        context["outputs_token_sum"] = safexeg::xmr_amount_to_str(outputs_token_sum, "{:0.0f}", true, "no");
 
         context.emplace("outputs", outputs);
 
@@ -6041,7 +6041,7 @@ private:
         for (auto& mixn_timestamps : mixin_timestamp_groups)
         {
             // get mixins in time scale for visual representation
-            pair<string, double> mixin_times_scale = xmreg::timestamps_time_scale(
+            pair<string, double> mixin_times_scale = safexeg::timestamps_time_scale(
                     mixn_timestamps,
                     max_mix_timestamp,
                     170,
@@ -6075,7 +6075,7 @@ private:
         // this check if there are two public keys
         // due to previous bug with sining txs:
         // https://github.com/monero-project/monero/pull/1358/commits/7abfc5474c0f86e16c405f154570310468b635c2
-        txd.pk = xmreg::get_tx_pub_key_from_received_outs(tx);
+        txd.pk = safexeg::get_tx_pub_key_from_received_outs(tx);
         txd.additional_pks = cryptonote::get_additional_tx_pub_keys_from_extra(tx);
 
 
@@ -6374,7 +6374,7 @@ private:
                                          + std::to_string(ONIONEXPLORER_RPC_VERSION_MINOR)},
         };
 
-        string footer_html = mstch::render(xmreg::read(TMPL_FOOTER), footer_context);
+        string footer_html = mstch::render(safexeg::read(TMPL_FOOTER), footer_context);
 
         return footer_html;
     }

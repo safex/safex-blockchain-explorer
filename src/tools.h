@@ -15,7 +15,7 @@
 
 
 
-#include "monero_headers.h"
+#include "safex_headers.h"
 #include "display_types.h"
 
 #include "../ext/fmt/ostream.h"
@@ -40,7 +40,7 @@
  * Names are rather self-explanatory, so I think
  * there is no reason for any detailed explanations here
  */
-namespace xmreg
+namespace safexeg
 {
 
 
@@ -157,8 +157,8 @@ sum_money_in_outputs(const json& _json);
 array<uint64_t, 7>
 summary_of_in_out_rct(
         const transaction &tx,
-        vector<pair<xmreg::displayable_output, uint64_t>> &output_pub_keys,
-        vector<xmreg::displayable_input> &input_token_key_imgs);
+        vector<pair<safexeg::displayable_output, uint64_t>> &output_pub_keys,
+        vector<safexeg::displayable_input> &input_token_key_imgs);
 
 // this version for mempool txs from json
 array<uint64_t, 6>
