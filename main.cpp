@@ -773,7 +773,7 @@ main(int ac, const char* av[])
     CROW_ROUTE(app, "/api/totalsfx")
     ([&]() {
       uint64_t amount = xmrblocks.get_total_SFX();
-      return safexeg::xmr_amount_to_str(amount, "{:0.2f}", true);
+      return safexeg::safex_amount_to_str(amount, "{:0.2f}", true);
     });
     /********* End Total coins API ***/
 

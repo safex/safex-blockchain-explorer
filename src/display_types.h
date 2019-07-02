@@ -32,7 +32,8 @@ public_key const &get_public_key(displayable_output const &d_out);
 
 key_image const &get_key_image(displayable_input const &d_in);
 
-uint64_t get_amount(displayable_input const &d_in);
+uint64_t get_cash_amount(displayable_input const &d_in);
+uint64_t get_token_amount(displayable_input const &d_in);
 
 std::vector<uint64_t> const &get_key_offsets(displayable_input const &d_in);
 
