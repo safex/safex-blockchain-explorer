@@ -7,7 +7,7 @@
 
 #define PATH_SEPARARTOR '/'
 
-#define XMR_AMOUNT(value) \
+#define SAFEX_AMOUNT(value) \
     static_cast<double>(value) / 1e10
 
 #define REMOVE_HASH_BRAKETS(a_hash) \
@@ -275,18 +275,17 @@ public_key
 get_tx_pub_key_from_received_outs(const transaction &tx);
 
 static
-string
-xmr_amount_to_str(const uint64_t& xmr_amount,
-                  string _format="{:0.10f}",
-                  bool zero_to_question_mark=true,
-                  std::string const &zero_string="?")
+string safex_amount_to_str(const uint64_t &xmr_amount,
+                           string _format = "{:0.10f}",
+                           bool zero_to_question_mark = true,
+                           std::string const &zero_string = "?")
 {
     string amount_str = zero_string;
 
     if (!zero_to_question_mark) {
-        amount_str = fmt::format(_format, XMR_AMOUNT(xmr_amount));
+        amount_str = fmt::format(_format, SAFEX_AMOUNT(xmr_amount));
     } else if (xmr_amount > 0) {
-        amount_str = fmt::format(_format, XMR_AMOUNT(xmr_amount));
+        amount_str = fmt::format(_format, SAFEX_AMOUNT(xmr_amount));
     }
 
     return amount_str;

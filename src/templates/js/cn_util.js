@@ -1664,7 +1664,7 @@ var cnUtil = (function(initConfig) {
         return new_arr;
     };
 
-    this.construct_tx = function(keys, sources, dsts, fee_amount, payment_id, pid_encrypt, realDestViewKey, unlock_time, rct) {
+    this.construct_tx = function(keys, sources, dsts, fee_amount, payment_id, pid_encrypt, realDestViewKey, unlock_time, advanced_tx) {
         //we move payment ID stuff here, because we need txkey to encrypt
         var txkey = this.random_keypair();
         console.log(txkey);
@@ -1691,13 +1691,13 @@ var cnUtil = (function(initConfig) {
 
         var tx = {
             unlock_time: unlock_time,
-            version: rct ? CURRENT_TX_VERSION : OLD_TX_VERSION,
+            version: advanced_tx ? CURRENT_TX_VERSION : OLD_TX_VERSION,
             extra: extra,
             prvkey: '',
             vin: [],
             vout: []
         };
-        if (rct) {
+        if (advanced) {
             tx.rct_signatures = {};
         } else {
             tx.signatures = [];
@@ -1807,7 +1807,7 @@ var cnUtil = (function(initConfig) {
                 out_derivation = this.generate_key_derivation(dsts[i].keys.view, txkey.sec);
             }
 
-            if (rct) {
+            if (advanced) {
                 amountKeys.push(this.derivation_to_scalar(out_derivation, out_index));
             }
 
@@ -1838,7 +1838,7 @@ var cnUtil = (function(initConfig) {
         }
 
 
-        if (!rct) {
+        if (!advanced) {
             for (i = 0; i < sources.length; ++i) {
                 var src_keys = [];
                 for (j = 0; j < sources[i].outputs.length; ++j) {
