@@ -48,7 +48,7 @@ git clone --recursive https://github.com/safex/safexcore
 
 cd safeccore/
 
-# checkout last monero version
+# checkout last safex version
 git checkout master
 
 make
@@ -154,7 +154,7 @@ xmrblocks, Safex Blockchain Explorer:
   --mempool-refresh-time arg (=5)       time, in seconds, for each refresh of
                                         mempool state
   -b [ --bc-path ] arg                  path to lmdb folder of the blockchain,
-                                        e.g., ~/.bitmonero/lmdb
+                                        e.g., ~/.safex/lmdb
   --ssl-crt-file arg                    path to crt file for ssl (https)
                                         functionality
   --ssl-key-file arg                    path to key file for ssl (https)

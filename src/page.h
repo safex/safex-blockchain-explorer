@@ -5697,7 +5697,8 @@ namespace safexeg
               // offsets seems good, so try to get the outputs for the amount and offsets given
               for (int i = 0; i < absolute_offsets.size(); i++)
               {
-                output_data_t temp = core_storage->get_db().get_output_key(cash_amount, absolute_offsets[i], output_type);
+                const uint64_t amount = token_amount > 0 ? token_amount : cash_amount;
+                output_data_t temp = core_storage->get_db().get_output_key(amount, absolute_offsets[i], output_type);
                 outputs.push_back(temp);
               }
             }
@@ -5759,29 +5760,20 @@ namespace safexeg
             // get basic information about mixn's output
 
             cryptonote::output_data_t output_data = outputs.at(count);
-
             tx_out_index tx_out_idx;
 
             try
             {
-              // get pair pair<crypto::hash, uint64_t> where first is tx hash
-              // and second is local index of the output i in that tx
-              tx_out_idx = core_storage->get_db()
-                      .get_output_tx_and_index(cash_amount, i, output_type);
+              // get pair pair<crypto::hash, uint64_t> where first is tx hash and second is local index of the output i in that tx
+              const uint64_t amount = token_amount > 0 ? token_amount : cash_amount;
+              tx_out_idx = core_storage->get_db().get_output_tx_and_index(amount, i, output_type);
             }
             catch (const OUTPUT_DNE &e)
             {
-
-              string out_msg = fmt::format(
-                      "Output with amount {:d} and index {:d} does not exist!",
-                      cash_amount, i
-              );
-
+              string out_msg = fmt::format("Output with token_amount {:d} and cash_amount {:d} index {:d} does not exist!", token_amount, cash_amount, i);
               cerr << out_msg << endl;
-
               context["has_error"] = true;
               context["error_msg"] = out_msg;
-
               return context;
             }
 
@@ -5790,29 +5782,21 @@ namespace safexeg
             {
               // get block of given height, as we want to get its timestamp
               cryptonote::block blk;
-
               if (!mcore->get_block_by_height(output_data.height, blk))
               {
-                cerr << "- cant get block of height: "
-                     << output_data.height << endl;
-
+                cerr << "- cant get block of height: " << output_data.height << endl;
                 context["has_error"] = true;
-                context["error_msg"] = fmt::format(
-                        "- cant get block of height: {}",
-                        output_data.height);
+                context["error_msg"] = fmt::format("- cant get block of height: {}", output_data.height);
               }
 
               // get age of mixin relative to server time
-              pair<string, string> mixin_age = get_age(server_timestamp,
-                                                       blk.timestamp,
-                                                       FULL_AGE_FORMAT);
+              pair<string, string> mixin_age = get_age(server_timestamp, blk.timestamp, FULL_AGE_FORMAT);
               // get mixin transaction
               transaction mixin_tx;
 
               if (!mcore->get_tx(tx_out_idx.first, mixin_tx))
               {
                 cerr << "Cant get tx: " << tx_out_idx.first << endl;
-
                 context["has_error"] = true;
                 context["error_msg"] = fmt::format("Cant get tx: {:s}", tx_out_idx.first);
               }
@@ -5868,25 +5852,14 @@ namespace safexeg
           uint64_t min_mix_timestamp{0};
           uint64_t max_mix_timestamp{0};
 
-          pair<mstch::array, double> mixins_timescales
-                  = construct_mstch_mixin_timescales(
-                          mixin_timestamp_groups,
-                          min_mix_timestamp,
-                          max_mix_timestamp
-                  );
-
+          pair<mstch::array, double> mixins_timescales = construct_mstch_mixin_timescales(mixin_timestamp_groups, min_mix_timestamp, max_mix_timestamp);
 
           context["min_mix_time"] = safexeg::timestamp_to_str_gm(min_mix_timestamp);
           context["max_mix_time"] = safexeg::timestamp_to_str_gm(max_mix_timestamp);
 
           context.emplace("timescales", mixins_timescales.first);
-
-
-          context["timescales_scale"] = fmt::format("{:0.2f}",
-                                                    mixins_timescales.second / 3600.0 / 24.0); // in days
-
+          context["timescales_scale"] = fmt::format("{:0.2f}", mixins_timescales.second / 3600.0 / 24.0); // in days
           context["tx_prefix_hash"] = pod_to_hex(get_transaction_prefix_hash(tx));
-
         }
 
 
