@@ -233,7 +233,9 @@ namespace safexeg
     static std::string cash{"cash"};
     static std::string token{"token"};
     static std::string migration{"migration"};
-    static std::string advanced_output{"advanced output"};
+    static std::string staked_token{"staked token"};
+    static std::string collected_network_fee{"collected network fee"};
+    static std::string invalid_type{"invalid type"};
 
     struct visitor : public boost::static_visitor<std::string const &>
     {
@@ -252,9 +254,23 @@ namespace safexeg
         return migration;
       }
 
-      std::string const &operator()(const txin_to_script &) const
+      std::string const &operator()(const txin_to_script &txin) const
       {
-        return advanced_output;
+
+        switch (txin.command_type) {
+          case safex::command_t::donate_network_fee:
+            return cash;
+          case safex::command_t::token_stake:
+            return token;
+          case safex::command_t::token_unstake:
+          case safex::command_t::token_collect:
+            return staked_token;
+          case safex::command_t::distribute_network_fee:
+            return collected_network_fee;
+          case safex::command_t::nop:
+          default:
+            return invalid_type;
+        }
       }
     };
     return boost::apply_visitor(visitor{}, d_in);
