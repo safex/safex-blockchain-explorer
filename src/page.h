@@ -142,7 +142,10 @@ namespace safexeg
     uint64_t cash_outputs;
     uint64_t token_inputs;
     uint64_t token_outputs;
-    uint64_t num_nonrct_inputs;
+    uint64_t staked_token_inputs;
+    uint64_t staked_token_outputs;
+    uint64_t network_fee_inputs;
+    uint64_t network_fee_outputs;
     uint64_t fee;
     uint64_t cash_mixin_no;
     uint64_t token_mixin_no;
@@ -216,7 +219,7 @@ namespace safexeg
               {"sum_outputs_token_short", safex_amount_to_str(token_outputs, "{:0.3f}", true, "N/A")},
               {"no_inputs",               static_cast<uint64_t>(input_key_imgs.size())},
               {"no_outputs",              static_cast<uint64_t>(output_pub_keys.size())},
-              {"no_nonrct_inputs",        num_nonrct_inputs},
+              {"no_nonrct_inputs",        staked_token_inputs},
               {"mixin",                   mixin_str},
               {"blk_height",              blk_height},
               {"version",                 static_cast<uint64_t>(version)},
@@ -6033,8 +6036,7 @@ namespace safexeg
 
 
         // sum xmr in inputs and ouputs in the given tx
-        const auto &sum_data = summary_of_in_out_rct(
-                tx, txd.output_pub_keys, txd.input_key_imgs);
+        const auto &sum_data = summary_of_in_out(tx, txd.output_pub_keys, txd.input_key_imgs);
 
         txd.cash_outputs = sum_data[0];
         txd.token_outputs = sum_data[1];
@@ -6042,14 +6044,15 @@ namespace safexeg
         txd.token_inputs = sum_data[3];
         txd.cash_mixin_no = sum_data[4];
         txd.token_mixin_no = sum_data[5];
-        txd.num_nonrct_inputs = sum_data[6];
+        txd.staked_token_inputs = sum_data[6];
+        txd.staked_token_outputs = sum_data[7];
+        txd.network_fee_inputs = sum_data[8];
+        txd.network_fee_outputs = sum_data[9];
 
         txd.fee = 0;
-
         if (!coinbase && !tx.vin.empty())
         {
-          // check if not miner tx
-          // i.e., for blocks without any user transactions
+          // check if not miner tx, i.e., for blocks without any user transactions
           if (tx.vin.at(0).type() != typeid(txin_gen))
           {
             // get tx fee
