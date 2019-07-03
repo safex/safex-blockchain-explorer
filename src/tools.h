@@ -154,10 +154,7 @@ pair<uint64_t, uint64_t>
 sum_money_in_outputs(const json& _json);
 
 
-array<uint64_t, 7>
-summary_of_in_out_rct(
-        const transaction &tx,
-        vector<pair<safexeg::displayable_output, uint64_t>> &output_pub_keys,
+array<uint64_t, 10> summary_of_in_out(const transaction &tx, vector<pair<safexeg::displayable_output, uint64_t>> &output_pub_keys,
         vector<safexeg::displayable_input> &input_token_key_imgs);
 
 // this version for mempool txs from json
