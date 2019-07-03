@@ -8,7 +8,7 @@
 #include <thread>
 
 
-namespace xmreg
+namespace safexeg
 {
 
 /**
@@ -267,7 +267,7 @@ get_blockchain_path(const boost::optional<string>& bc_path,
                     cryptonote::network_type nettype)
 {
     // the default folder of the lmdb blockchain database
-    string default_lmdb_dir   = xmreg::get_default_lmdb_folder(nettype);
+    string default_lmdb_dir   = safexeg::get_default_lmdb_folder(nettype);
 
     blockchain_path = bc_path
                       ? bf::path(*bc_path)
@@ -282,7 +282,7 @@ get_blockchain_path(const boost::optional<string>& bc_path,
         return false;
     }
 
-    blockchain_path = xmreg::remove_trailing_path_separator(blockchain_path);
+    blockchain_path = safexeg::remove_trailing_path_separator(blockchain_path);
 
     return true;
 }
@@ -346,8 +346,8 @@ sum_money_in_outputs(const json& _json)
 array<uint64_t, 7>
 summary_of_in_out_rct(
         const transaction &tx,
-        vector<pair<xmreg::displayable_output, uint64_t>> &output_pub_keys,
-        vector<xmreg::displayable_input> &input_key_imgs) {
+        vector<pair<safexeg::displayable_output, uint64_t>> &output_pub_keys,
+        vector<safexeg::displayable_input> &input_key_imgs) {
 
     uint64_t xmr_outputs{0};
     uint64_t token_outputs{0};

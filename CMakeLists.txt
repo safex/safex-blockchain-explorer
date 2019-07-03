@@ -16,31 +16,31 @@ endif()
 
 
 if (NOT SAFEX_DIR)
-    set(SAFEX_DIR ~/monero)
+    set(SAFEX_DIR ~/safexcore)
 endif()
 
 message(STATUS SAFEX_DIR ": ${SAFEX_DIR}")
 
-set(MONERO_SOURCE_DIR ${SAFEX_DIR}
-        CACHE PATH "Path to the root directory for Monero")
+set(SAFEX_SOURCE_DIR ${SAFEX_DIR}
+        CACHE PATH "Path to the root directory for Safex")
 
-# set location of monero build tree
-set(MONERO_BUILD_DIR ${MONERO_SOURCE_DIR}/build/release/
-        CACHE PATH "Path to the build directory for Monero")
+# set location of safexcore build tree
+set(SAFEX_BUILD_DIR ${SAFEX_SOURCE_DIR}/build/debug/
+        CACHE PATH "Path to the build directory for Safex")
 
 set(MY_CMAKE_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake"
         CACHE PATH "The path to the cmake directory of the current project")
 
 list(APPEND CMAKE_MODULE_PATH "${MY_CMAKE_DIR}")
 
-set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "${MONERO_BUILD_DIR}"
-        CACHE PATH "Add Monero directory for library searching")
+set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "${SAFEX_BUILD_DIR}"
+        CACHE PATH "Add Safexcore directory for library searching")
 set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "/usr/local/opt/pcsc-lite/lib"
        CACHE PATH "Add pcsclite for mac")
 
 include(MyUtils)
 
-find_package(Monero)
+find_package(Safex)
 
 # find boost
 find_package(Boost COMPONENTS
@@ -66,7 +66,7 @@ endif()
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" OR WIN32)
     add_library(unbound STATIC IMPORTED)
-    set_property(TARGET unbound PROPERTY IMPORTED_LOCATION ${MONERO_BUILD_DIR}/external/unbound/libunbound.a)
+    set_property(TARGET unbound PROPERTY IMPORTED_LOCATION ${SAFEX_BUILD_DIR}/external/unbound/libunbound.a)
 endif()
 
 # include boost headers
