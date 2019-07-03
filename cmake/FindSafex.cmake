@@ -2,8 +2,7 @@
 # CMake helper for the majority of the cpp-ethereum modules.
 #
 # This module defines
-#     Monero_XXX_LIBRARIES, the libraries needed to use ethereum.
-#     Monero_FOUND, If false, do not try to use ethereum.
+#     Safex_XXX_LIBRARIES, Safex_FOUND
 #
 # File addetped from cpp-ethereum
 #
@@ -51,30 +50,30 @@ foreach (l ${LIBS})
 
 	set(Safex_${L}_LIBRARIES ${Safex_${L}_LIBRARY})
 
-	message(STATUS FindMonero " Safex_${L}_LIBRARIES ${Safex_${L}_LIBRARY}")
+	message(STATUS FindSafex " Safex_${L}_LIBRARIES ${Safex_${L}_LIBRARY}")
 
 	add_library(${l} STATIC IMPORTED)
 	set_property(TARGET ${l} PROPERTY IMPORTED_LOCATION ${Safex_${L}_LIBRARIES})
 
 endforeach()
 
-if (EXISTS ${MONERO_BUILD_DIR}/src/ringct/libringct_basic.a)
-	message(STATUS FindMonero " found libringct_basic.a")
+if (EXISTS ${SAFEX_BUILD_DIR}/src/ringct/libringct_basic.a)
+	message(STATUS FindSafex " found libringct_basic.a")
 	add_library(ringct_basic STATIC IMPORTED)
 	set_property(TARGET ringct_basic
-			PROPERTY IMPORTED_LOCATION ${MONERO_BUILD_DIR}/src/ringct/libringct_basic.a)
+			PROPERTY IMPORTED_LOCATION ${SAFEX_BUILD_DIR}/src/ringct/libringct_basic.a)
 endif()
 
 
-message(STATUS ${MONERO_SOURCE_DIR}/build)
+message(STATUS ${SAFEX_SOURCE_DIR}/build)
 
-# include monero headers
+# include safex headers
 include_directories(
-		${MONERO_SOURCE_DIR}/src
-		${MONERO_SOURCE_DIR}/src/crypto/
-		${MONERO_SOURCE_DIR}/external
-		${MONERO_SOURCE_DIR}/build
-		${MONERO_SOURCE_DIR}/external/easylogging++
-		${MONERO_SOURCE_DIR}/contrib/epee/include
-		${MONERO_SOURCE_DIR}/external/db_drivers/liblmdb
-		${MONERO_SOURCE_DIR}/external/randomx/src)
+		${SAFEX_SOURCE_DIR}/src
+		${SAFEX_SOURCE_DIR}/src/crypto/
+		${SAFEX_SOURCE_DIR}/external
+		${SAFEX_SOURCE_DIR}/build
+		${SAFEX_SOURCE_DIR}/external/easylogging++
+		${SAFEX_SOURCE_DIR}/contrib/epee/include
+		${SAFEX_SOURCE_DIR}/external/db_drivers/liblmdb
+		${SAFEX_SOURCE_DIR}/external/randomx/src)
