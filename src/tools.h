@@ -275,7 +275,7 @@ static
 string safex_amount_to_str(const uint64_t &xmr_amount,
                            string _format = "{:0.10f}",
                            bool zero_to_question_mark = true,
-                           std::string const &zero_string = "?")
+                           std::string const &zero_string = "0")
 {
     string amount_str = zero_string;
 

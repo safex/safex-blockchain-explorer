@@ -278,4 +278,34 @@ namespace safexeg
     return boost::apply_visitor(visitor{}, d_in);
   }
 
+  std::string const &get_type_string(const cryptonote::tx_out_type output_type)
+  {
+    static const std::string cash{"cash"};
+    static const std::string token{"token"};
+    static const std::string migration{"migration"};
+    static const std::string staked_token{"staked token"};
+    static const std::string collected_network_fee{"collected network fee"};
+    static const std::string invalid_type{"invalid type"};
+    static const std::string advanced_outout{"advanced output"};
+
+
+    switch (output_type)
+    {
+      case cryptonote::tx_out_type::out_cash:
+        return cash;
+      case cryptonote::tx_out_type::out_token:
+        return token;
+      case cryptonote::tx_out_type::out_staked_token:
+        return staked_token;
+      case cryptonote::tx_out_type::out_network_fee:
+        return collected_network_fee;
+      case cryptonote::tx_out_type::out_advanced:
+        return collected_network_fee;
+      case cryptonote::tx_out_type::out_invalid:
+        return advanced_outout;
+      default:
+        return invalid_type;
+    }
+  }
+
 }
