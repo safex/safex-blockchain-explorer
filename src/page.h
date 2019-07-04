@@ -211,11 +211,11 @@ namespace safexeg
               {"tx_fee",                  fee_str},
               {"tx_fee_short",            fee_short_str},
               {"payed_for_kB",            payed_for_kB_str},
-              {"sum_inputs", safex_amount_to_str(cash_inputs, "{:0.6f}")},
-              {"sum_outputs", safex_amount_to_str(cash_outputs, "{:0.6f}")},
-              {"sum_inputs_short", safex_amount_to_str(cash_inputs, "{:0.3f}")},
-              {"sum_outputs_short", safex_amount_to_str(cash_outputs, "{:0.3f}")},
-              {"sum_inputs_token_short", safex_amount_to_str(token_inputs, "{:0.3f}")},
+              {"sum_inputs",              safex_amount_to_str(cash_inputs, "{:0.6f}")},
+              {"sum_outputs",             safex_amount_to_str(cash_outputs, "{:0.6f}")},
+              {"sum_inputs_short",        safex_amount_to_str(cash_inputs, "{:0.3f}")},
+              {"sum_outputs_short",       safex_amount_to_str(cash_outputs, "{:0.3f}")},
+              {"sum_inputs_token_short",  safex_amount_to_str(token_inputs, "{:0.3f}")},
               {"sum_outputs_token_short", safex_amount_to_str(token_outputs, "{:0.3f}", true, "N/A")},
               {"no_inputs",               static_cast<uint64_t>(input_key_imgs.size())},
               {"no_outputs",              static_cast<uint64_t>(output_pub_keys.size())},
@@ -861,7 +861,7 @@ namespace safexeg
                 {"current_hf_version", current_network_info.current_hf_version},
                 {"age",                network_info_age.first},
                 {"age_format",         network_info_age.second},
-                {"issued_coins", safexeg::safex_amount_to_str(current_network_info.issued_coins, "{:0.2f}", true)},
+                {"issued_coins",       safexeg::safex_amount_to_str(current_network_info.issued_coins, "{:0.2f}", true)},
                 {"migrated_tokens",    current_network_info.migrated_tokens},
         };
 
@@ -1750,7 +1750,7 @@ namespace safexeg
                 {"blk_height",            tx_blk_height_str},
                 {"tx_size",               fmt::format("{:0.4f}",
                                                       static_cast<double>(txd.size) / 1024.0)},
-                {"tx_fee", safexeg::safex_amount_to_str(txd.fee, "{:0.10f}", true)},
+                {"tx_fee",                safexeg::safex_amount_to_str(txd.fee, "{:0.10f}", true)},
                 {"blk_timestamp",         blk_timestamp},
                 {"delta_time",            age.first},
                 {"outputs_no",            static_cast<uint64_t>(txd.output_pub_keys.size())},
@@ -1901,7 +1901,7 @@ namespace safexeg
 
           outputs.push_back(mstch::map{
                   {"out_pub_key", pod_to_hex(get_public_key(outp.first))},
-                  {"amount", safexeg::safex_amount_to_str(outp.second)},
+                  {"amount",      safexeg::safex_amount_to_str(outp.second)},
                   {"mine_output", mine_output},
                   {"output_idx",  fmt::format("{:02d}", output_idx)}
           });
@@ -2192,7 +2192,7 @@ namespace safexeg
                       {"out_idx",          output_idx_in_tx},
                       {"formed_output_pk", out_pub_key_str},
                       {"out_in_match",     output_match},
-                      {"amount", safexeg::safex_amount_to_str(amount)}
+                      {"amount",           safexeg::safex_amount_to_str(amount)}
               });
 
               //cout << "txout_k.key == output_data.pubkey" << endl;
@@ -2400,7 +2400,7 @@ namespace safexeg
               mstch::map tx_cd_data{
                       {"no_of_sources",   static_cast<uint64_t>(no_of_sources)},
                       {"use_rct",         tx_cd.use_rct},
-                      {"change_amount", safexeg::safex_amount_to_str(tx_change.amount)},
+                      {"change_amount",   safexeg::safex_amount_to_str(tx_change.amount)},
                       {"has_payment_id",  (payment_id != null_hash)},
                       {"has_payment_id8", (payment_id8 != null_hash8)},
                       {"payment_id",      pid_str},
@@ -2417,7 +2417,7 @@ namespace safexeg
                 mstch::map dest_info{
                         {"dest_address", get_account_address_as_str(
                                 nettype, a_dest.is_subaddress, a_dest.addr)},
-                        {"dest_amount", safexeg::safex_amount_to_str(a_dest.amount)}
+                        {"dest_amount",  safexeg::safex_amount_to_str(a_dest.amount)}
                 };
 
                 dest_infos.push_back(dest_info);
@@ -2434,7 +2434,7 @@ namespace safexeg
                 const tx_source_entry &tx_source = tx_cd.sources.at(i);
 
                 mstch::map single_dest_source{
-                        {"output_amount", safexeg::safex_amount_to_str(tx_source.amount)},
+                        {"output_amount",           safexeg::safex_amount_to_str(tx_source.amount)},
                         {"real_output",             static_cast<uint64_t>(tx_source.real_output)},
                         {"real_out_tx_key",         pod_to_hex(tx_source.real_out_tx_key)},
                         {"real_output_in_tx_index", static_cast<uint64_t>(tx_source.real_output_in_tx_index)},
@@ -2760,7 +2760,7 @@ namespace safexeg
                       mstch::map{
                               {"dest_address",   get_account_address_as_str(
                                       nettype, a_dest.is_subaddress, a_dest.addr)},
-                              {"dest_amount", safexeg::safex_amount_to_str(a_dest.amount)},
+                              {"dest_amount",    safexeg::safex_amount_to_str(a_dest.amount)},
                               {"is_this_change", false}
                       }
               );
@@ -2778,7 +2778,7 @@ namespace safexeg
                               {"dest_address",   get_account_address_as_str(
                                       nettype, ptx.construction_data.change_dts.is_subaddress, ptx.construction_data.change_dts.addr)},
                               {"dest_amount",
-                                      safexeg::safex_amount_to_str(ptx.construction_data.change_dts.amount)},
+                                                 safexeg::safex_amount_to_str(ptx.construction_data.change_dts.amount)},
                               {"is_this_change", true}
                       }
               );
@@ -3550,7 +3550,7 @@ namespace safexeg
           mstch::map output_info{
                   {"output_no", fmt::format("{:03d}", output_no)},
                   {"output_pub_key", REMOVE_HASH_BRAKETS(fmt::format("{:s}", txout_key.key))},
-                  {"amount", safexeg::safex_amount_to_str(xmr_amount)},
+                  {"amount",    safexeg::safex_amount_to_str(xmr_amount)},
                   {"tx_hash",        REMOVE_HASH_BRAKETS(fmt::format("{:s}", td.m_txid))},
                   {"timestamp", safexeg::timestamp_to_str_gm(blk_timestamp)},
                   {"is_spent",  is_output_spent},
@@ -5594,7 +5594,7 @@ namespace safexeg
                 {"blk_height",             tx_blk_height_str},
                 {"tx_blk_height",          tx_blk_height},
                 {"tx_size",                fmt::format("{:0.4f}", tx_size)},
-                {"tx_fee", safexeg::safex_amount_to_str(txd.fee, "{:0.10f}", false)},
+                {"tx_fee",                 safexeg::safex_amount_to_str(txd.fee, "{:0.10f}", false)},
                 {"payed_for_kB",           fmt::format("{:0.10f}", payed_for_kB)},
                 {"tx_version",             static_cast<uint64_t>(txd.version)},
                 {"blk_timestamp",          blk_timestamp},
@@ -5665,13 +5665,17 @@ namespace safexeg
           auto const output_type = get_out_type(in_key);
           auto const k_image = get_key_image(in_key);
           bool is_token = (output_type == tx_out_type::out_token) || (output_type == tx_out_type::out_staked_token);
+          bool is_advanced_output = (output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_network_fee) || (output_type == tx_out_type::out_advanced);
 
           std::vector<uint64_t> absolute_offsets;
 
           // get absolute offsets of mixins
-          if ((output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_advanced)) {
+          if ((output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_advanced))
+          {
             absolute_offsets = get_key_offsets(in_key);
-          } else {
+          }
+          else
+          {
             absolute_offsets = cryptonote::relative_output_offsets_to_absolute(get_key_offsets(in_key));
           }
 
@@ -5685,7 +5689,14 @@ namespace safexeg
             // check how many outputs there are for that amount
             // go to next input if a too large offset was found
 
-            if ((output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_advanced)) {
+            if ((output_type == tx_out_type::out_network_fee)) {
+              output_advanced_data_t adv_temp{0};
+              adv_temp.output_type = static_cast<uint64_t>(tx_out_type::out_network_fee);
+              advanced_outputs.push_back(adv_temp);
+              //do nothing
+            }
+            else if ((output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_advanced))
+            {
               //todo check if absolute offsets are good
               // offsets seems good, so try to get the advanced output data
               for (int i = 0; i < absolute_offsets.size(); i++)
@@ -5693,7 +5704,9 @@ namespace safexeg
                 output_advanced_data_t adv_temp = core_storage->get_db().get_output_key(output_type, absolute_offsets[i]);
                 advanced_outputs.push_back(adv_temp);
               }
-            } else {
+            }
+            else
+            {
               if (!are_absolute_offsets_good(absolute_offsets, in_key))
                 continue;
 
@@ -5761,15 +5774,29 @@ namespace safexeg
           for (const uint64_t &i: absolute_offsets)
           {
             // get basic information about mixn's output
+            cryptonote::output_data_t output_data;
+            cryptonote::output_advanced_data_t output_advanced_data;
 
-            cryptonote::output_data_t output_data = outputs.at(count);
+            if (is_advanced_output)
+              output_advanced_data = advanced_outputs.at(count);
+            else
+              output_data = outputs.at(count);
+
+            const uint64_t block_height = is_advanced_output ? output_advanced_data.height : output_data.height;
+
             tx_out_index tx_out_idx;
 
             try
             {
               // get pair pair<crypto::hash, uint64_t> where first is tx hash and second is local index of the output i in that tx
-              const uint64_t amount = token_amount > 0 ? token_amount : cash_amount;
-              tx_out_idx = core_storage->get_db().get_output_tx_and_index(amount, i, output_type);
+              if (is_advanced_output) {
+                tx_out_idx = core_storage->get_db().get_output_tx_and_index_from_global(i);
+              }
+              else
+              {
+                const uint64_t amount = token_amount > 0 ? token_amount : cash_amount;
+                tx_out_idx = core_storage->get_db().get_output_tx_and_index(amount, i, output_type);
+              }
             }
             catch (const OUTPUT_DNE &e)
             {
@@ -5785,11 +5812,11 @@ namespace safexeg
             {
               // get block of given height, as we want to get its timestamp
               cryptonote::block blk;
-              if (!mcore->get_block_by_height(output_data.height, blk))
+              if (!mcore->get_block_by_height(block_height, blk))
               {
-                cerr << "- cant get block of height: " << output_data.height << endl;
+                cerr << "- cant get block of height: " << block_height << endl;
                 context["has_error"] = true;
-                context["error_msg"] = fmt::format("- cant get block of height: {}", output_data.height);
+                context["error_msg"] = fmt::format("- cant get block of height: {}", block_height);
               }
 
               // get age of mixin relative to server time
@@ -5808,8 +5835,8 @@ namespace safexeg
               tx_details mixin_txd = get_tx_details(mixin_tx, true);
 
               mixins.push_back(mstch::map{
-                      {"mix_blk",        fmt::format("{:08d}", output_data.height)},
-                      {"mix_pub_key",    pod_to_hex(output_data.pubkey)},
+                      {"mix_blk",        fmt::format("{:08d}", block_height)},
+                      {"mix_pub_key",    pod_to_hex((is_advanced_output ? output_advanced_data.pubkey : output_data.pubkey))},
                       {"mix_tx_hash",    pod_to_hex(tx_out_idx.first)},
                       {"mix_out_indx",   tx_out_idx.second},
                       {"mix_timestamp",  safexeg::timestamp_to_str_gm(blk.timestamp)},
@@ -5828,8 +5855,8 @@ namespace safexeg
             else //  if (detailed_view)
             {
               mixins.push_back(mstch::map{
-                      {"mix_blk",        fmt::format("{:08d}", output_data.height)},
-                      {"mix_pub_key",    pod_to_hex(output_data.pubkey)},
+                      {"mix_blk",        fmt::format("{:08d}", block_height)},
+                      {"mix_pub_key",    pod_to_hex((is_advanced_output ? output_advanced_data.pubkey : output_data.pubkey))},
                       {"mix_idx",        fmt::format("{:02d}", count)},
                       {"mix_is_it_real", false}, // a placeholder for future
               });
