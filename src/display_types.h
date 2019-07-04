@@ -44,6 +44,7 @@ tx_out_type get_out_type(displayable_output const &d_in);
 boost::optional<crypto::hash const &> get_bitcoin_hash(displayable_input const &d_in);
 
 std::string const& get_type_string(displayable_input const &d_in);
+std::string const& get_type_string(const cryptonote::tx_out_type);
 
 }
 

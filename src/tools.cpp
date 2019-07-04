@@ -361,11 +361,11 @@ sum_money_in_outputs(const json& _json)
     // Process outputs
     for (auto const &txout: tx.vout)
     {
-      if (txout.target.type() != typeid(txout_to_key) && txout.target.type() != typeid(txout_token_to_key))
-      {
-        output_pub_keys.emplace_back();
-        continue;
-      }
+//      if (txout.target.type() != typeid(txout_to_key) && txout.target.type() != typeid(txout_token_to_key))
+//      {
+//        output_pub_keys.emplace_back();
+//        continue;
+//      }
 
       if (txout.target.type() == typeid(txout_to_key))
       {
