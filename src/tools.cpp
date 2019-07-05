@@ -288,130 +288,176 @@ get_blockchain_path(const boost::optional<string>& bc_path,
 }
 
 
-uint64_t
-sum_money_in_outputs(const transaction& tx)
+uint64_t sum_cash_in_outputs(const transaction &tx)
 {
-    uint64_t sum_xmr {0};
-
+    uint64_t sum_safex_cash {0};
     for (const tx_out& txout: tx.vout)
-    {
-        sum_xmr += txout.amount;
-    }
+        sum_safex_cash += txout.amount;
 
-    return sum_xmr;
+    return sum_safex_cash;
 }
 
-pair<uint64_t, uint64_t>
-sum_money_in_outputs(const string& json_str)
+uint64_t sum_token_in_outputs(const transaction &tx)
 {
-    pair<uint64_t, uint64_t> sum_xmr {0, 0};
+  uint64_t sum_safex_token {0};
+  for (const tx_out& txout: tx.vout)
+    sum_safex_token += txout.token_amount;
+
+  return sum_safex_token;
+}
+
+pair<uint64_t, uint64_t> sum_cash_in_outputs(const string &json_str)
+{
+    pair<uint64_t, uint64_t> sum_safex_cash {0, 0};
 
     json j;
-
     try
     {
         j = json::parse( json_str);
     }
     catch (std::invalid_argument& e)
     {
-        cerr << "sum_money_in_outputs: " << e.what() << endl;
-        return sum_xmr;
+        cerr << "sum_cash_in_outputs: " << e.what() << endl;
+        return sum_safex_cash;
     }
 
     for (json& vout: j["vout"])
     {
-        sum_xmr.first += vout["amount"].get<uint64_t>();
-        ++sum_xmr.second;
+        sum_safex_cash.first += vout["amount"].get<uint64_t>();
+        ++sum_safex_cash.second;
     }
 
-
-    return sum_xmr;
+    return sum_safex_cash;
 };
 
-pair<uint64_t, uint64_t>
-sum_money_in_outputs(const json& _json)
+pair<uint64_t, uint64_t> sum_cash_in_outputs(const json &_json)
 {
-    pair<uint64_t, uint64_t> sum_xmr {0ULL, 0ULL};
+    pair<uint64_t, uint64_t> sum_safex_cash {0ULL, 0ULL};
 
     for (const json& vout: _json["vout"])
     {
-        sum_xmr.first += vout["amount"].get<uint64_t>();
-        ++sum_xmr.second;
+        sum_safex_cash.first += vout["amount"].get<uint64_t>();
+        ++sum_safex_cash.second;
     }
 
-    return sum_xmr;
+    return sum_safex_cash;
 };
 
 
-array<uint64_t, 7>
-summary_of_in_out_rct(
-        const transaction &tx,
-        vector<pair<safexeg::displayable_output, uint64_t>> &output_pub_keys,
-        vector<safexeg::displayable_input> &input_key_imgs) {
+  array<uint64_t, 10> summary_of_in_out(const transaction &tx, vector <pair<safexeg::displayable_output, uint64_t>> &output_pub_keys,
+                                       vector <safexeg::displayable_input> &input_key_imgs)
+  {
 
-    uint64_t xmr_outputs{0};
+    uint64_t cash_outputs{0};
     uint64_t token_outputs{0};
-    uint64_t xmr_inputs{0};
+    uint64_t staked_tokens_outputs{0};
+    uint64_t network_fee_outputs{0};
+    uint64_t cash_inputs{0};
     uint64_t token_inputs{0};
+    uint64_t staked_token_inputs{0};
+    uint64_t network_fee_inputs{0};
     uint64_t mixin_no{0};
     uint64_t token_mixin_no{0};
-    uint64_t num_nonrct_inputs{0};
 
     // Process outputs
-    for (auto const &txout: tx.vout) {
-        if (txout.target.type() != typeid(txout_to_key) && txout.target.type() != typeid(txout_token_to_key)) {
-            output_pub_keys.emplace_back();
-            continue;
-        }
+    for (auto const &txout: tx.vout)
+    {
+//      if (txout.target.type() != typeid(txout_to_key) && txout.target.type() != typeid(txout_token_to_key))
+//      {
+//        output_pub_keys.emplace_back();
+//        continue;
+//      }
 
-        if (txout.target.type() == typeid(txout_to_key)) {
-            auto target = boost::get<cryptonote::txout_to_key>(txout.target);
-            output_pub_keys.emplace_back(target, txout.amount);
-            xmr_outputs += txout.amount;
-        }
+      if (txout.target.type() == typeid(txout_to_key))
+      {
+        auto target = boost::get<cryptonote::txout_to_key>(txout.target);
+        output_pub_keys.emplace_back(target, txout.amount);
+        cash_outputs += txout.amount;
+      }
 
-        if (txout.target.type() == typeid(txout_token_to_key)) {
-            auto target = boost::get<cryptonote::txout_token_to_key>(txout.target);
-            output_pub_keys.emplace_back(target, txout.token_amount);
-            token_outputs += txout.token_amount;
+      if (txout.target.type() == typeid(txout_token_to_key))
+      {
+        auto target = boost::get<cryptonote::txout_token_to_key>(txout.target);
+        output_pub_keys.emplace_back(target, txout.token_amount);
+        token_outputs += txout.token_amount;
+      }
+
+      if (txout.target.type() == typeid(txout_to_script))
+      {
+        const cryptonote::txout_to_script &target = boost::get<cryptonote::txout_to_script>(txout.target);
+        cryptonote::tx_out_type output_type = static_cast<cryptonote::tx_out_type>(target.output_type);
+        if (output_type == tx_out_type::out_staked_token)
+        {
+          output_pub_keys.emplace_back(target, txout.token_amount);
+          staked_tokens_outputs += txout.token_amount;
         }
+        else if (output_type == tx_out_type::out_network_fee)
+        {
+          output_pub_keys.emplace_back(target, txout.amount);
+          network_fee_outputs += txout.amount;
+        }
+      }
     }
 
     // Process inputs
 
-    for (auto const &txin: tx.vin) {
+    for (auto const &txin: tx.vin)
+    {
 
-        if (txin.type() == typeid(txin_to_key)) {
-            auto input = boost::get<txin_to_key>(txin);
-            xmr_inputs += input.amount;
-            if (input.amount != 0) {
-                ++num_nonrct_inputs;
-            }
-            if (mixin_no == 0) {
-                mixin_no = input.key_offsets.size();
-            }
-            input_key_imgs.emplace_back(input);
+      if (txin.type() == typeid(txin_to_key))
+      {
+        auto input = boost::get<txin_to_key>(txin);
+        cash_inputs += input.amount;
+        if (mixin_no == 0)
+        {
+          mixin_no = input.key_offsets.size();
+        }
+        input_key_imgs.emplace_back(input);
+      }
+
+      if (txin.type() == typeid(txin_token_to_key))
+      {
+        auto input = boost::get<txin_token_to_key>(txin);
+        token_inputs += input.token_amount;
+        if (token_mixin_no == 0)
+        {
+          token_mixin_no = input.key_offsets.size();
+        }
+        input_key_imgs.emplace_back(input);
+      }
+
+      if (txin.type() == typeid(txin_token_migration))
+      {
+        auto input = boost::get<txin_token_migration>(txin);
+        token_inputs += input.token_amount;
+        input_key_imgs.emplace_back(input);
+      }
+
+      if (txin.type() == typeid(txin_to_script))
+      {
+        const txin_to_script& input = boost::get<txin_to_script>(txin);
+        if (input.command_type == safex::command_t::token_unstake)
+        {
+          staked_token_inputs += input.token_amount;
+        } else if (input.command_type == safex::command_t::token_stake) {
+          token_inputs += input.token_amount;
+          if (token_mixin_no == 0) token_mixin_no = input.key_offsets.size();
+        } else if (input.command_type == safex::command_t::donate_network_fee) {
+          cash_inputs += input.amount;
+          if (mixin_no == 0) mixin_no = input.key_offsets.size();
+        } else if (input.command_type == safex::command_t::distribute_network_fee) {
+          network_fee_inputs += input.amount;
+        } else if (input.command_type == safex::command_t::token_collect) {
+          staked_token_inputs += input.token_amount;
         }
 
-        if (txin.type() == typeid(txin_token_to_key)) {
-            auto input = boost::get<txin_token_to_key>(txin);
-            token_inputs += input.token_amount;
-            if (token_mixin_no == 0) {
-                token_mixin_no = input.key_offsets.size();
-            }
-            input_key_imgs.emplace_back(input);
-        }
-
-        if (txin.type() == typeid(txin_token_migration)) {
-            auto input = boost::get<txin_token_migration>(txin);
-            token_inputs += input.token_amount;
-            input_key_imgs.emplace_back(input);
-        }
+        input_key_imgs.emplace_back(input);
+      }
     }
 
-    return {xmr_outputs, token_outputs, xmr_inputs, token_inputs, mixin_no,
-            token_mixin_no, num_nonrct_inputs};
-};
+    return {cash_outputs, token_outputs, cash_inputs, token_inputs, mixin_no,
+            token_mixin_no, staked_token_inputs, staked_tokens_outputs, network_fee_inputs, network_fee_outputs};
+  };
 
 
 // this version for mempool txs from json
@@ -487,7 +533,7 @@ sum_money_in_inputs(const string& json_str)
     }
     catch (std::invalid_argument& e)
     {
-        cerr << "sum_money_in_outputs: " << e.what() << endl;
+        cerr << "sum_cash_in_outputs: " << e.what() << endl;
         return sum_xmr;
     }
 
@@ -589,7 +635,7 @@ sum_money_in_tx(const transaction& tx)
     array<uint64_t, 2> sum_xmr;
 
     sum_xmr[0] = sum_money_in_inputs(tx);
-    sum_xmr[1] = sum_money_in_outputs(tx);
+    sum_xmr[1] = sum_cash_in_outputs(tx);
 
     return sum_xmr;
 };
@@ -603,7 +649,7 @@ sum_money_in_txs(const vector<transaction>& txs)
     for (const transaction& tx: txs)
     {
         sum_xmr[0] += sum_money_in_inputs(tx);
-        sum_xmr[1] += sum_money_in_outputs(tx);
+        sum_xmr[1] += sum_cash_in_outputs(tx);
     }
 
     return sum_xmr;

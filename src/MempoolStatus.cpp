@@ -150,11 +150,11 @@ MempoolStatus::read_mempool()
         vector<pair<displayable_output, uint64_t>> output_pub_keys;
 
         // sum xmr in inputs and ouputs in the given tx
-        const auto& sum_data = summary_of_in_out_rct(tx, output_pub_keys, input_key_imgs);
+        const auto& sum_data = summary_of_in_out(tx, output_pub_keys, input_key_imgs);
 
 
         // {xmr_outputs, token_outputs, xmr_inputs, token_inputs, mixin_no,
-        //        token_mixin_no, num_nonrct_inputs}
+        //        token_mixin_no, staked_token_inputs}
         double tx_size =  static_cast<double>(_tx_info.blob_size)/1024.0;
 
         double payed_for_kB = SAFEX_AMOUNT(_tx_info.fee) / tx_size;

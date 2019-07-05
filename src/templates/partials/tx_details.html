@@ -39,7 +39,6 @@
                     <th>Tx size</th>
                     <th>Tx version</th>
                     <th>No of confirmations</th>
-                    <th>RingCT/type</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,7 +54,6 @@
                     <td>{{tx_size}} kB</td>
                     <td>{{tx_version}}</td>
                     <td>{{confirmations}}</td>
-                    <td>{{#is_ringct}}yes/{{rct_type}}{{/is_ringct}}{{^is_ringct}}no{{/is_ringct}}</td>
                 </tr>
                 <tr>
                     <td colspan="9">Extra: {{extra}}</td>
@@ -65,7 +63,7 @@
     </div>
 
     <div class="table-head-wrap">
-        <h3>{{outputs_no}} output(s) for total of {{outputs_xmr_sum}} cash and {{outputs_token_sum}} token(s)</h3>
+        <h3>{{outputs_no}} output(s) for total of {{outputs_safex_sum}} cash and {{outputs_token_sum}} token(s)</h3>
     </div>
 
     <div class="table-wrap">
@@ -76,6 +74,7 @@
                     <th>amount</th>
                     <th>amount idx</th>
                     <th>token</th>
+                    <th>output type</th>
                 </tr>
             </thead>
             <tbody>
@@ -90,6 +89,7 @@
                         {{^token}}
                             <td class="red">{{token}}</td>
                         {{/token}}
+                        <td>{{output_type}}</td>
                     </tr>
                 {{/outputs}}
             </tbody>
@@ -105,8 +105,6 @@
                     <div class="content">
                         <h4 style="margin: 0px">Check which outputs belong to given Safex address/subaddress and viewkey</h4>
                         <h5 style="margin: 0px">
-                            For RingCT transactions, outputs' amounts are also decoded
-                            <br/>
                             {{#enable_js}}
                                 Note: address/subaddress and viewkey are NOT sent to the server, as the calculations are done on the client side
                             {{/enable_js}}
@@ -357,7 +355,7 @@
 
                 decoding_results_str += "</table>";
 
-                decoding_results_str += "<h3>Sum XMR from matched outputs (i.e., incoming XMR): " + (sum_outptus / 1e12) + "</h3>"
+                decoding_results_str += "<h3>Sum SFX from matched outputs (i.e., incoming SFX): " + (sum_outptus / 1e12) + "</h3>"
 
 
                 // decrypt payment_id8 which results in using
@@ -395,18 +393,18 @@
     {{/enable_mixins_details}}
 
     <div class="table-head-wrap">
-        {{^inputs_xmr_sum_not_zero}}
-            <h3>{{inputs_no}} input(s) for total of {{inputs_xmr_sum}} cash and {{inputs_token_sum}} token(s)</h3>
-        {{/inputs_xmr_sum_not_zero}}
+        {{^inputs_safex_sum_not_zero}}
+            <h3>{{inputs_no}} input(s) for total of {{inputs_safex_sum}} cash and {{inputs_token_sum}} token(s)</h3>
+        {{/inputs_safex_sum_not_zero}}
 
-        {{#inputs_xmr_sum_not_zero}}
+        {{#inputs_safex_sum_not_zero}}
             {{^have_any_unknown_amount}}
-                <h3>{{inputs_no}} inputs(s) for total of {{inputs_xmr_sum}} cash and {{inputs_token_sum}} token(s)</h3>
+                <h3>{{inputs_no}} inputs(s) for total of {{inputs_safex_sum}} cash and {{inputs_token_sum}} token(s)</h3>
             {{/have_any_unknown_amount}}
             {{#have_any_unknown_amount}}
-                <h3>{{inputs_no}} inputs(s) for total of at least {{inputs_xmr_sum}} cash and {{inputs_token_sum}} token(s)</h3>
+                <h3>{{inputs_no}} inputs(s) for total of at least {{inputs_safex_sum}} cash and {{inputs_token_sum}} token(s)</h3>
             {{/have_any_unknown_amount}}
-        {{/inputs_xmr_sum_not_zero}}
+        {{/inputs_safex_sum_not_zero}}
 
         {{#show_part_of_inputs}}
             <h4>
@@ -439,8 +437,12 @@
                     {{/have_raw_tx}}
 
                     <tr>
-                        <td>Amount: </td>
-                        <td>{{amount}}</td>
+                        <td>Cash Amount: </td>
+                        <td>{{cash_amount}}</td>
+                    </tr>
+                    <tr>
+                        <td>Token Amount: </td>
+                        <td>{{token_amount}}</td>
                     </tr>
 
                     <tr>

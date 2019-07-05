@@ -142,7 +142,10 @@ namespace safexeg
     uint64_t cash_outputs;
     uint64_t token_inputs;
     uint64_t token_outputs;
-    uint64_t num_nonrct_inputs;
+    uint64_t staked_token_inputs;
+    uint64_t staked_token_outputs;
+    uint64_t network_fee_inputs;
+    uint64_t network_fee_outputs;
     uint64_t fee;
     uint64_t cash_mixin_no;
     uint64_t token_mixin_no;
@@ -173,7 +176,6 @@ namespace safexeg
     // public keys and xmr amount of outputs
     //displayable_output
     vector<pair<displayable_output, uint64_t>> output_pub_keys;
-    //vector<pair<txout_to_key, uint64_t>> output_pub_keys;
 
     mstch::map
     get_mstch_map() const
@@ -208,15 +210,15 @@ namespace safexeg
               {"tx_fee",                  fee_str},
               {"tx_fee_short",            fee_short_str},
               {"payed_for_kB",            payed_for_kB_str},
-              {"sum_inputs", safex_amount_to_str(cash_inputs, "{:0.6f}")},
-              {"sum_outputs", safex_amount_to_str(cash_outputs, "{:0.6f}")},
-              {"sum_inputs_short", safex_amount_to_str(cash_inputs, "{:0.3f}")},
-              {"sum_outputs_short", safex_amount_to_str(cash_outputs, "{:0.3f}")},
-              {"sum_inputs_token_short", safex_amount_to_str(token_inputs, "{:0.3f}")},
+              {"sum_inputs",              safex_amount_to_str(cash_inputs, "{:0.6f}")},
+              {"sum_outputs",             safex_amount_to_str(cash_outputs, "{:0.6f}")},
+              {"sum_inputs_short",        safex_amount_to_str(cash_inputs, "{:0.3f}")},
+              {"sum_outputs_short",       safex_amount_to_str(cash_outputs, "{:0.3f}")},
+              {"sum_inputs_token_short",  safex_amount_to_str(token_inputs, "{:0.3f}")},
               {"sum_outputs_token_short", safex_amount_to_str(token_outputs, "{:0.3f}", true, "N/A")},
               {"no_inputs",               static_cast<uint64_t>(input_key_imgs.size())},
               {"no_outputs",              static_cast<uint64_t>(output_pub_keys.size())},
-              {"no_nonrct_inputs",        num_nonrct_inputs},
+              {"no_nonrct_inputs",        staked_token_inputs},
               {"mixin",                   mixin_str},
               {"blk_height",              blk_height},
               {"version",                 static_cast<uint64_t>(version)},
@@ -858,7 +860,7 @@ namespace safexeg
                 {"current_hf_version", current_network_info.current_hf_version},
                 {"age",                network_info_age.first},
                 {"age_format",         network_info_age.second},
-                {"issued_coins", safexeg::safex_amount_to_str(current_network_info.issued_coins, "{:0.2f}", true)},
+                {"issued_coins",       safexeg::safex_amount_to_str(current_network_info.issued_coins, "{:0.2f}", true)},
                 {"migrated_tokens",    current_network_info.migrated_tokens},
         };
 
@@ -1747,7 +1749,7 @@ namespace safexeg
                 {"blk_height",            tx_blk_height_str},
                 {"tx_size",               fmt::format("{:0.4f}",
                                                       static_cast<double>(txd.size) / 1024.0)},
-                {"tx_fee", safexeg::safex_amount_to_str(txd.fee, "{:0.10f}", true)},
+                {"tx_fee",                safexeg::safex_amount_to_str(txd.fee, "{:0.10f}", true)},
                 {"blk_timestamp",         blk_timestamp},
                 {"delta_time",            age.first},
                 {"outputs_no",            static_cast<uint64_t>(txd.output_pub_keys.size())},
@@ -1898,7 +1900,7 @@ namespace safexeg
 
           outputs.push_back(mstch::map{
                   {"out_pub_key", pod_to_hex(get_public_key(outp.first))},
-                  {"amount", safexeg::safex_amount_to_str(outp.second)},
+                  {"amount",      safexeg::safex_amount_to_str(outp.second)},
                   {"mine_output", mine_output},
                   {"output_idx",  fmt::format("{:02d}", output_idx)}
           });
@@ -2189,7 +2191,7 @@ namespace safexeg
                       {"out_idx",          output_idx_in_tx},
                       {"formed_output_pk", out_pub_key_str},
                       {"out_in_match",     output_match},
-                      {"amount", safexeg::safex_amount_to_str(amount)}
+                      {"amount",           safexeg::safex_amount_to_str(amount)}
               });
 
               //cout << "txout_k.key == output_data.pubkey" << endl;
@@ -2397,7 +2399,7 @@ namespace safexeg
               mstch::map tx_cd_data{
                       {"no_of_sources",   static_cast<uint64_t>(no_of_sources)},
                       {"use_rct",         tx_cd.use_rct},
-                      {"change_amount", safexeg::safex_amount_to_str(tx_change.amount)},
+                      {"change_amount",   safexeg::safex_amount_to_str(tx_change.amount)},
                       {"has_payment_id",  (payment_id != null_hash)},
                       {"has_payment_id8", (payment_id8 != null_hash8)},
                       {"payment_id",      pid_str},
@@ -2414,7 +2416,7 @@ namespace safexeg
                 mstch::map dest_info{
                         {"dest_address", get_account_address_as_str(
                                 nettype, a_dest.is_subaddress, a_dest.addr)},
-                        {"dest_amount", safexeg::safex_amount_to_str(a_dest.amount)}
+                        {"dest_amount",  safexeg::safex_amount_to_str(a_dest.amount)}
                 };
 
                 dest_infos.push_back(dest_info);
@@ -2431,7 +2433,7 @@ namespace safexeg
                 const tx_source_entry &tx_source = tx_cd.sources.at(i);
 
                 mstch::map single_dest_source{
-                        {"output_amount", safexeg::safex_amount_to_str(tx_source.amount)},
+                        {"output_amount",           safexeg::safex_amount_to_str(tx_source.amount)},
                         {"real_output",             static_cast<uint64_t>(tx_source.real_output)},
                         {"real_out_tx_key",         pod_to_hex(tx_source.real_out_tx_key)},
                         {"real_output_in_tx_index", static_cast<uint64_t>(tx_source.real_output_in_tx_index)},
@@ -2744,7 +2746,7 @@ namespace safexeg
 
             mstch::array destination_addresses;
             vector<uint64_t> real_ammounts;
-            uint64_t outputs_xmr_sum{0};
+            uint64_t outputs_safex_sum{0};
 
             // destiantion address for this tx
             for (tx_destination_entry &a_dest: ptx.construction_data.splitted_dsts)
@@ -2757,12 +2759,12 @@ namespace safexeg
                       mstch::map{
                               {"dest_address",   get_account_address_as_str(
                                       nettype, a_dest.is_subaddress, a_dest.addr)},
-                              {"dest_amount", safexeg::safex_amount_to_str(a_dest.amount)},
+                              {"dest_amount",    safexeg::safex_amount_to_str(a_dest.amount)},
                               {"is_this_change", false}
                       }
               );
 
-              outputs_xmr_sum += a_dest.amount;
+              outputs_safex_sum += a_dest.amount;
 
               real_ammounts.push_back(a_dest.amount);
             }
@@ -2775,7 +2777,7 @@ namespace safexeg
                               {"dest_address",   get_account_address_as_str(
                                       nettype, ptx.construction_data.change_dts.is_subaddress, ptx.construction_data.change_dts.addr)},
                               {"dest_amount",
-                                      safexeg::safex_amount_to_str(ptx.construction_data.change_dts.amount)},
+                                                 safexeg::safex_amount_to_str(ptx.construction_data.change_dts.amount)},
                               {"is_this_change", true}
                       }
               );
@@ -2783,7 +2785,7 @@ namespace safexeg
               real_ammounts.push_back(ptx.construction_data.change_dts.amount);
             };
 
-            tx_context["outputs_xmr_sum"] = safexeg::safex_amount_to_str(outputs_xmr_sum);
+            tx_context["outputs_safex_sum"] = safexeg::safex_amount_to_str(outputs_safex_sum);
 
             tx_context.insert({"dest_infos", destination_addresses});
 
@@ -2817,7 +2819,7 @@ namespace safexeg
             vector<uint64_t> real_output_indices;
             vector<uint64_t> real_amounts;
 
-            uint64_t inputs_xmr_sum{0};
+            uint64_t inputs_safex_sum{0};
 
             for (const tx_source_entry &tx_source: ptx.construction_data.sources)
             {
@@ -2866,14 +2868,14 @@ namespace safexeg
               real_output_indices.push_back(tx_source.real_output);
               real_amounts.push_back(tx_source.amount);
 
-              inputs_xmr_sum += tx_source.amount;
+              inputs_safex_sum += tx_source.amount;
             }
 
             // mark that we have signed tx data for use in mstch
             tx_context["have_raw_tx"] = true;
 
             // provide total mount of inputs xmr
-            tx_context["inputs_xmr_sum"] = safexeg::safex_amount_to_str(inputs_xmr_sum);
+            tx_context["inputs_safex_sum"] = safexeg::safex_amount_to_str(inputs_safex_sum);
 
             // get reference to inputs array created of the tx
             mstch::array &inputs = boost::get<mstch::array>(tx_context["inputs"]);
@@ -3547,7 +3549,7 @@ namespace safexeg
           mstch::map output_info{
                   {"output_no", fmt::format("{:03d}", output_no)},
                   {"output_pub_key", REMOVE_HASH_BRAKETS(fmt::format("{:s}", txout_key.key))},
-                  {"amount", safexeg::safex_amount_to_str(xmr_amount)},
+                  {"amount",    safexeg::safex_amount_to_str(xmr_amount)},
                   {"tx_hash",        REMOVE_HASH_BRAKETS(fmt::format("{:s}", td.m_txid))},
                   {"timestamp", safexeg::timestamp_to_str_gm(blk_timestamp)},
                   {"is_spent",  is_output_spent},
@@ -5351,7 +5353,7 @@ namespace safexeg
 
             // get the tx output public key
             // that normally would be generated for us,
-            // if someone had sent us some xmr.
+            // if someone had sent us some safex.
             public_key tx_pubkey;
 
             auto key = get_public_key(outp.first);
@@ -5417,6 +5419,7 @@ namespace safexeg
                       {"output_pubkey", pod_to_hex(key)},
                       {"amount",        outp.second},
                       {"token",         tx_out_type::out_token == get_out_type(outp.first)},
+                      {"output_type",   get_type_string(get_out_type(outp.first))},
                       {"block_no",      block_no},
                       {"in_mempool",    is_mempool},
                       {"output_idx",    output_idx},
@@ -5591,7 +5594,7 @@ namespace safexeg
                 {"blk_height",             tx_blk_height_str},
                 {"tx_blk_height",          tx_blk_height},
                 {"tx_size",                fmt::format("{:0.4f}", tx_size)},
-                {"tx_fee", safexeg::safex_amount_to_str(txd.fee, "{:0.10f}", false)},
+                {"tx_fee",                 safexeg::safex_amount_to_str(txd.fee, "{:0.10f}", false)},
                 {"payed_for_kB",           fmt::format("{:0.10f}", payed_for_kB)},
                 {"tx_version",             static_cast<uint64_t>(txd.version)},
                 {"blk_timestamp",          blk_timestamp},
@@ -5662,13 +5665,17 @@ namespace safexeg
           auto const output_type = get_out_type(in_key);
           auto const k_image = get_key_image(in_key);
           bool is_token = (output_type == tx_out_type::out_token) || (output_type == tx_out_type::out_staked_token);
+          bool is_advanced_output = (output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_network_fee) || (output_type == tx_out_type::out_advanced);
 
           std::vector<uint64_t> absolute_offsets;
 
           // get absolute offsets of mixins
-          if ((output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_advanced)) {
+          if ((output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_advanced))
+          {
             absolute_offsets = get_key_offsets(in_key);
-          } else {
+          }
+          else
+          {
             absolute_offsets = cryptonote::relative_output_offsets_to_absolute(get_key_offsets(in_key));
           }
 
@@ -5682,7 +5689,14 @@ namespace safexeg
             // check how many outputs there are for that amount
             // go to next input if a too large offset was found
 
-            if ((output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_advanced)) {
+            if ((output_type == tx_out_type::out_network_fee)) {
+              output_advanced_data_t adv_temp{0};
+              adv_temp.output_type = static_cast<uint64_t>(tx_out_type::out_network_fee);
+              advanced_outputs.push_back(adv_temp);
+              //do nothing
+            }
+            else if ((output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_advanced))
+            {
               //todo check if absolute offsets are good
               // offsets seems good, so try to get the advanced output data
               for (int i = 0; i < absolute_offsets.size(); i++)
@@ -5690,7 +5704,9 @@ namespace safexeg
                 output_advanced_data_t adv_temp = core_storage->get_db().get_output_key(output_type, absolute_offsets[i]);
                 advanced_outputs.push_back(adv_temp);
               }
-            } else {
+            }
+            else
+            {
               if (!are_absolute_offsets_good(absolute_offsets, in_key))
                 continue;
 
@@ -5758,15 +5774,29 @@ namespace safexeg
           for (const uint64_t &i: absolute_offsets)
           {
             // get basic information about mixn's output
+            cryptonote::output_data_t output_data;
+            cryptonote::output_advanced_data_t output_advanced_data;
 
-            cryptonote::output_data_t output_data = outputs.at(count);
+            if (is_advanced_output)
+              output_advanced_data = advanced_outputs.at(count);
+            else
+              output_data = outputs.at(count);
+
+            const uint64_t block_height = is_advanced_output ? output_advanced_data.height : output_data.height;
+
             tx_out_index tx_out_idx;
 
             try
             {
               // get pair pair<crypto::hash, uint64_t> where first is tx hash and second is local index of the output i in that tx
-              const uint64_t amount = token_amount > 0 ? token_amount : cash_amount;
-              tx_out_idx = core_storage->get_db().get_output_tx_and_index(amount, i, output_type);
+              if (is_advanced_output) {
+                tx_out_idx = core_storage->get_db().get_output_tx_and_index_from_global(i);
+              }
+              else
+              {
+                const uint64_t amount = token_amount > 0 ? token_amount : cash_amount;
+                tx_out_idx = core_storage->get_db().get_output_tx_and_index(amount, i, output_type);
+              }
             }
             catch (const OUTPUT_DNE &e)
             {
@@ -5782,11 +5812,11 @@ namespace safexeg
             {
               // get block of given height, as we want to get its timestamp
               cryptonote::block blk;
-              if (!mcore->get_block_by_height(output_data.height, blk))
+              if (!mcore->get_block_by_height(block_height, blk))
               {
-                cerr << "- cant get block of height: " << output_data.height << endl;
+                cerr << "- cant get block of height: " << block_height << endl;
                 context["has_error"] = true;
-                context["error_msg"] = fmt::format("- cant get block of height: {}", output_data.height);
+                context["error_msg"] = fmt::format("- cant get block of height: {}", block_height);
               }
 
               // get age of mixin relative to server time
@@ -5805,8 +5835,8 @@ namespace safexeg
               tx_details mixin_txd = get_tx_details(mixin_tx, true);
 
               mixins.push_back(mstch::map{
-                      {"mix_blk",        fmt::format("{:08d}", output_data.height)},
-                      {"mix_pub_key",    pod_to_hex(output_data.pubkey)},
+                      {"mix_blk",        fmt::format("{:08d}", block_height)},
+                      {"mix_pub_key",    pod_to_hex((is_advanced_output ? output_advanced_data.pubkey : output_data.pubkey))},
                       {"mix_tx_hash",    pod_to_hex(tx_out_idx.first)},
                       {"mix_out_indx",   tx_out_idx.second},
                       {"mix_timestamp",  safexeg::timestamp_to_str_gm(blk.timestamp)},
@@ -5825,8 +5855,8 @@ namespace safexeg
             else //  if (detailed_view)
             {
               mixins.push_back(mstch::map{
-                      {"mix_blk",        fmt::format("{:08d}", output_data.height)},
-                      {"mix_pub_key",    pod_to_hex(output_data.pubkey)},
+                      {"mix_blk",        fmt::format("{:08d}", block_height)},
+                      {"mix_pub_key",    pod_to_hex((is_advanced_output ? output_advanced_data.pubkey : output_data.pubkey))},
                       {"mix_idx",        fmt::format("{:02d}", count)},
                       {"mix_is_it_real", false}, // a placeholder for future
               });
@@ -5864,8 +5894,8 @@ namespace safexeg
 
 
         context["have_any_unknown_amount"] = have_any_unknown_amount;
-        context["inputs_xmr_sum_not_zero"] = (inputs_safex_cash_sum > 0);
-        context["inputs_xmr_sum"] = safexeg::safex_amount_to_str(inputs_safex_cash_sum);
+        context["inputs_safex_sum_not_zero"] = (inputs_safex_cash_sum > 0);
+        context["inputs_safex_sum"] = safexeg::safex_amount_to_str(inputs_safex_cash_sum);
         context["inputs_token_sum"] = safexeg::safex_amount_to_str(inputs_token_sum, "{:0.0f}", true, "no");
         context["server_time"] = server_time_str;
         context["enable_mixins_details"] = detailed_view;
@@ -5885,8 +5915,7 @@ namespace safexeg
 
           if (core_storage->get_db().tx_exists(txd.hash, tx_index))
           {
-            out_amount_indices = core_storage->get_db()
-                    .get_tx_amount_output_indices(tx_index);
+            out_amount_indices = core_storage->get_db().get_tx_amount_output_indices(tx_index);
           }
           else
           {
@@ -5903,17 +5932,25 @@ namespace safexeg
 
         mstch::array outputs;
 
-        uint64_t outputs_xmr_sum{0};
+        uint64_t outputs_safex_sum{0};
         uint64_t outputs_token_sum{0};
+        uint64_t outputs_staked_token_sum{0};
 
         for (auto &output: txd.output_pub_keys)
         {
 
           // total number of ouputs in the blockchain for this amount
+          uint64_t num_outputs_amount{0};
 
           const auto output_type = get_out_type(output.first);
-          uint64_t num_outputs_amount = core_storage->get_db()
-                  .get_num_outputs(output.second, output_type);
+
+          if ((output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_network_fee)) {
+            //do nothing
+          }
+          else
+          {
+            num_outputs_amount = core_storage->get_db().get_num_outputs(output.second, output_type);
+          }
 
           string out_amount_index_str{"N/A"};
 
@@ -5921,34 +5958,37 @@ namespace safexeg
           // thus for them, we print N/A
           if (!out_amount_indices.empty())
           {
-            out_amount_index_str
-                    = std::to_string(out_amount_indices.at(output_idx));
+            out_amount_index_str = std::to_string(out_amount_indices.at(output_idx));
           }
 
           if (output_type == tx_out_type::out_cash)
           {
-            outputs_xmr_sum += output.second;
+            outputs_safex_sum += output.second;
+          }
+          else if (output_type == tx_out_type::out_staked_token)
+          {
+            outputs_staked_token_sum += output.second;
           }
           else
           {
             outputs_token_sum += output.second;
           }
-          const auto is_token = output_type == tx_out_type::out_token;
+
+          const auto is_token = output_type == tx_out_type::out_token || output_type == tx_out_type::out_staked_token;
           outputs.push_back(mstch::map{
                   {"out_pub_key",           pod_to_hex(get_public_key(output.first))},
-                  {"amount",                is_token
-                                            ? safexeg::safex_amount_to_str(output.second, "{:0.0f}")
-                                            : safexeg::safex_amount_to_str(output.second)},
+                  {"amount",           is_token ? safexeg::safex_amount_to_str(output.second, "{:0.0f}") : safexeg::safex_amount_to_str(output.second)},
                   {"amount_idx",            out_amount_index_str},
                   {"num_outputs",           num_outputs_amount},
                   {"unformated_output_idx", output_idx},
                   {"output_idx",            fmt::format("{:02d}", output_idx++)},
-                  {"token",                 is_token}
+                  {"token",                 is_token},
+                  {"output_type",           get_type_string(output_type)}
           });
 
         } //  for (pair<txout_to_key, uint64_t>& outp: txd.output_pub_keys)
 
-        context["outputs_xmr_sum"] = safexeg::safex_amount_to_str(outputs_xmr_sum);
+        context["outputs_safex_sum"] = safexeg::safex_amount_to_str(outputs_safex_sum);
         context["outputs_token_sum"] = safexeg::safex_amount_to_str(outputs_token_sum, "{:0.0f}", true, "no");
 
         context.emplace("outputs", outputs);
@@ -6033,8 +6073,7 @@ namespace safexeg
 
 
         // sum xmr in inputs and ouputs in the given tx
-        const auto &sum_data = summary_of_in_out_rct(
-                tx, txd.output_pub_keys, txd.input_key_imgs);
+        const auto &sum_data = summary_of_in_out(tx, txd.output_pub_keys, txd.input_key_imgs);
 
         txd.cash_outputs = sum_data[0];
         txd.token_outputs = sum_data[1];
@@ -6042,14 +6081,15 @@ namespace safexeg
         txd.token_inputs = sum_data[3];
         txd.cash_mixin_no = sum_data[4];
         txd.token_mixin_no = sum_data[5];
-        txd.num_nonrct_inputs = sum_data[6];
+        txd.staked_token_inputs = sum_data[6];
+        txd.staked_token_outputs = sum_data[7];
+        txd.network_fee_inputs = sum_data[8];
+        txd.network_fee_outputs = sum_data[9];
 
         txd.fee = 0;
-
         if (!coinbase && !tx.vin.empty())
         {
-          // check if not miner tx
-          // i.e., for blocks without any user transactions
+          // check if not miner tx, i.e., for blocks without any user transactions
           if (tx.vin.at(0).type() != typeid(txin_gen))
           {
             // get tx fee

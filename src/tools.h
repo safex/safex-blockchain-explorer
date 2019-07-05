@@ -144,20 +144,17 @@ get_blockchain_path(const boost::optional<string>& bc_path,
                     bf::path& blockchain_path,
                     cryptonote::network_type nettype = cryptonote::network_type::MAINNET);
 
-uint64_t
-sum_money_in_outputs(const transaction& tx);
+uint64_t sum_cash_in_outputs(const transaction &tx);
+uint64_t sum_token_in_outputs(const transaction &tx);
 
 pair<uint64_t, uint64_t>
-sum_money_in_outputs(const string& json_str);
+sum_cash_in_outputs(const string &json_str);
 
 pair<uint64_t, uint64_t>
-sum_money_in_outputs(const json& _json);
+sum_cash_in_outputs(const json &_json);
 
 
-array<uint64_t, 7>
-summary_of_in_out_rct(
-        const transaction &tx,
-        vector<pair<safexeg::displayable_output, uint64_t>> &output_pub_keys,
+array<uint64_t, 10> summary_of_in_out(const transaction &tx, vector<pair<safexeg::displayable_output, uint64_t>> &output_pub_keys,
         vector<safexeg::displayable_input> &input_token_key_imgs);
 
 // this version for mempool txs from json
@@ -278,7 +275,7 @@ static
 string safex_amount_to_str(const uint64_t &xmr_amount,
                            string _format = "{:0.10f}",
                            bool zero_to_question_mark = true,
-                           std::string const &zero_string = "?")
+                           std::string const &zero_string = "0")
 {
     string amount_str = zero_string;
 

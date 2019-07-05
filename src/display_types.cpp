@@ -170,6 +170,8 @@ namespace safexeg
             return tx_out_type::out_token;
           case safex::command_t::token_unstake:
             return tx_out_type::out_staked_token;
+          case safex::command_t::distribute_network_fee:
+            return tx_out_type::out_network_fee;
           case safex::command_t::nop:
           default:
             return tx_out_type::out_invalid;
@@ -233,7 +235,9 @@ namespace safexeg
     static std::string cash{"cash"};
     static std::string token{"token"};
     static std::string migration{"migration"};
-    static std::string advanced_output{"advanced output"};
+    static std::string staked_token{"staked token"};
+    static std::string collected_network_fee{"collected network fee"};
+    static std::string invalid_type{"invalid type"};
 
     struct visitor : public boost::static_visitor<std::string const &>
     {
@@ -252,12 +256,56 @@ namespace safexeg
         return migration;
       }
 
-      std::string const &operator()(const txin_to_script &) const
+      std::string const &operator()(const txin_to_script &txin) const
       {
-        return advanced_output;
+
+        switch (txin.command_type) {
+          case safex::command_t::donate_network_fee:
+            return cash;
+          case safex::command_t::token_stake:
+            return token;
+          case safex::command_t::token_unstake:
+          case safex::command_t::token_collect:
+            return staked_token;
+          case safex::command_t::distribute_network_fee:
+            return collected_network_fee;
+          case safex::command_t::nop:
+          default:
+            return invalid_type;
+        }
       }
     };
     return boost::apply_visitor(visitor{}, d_in);
+  }
+
+  std::string const &get_type_string(const cryptonote::tx_out_type output_type)
+  {
+    static const std::string cash{"cash"};
+    static const std::string token{"token"};
+    static const std::string migration{"migration"};
+    static const std::string staked_token{"staked token"};
+    static const std::string collected_network_fee{"collected network fee"};
+    static const std::string invalid_type{"invalid type"};
+    static const std::string advanced_outout{"advanced output"};
+
+
+    switch (output_type)
+    {
+      case cryptonote::tx_out_type::out_cash:
+        return cash;
+      case cryptonote::tx_out_type::out_token:
+        return token;
+      case cryptonote::tx_out_type::out_staked_token:
+        return staked_token;
+      case cryptonote::tx_out_type::out_network_fee:
+        return collected_network_fee;
+      case cryptonote::tx_out_type::out_advanced:
+        return collected_network_fee;
+      case cryptonote::tx_out_type::out_invalid:
+        return advanced_outout;
+      default:
+        return invalid_type;
+    }
   }
 
 }
