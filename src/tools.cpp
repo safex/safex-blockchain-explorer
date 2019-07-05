@@ -288,58 +288,59 @@ get_blockchain_path(const boost::optional<string>& bc_path,
 }
 
 
-uint64_t
-sum_money_in_outputs(const transaction& tx)
+uint64_t sum_cash_in_outputs(const transaction &tx)
 {
-    uint64_t sum_xmr {0};
-
+    uint64_t sum_safex_cash {0};
     for (const tx_out& txout: tx.vout)
-    {
-        sum_xmr += txout.amount;
-    }
+        sum_safex_cash += txout.amount;
 
-    return sum_xmr;
+    return sum_safex_cash;
 }
 
-pair<uint64_t, uint64_t>
-sum_money_in_outputs(const string& json_str)
+uint64_t sum_token_in_outputs(const transaction &tx)
 {
-    pair<uint64_t, uint64_t> sum_xmr {0, 0};
+  uint64_t sum_safex_token {0};
+  for (const tx_out& txout: tx.vout)
+    sum_safex_token += txout.token_amount;
+
+  return sum_safex_token;
+}
+
+pair<uint64_t, uint64_t> sum_cash_in_outputs(const string &json_str)
+{
+    pair<uint64_t, uint64_t> sum_safex_cash {0, 0};
 
     json j;
-
     try
     {
         j = json::parse( json_str);
     }
     catch (std::invalid_argument& e)
     {
-        cerr << "sum_money_in_outputs: " << e.what() << endl;
-        return sum_xmr;
+        cerr << "sum_cash_in_outputs: " << e.what() << endl;
+        return sum_safex_cash;
     }
 
     for (json& vout: j["vout"])
     {
-        sum_xmr.first += vout["amount"].get<uint64_t>();
-        ++sum_xmr.second;
+        sum_safex_cash.first += vout["amount"].get<uint64_t>();
+        ++sum_safex_cash.second;
     }
 
-
-    return sum_xmr;
+    return sum_safex_cash;
 };
 
-pair<uint64_t, uint64_t>
-sum_money_in_outputs(const json& _json)
+pair<uint64_t, uint64_t> sum_cash_in_outputs(const json &_json)
 {
-    pair<uint64_t, uint64_t> sum_xmr {0ULL, 0ULL};
+    pair<uint64_t, uint64_t> sum_safex_cash {0ULL, 0ULL};
 
     for (const json& vout: _json["vout"])
     {
-        sum_xmr.first += vout["amount"].get<uint64_t>();
-        ++sum_xmr.second;
+        sum_safex_cash.first += vout["amount"].get<uint64_t>();
+        ++sum_safex_cash.second;
     }
 
-    return sum_xmr;
+    return sum_safex_cash;
 };
 
 
@@ -532,7 +533,7 @@ sum_money_in_inputs(const string& json_str)
     }
     catch (std::invalid_argument& e)
     {
-        cerr << "sum_money_in_outputs: " << e.what() << endl;
+        cerr << "sum_cash_in_outputs: " << e.what() << endl;
         return sum_xmr;
     }
 
@@ -634,7 +635,7 @@ sum_money_in_tx(const transaction& tx)
     array<uint64_t, 2> sum_xmr;
 
     sum_xmr[0] = sum_money_in_inputs(tx);
-    sum_xmr[1] = sum_money_in_outputs(tx);
+    sum_xmr[1] = sum_cash_in_outputs(tx);
 
     return sum_xmr;
 };
@@ -648,7 +649,7 @@ sum_money_in_txs(const vector<transaction>& txs)
     for (const transaction& tx: txs)
     {
         sum_xmr[0] += sum_money_in_inputs(tx);
-        sum_xmr[1] += sum_money_in_outputs(tx);
+        sum_xmr[1] += sum_cash_in_outputs(tx);
     }
 
     return sum_xmr;
