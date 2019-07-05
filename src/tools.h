@@ -144,14 +144,14 @@ get_blockchain_path(const boost::optional<string>& bc_path,
                     bf::path& blockchain_path,
                     cryptonote::network_type nettype = cryptonote::network_type::MAINNET);
 
-uint64_t
-sum_money_in_outputs(const transaction& tx);
+uint64_t sum_cash_in_outputs(const transaction &tx);
+uint64_t sum_token_in_outputs(const transaction &tx);
 
 pair<uint64_t, uint64_t>
-sum_money_in_outputs(const string& json_str);
+sum_cash_in_outputs(const string &json_str);
 
 pair<uint64_t, uint64_t>
-sum_money_in_outputs(const json& _json);
+sum_cash_in_outputs(const json &_json);
 
 
 array<uint64_t, 10> summary_of_in_out(const transaction &tx, vector<pair<safexeg::displayable_output, uint64_t>> &output_pub_keys,
