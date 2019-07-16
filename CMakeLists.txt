@@ -25,8 +25,12 @@ set(SAFEX_SOURCE_DIR ${SAFEX_DIR}
         CACHE PATH "Path to the root directory for Safex")
 
 # set location of safexcore build tree
-set(SAFEX_BUILD_DIR ${SAFEX_SOURCE_DIR}/build/debug/
-        CACHE PATH "Path to the build directory for Safex")
+if (CMAKE_BUILD_TYPE MATCHES Debug)
+    set(SAFEX_BUILD_DIR ${SAFEX_SOURCE_DIR}/build/debug/ CACHE PATH "Path to the debug build directory for Safex")
+else()
+    set(SAFEX_BUILD_DIR ${SAFEX_SOURCE_DIR}/build/release/ CACHE PATH "Path to the release build directory for Safex")
+endif()
+
 
 set(MY_CMAKE_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake"
         CACHE PATH "The path to the cmake directory of the current project")
