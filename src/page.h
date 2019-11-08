@@ -149,6 +149,8 @@ namespace safexeg
     uint64_t staked_token_outputs;
     uint64_t network_fee_inputs;
     uint64_t network_fee_outputs;
+    uint64_t create_account_inputs;
+    uint64_t create_account_outputs;
     uint64_t fee;
     uint64_t cash_mixin_no;
     uint64_t token_mixin_no;
@@ -5667,13 +5669,13 @@ namespace safexeg
           auto const token_amount = get_token_amount(in_key);
           auto const output_type = get_out_type(in_key);
           auto const k_image = get_key_image(in_key);
-          bool is_token = (output_type == tx_out_type::out_token) || (output_type == tx_out_type::out_staked_token);
-          bool is_advanced_output = (output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_network_fee) || (output_type == tx_out_type::out_advanced);
+          bool is_token = (output_type == tx_out_type::out_token) || (output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_safex_account);
+          bool is_advanced_output = (output_type >= tx_out_type::out_advanced) && (output_type < tx_out_type::out_invalid);
 
           std::vector<uint64_t> absolute_offsets;
 
           // get absolute offsets of mixins
-          if ((output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_advanced))
+          if (is_advanced_output)
           {
             absolute_offsets = get_key_offsets(in_key);
           }
@@ -5698,16 +5700,22 @@ namespace safexeg
               advanced_outputs.push_back(adv_temp);
               //do nothing
             }
-            else if ((output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_advanced))
-            {
-              //todo check if absolute offsets are good
-              // offsets seems good, so try to get the advanced output data
-              for (int i = 0; i < absolute_offsets.size(); i++)
-              {
-                output_advanced_data_t adv_temp = core_storage->get_db().get_output_key(output_type, absolute_offsets[i]);
+            else if(is_advanced_output){
+                output_advanced_data_t adv_temp{0};
+                adv_temp.output_type = static_cast<uint64_t>(output_type);
                 advanced_outputs.push_back(adv_temp);
-              }
             }
+//            else if (is_advanced_output)
+//            {
+//                if (!are_absolute_offsets_good(absolute_offsets, in_key))
+//                    continue;
+//
+//              for (int i = 0; i < absolute_offsets.size(); i++)
+//              {
+//                output_advanced_data_t adv_temp = core_storage->get_db().get_output_key(output_type, absolute_offsets[i]);
+//                advanced_outputs.push_back(adv_temp);
+//              }
+//            }
             else
             {
               if (!are_absolute_offsets_good(absolute_offsets, in_key))
@@ -5780,6 +5788,8 @@ namespace safexeg
             cryptonote::output_data_t output_data;
             cryptonote::output_advanced_data_t output_advanced_data;
 
+            if(is_advanced_output && advanced_outputs.size()<=count)
+                break;
             if (is_advanced_output)
               output_advanced_data = advanced_outputs.at(count);
             else
@@ -5947,7 +5957,7 @@ namespace safexeg
 
           const auto output_type = get_out_type(output.first);
 
-          if ((output_type == tx_out_type::out_staked_token) || (output_type == tx_out_type::out_network_fee)) {
+          if ((output_type >= tx_out_type::out_advanced) || (output_type < tx_out_type::out_invalid)) {
             //do nothing
           }
           else
@@ -5968,7 +5978,7 @@ namespace safexeg
           {
             outputs_safex_sum += output.second;
           }
-          else if (output_type == tx_out_type::out_staked_token)
+          else if (output_type == tx_out_type::out_staked_token || output_type == tx_out_type::out_safex_account)
           {
             outputs_staked_token_sum += output.second;
           }
@@ -5977,7 +5987,7 @@ namespace safexeg
             outputs_token_sum += output.second;
           }
 
-          const auto is_token = output_type == tx_out_type::out_token || output_type == tx_out_type::out_staked_token;
+          const auto is_token = output_type == tx_out_type::out_token || output_type == tx_out_type::out_staked_token || output_type == tx_out_type::out_safex_account;
           outputs.push_back(mstch::map{
                   {"out_pub_key",           pod_to_hex(get_public_key(output.first))},
                   {"amount",           is_token ? safexeg::safex_amount_to_str(output.second, "{:0.0f}") : safexeg::safex_amount_to_str(output.second)},
@@ -6088,6 +6098,8 @@ namespace safexeg
         txd.staked_token_outputs = sum_data[7];
         txd.network_fee_inputs = sum_data[8];
         txd.network_fee_outputs = sum_data[9];
+        txd.create_account_inputs = sum_data[10];
+        txd.create_account_inputs = sum_data[11];
 
         txd.fee = 0;
         if (!coinbase && !tx.vin.empty())
@@ -6346,6 +6358,22 @@ namespace safexeg
               continue;
             }
           }
+        }
+        if(output_type >= tx_out_type::out_advanced && output_type < tx_out_type::out_invalid){
+            uint64_t no_outputs = core_storage->get_db().get_num_outputs(output_type);
+            int offset_idx{-1};
+            for (auto o: absolute_offsets)
+            {
+                offset_idx++;
+
+                if (o >= no_outputs)
+                {
+                    offset_too_large = true;
+                    cerr << "Advance absolute offset (" << o << ") of an output in a key image " << pod_to_hex(k_image) << " (ring member no: " << offset_idx << ") "
+                         << " is too large. There are only " << no_outputs << " such outputs!\n";
+                    continue;
+                }
+            }
         }
 
         return !offset_too_large;

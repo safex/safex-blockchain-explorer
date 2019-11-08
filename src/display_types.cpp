@@ -163,6 +163,7 @@ namespace safexeg
 
       tx_out_type operator()(const cryptonote::txin_to_script &txin) const
       {
+        //TODO: GRKI Token collect missing
         switch (txin.command_type) {
           case safex::command_t::donate_network_fee:
             return tx_out_type::out_cash;
@@ -172,6 +173,10 @@ namespace safexeg
             return tx_out_type::out_staked_token;
           case safex::command_t::distribute_network_fee:
             return tx_out_type::out_network_fee;
+          case safex::command_t::create_account:
+              return tx_out_type::out_safex_account;
+          case safex::command_t::edit_account:
+              return tx_out_type::out_safex_account_update;
           case safex::command_t::nop:
           default:
             return tx_out_type::out_invalid;
@@ -237,6 +242,8 @@ namespace safexeg
     static std::string migration{"migration"};
     static std::string staked_token{"staked token"};
     static std::string collected_network_fee{"collected network fee"};
+    static std::string create_account{"create account"};
+    static std::string edit_account{"edit account"};
     static std::string invalid_type{"invalid type"};
 
     struct visitor : public boost::static_visitor<std::string const &>
@@ -269,6 +276,10 @@ namespace safexeg
             return staked_token;
           case safex::command_t::distribute_network_fee:
             return collected_network_fee;
+          case safex::command_t::create_account:
+              return create_account;
+          case safex::command_t::edit_account:
+              return edit_account;
           case safex::command_t::nop:
           default:
             return invalid_type;
@@ -285,6 +296,8 @@ namespace safexeg
     static const std::string migration{"migration"};
     static const std::string staked_token{"staked token"};
     static const std::string collected_network_fee{"collected network fee"};
+    static const std::string create_account{"create account"};
+    static const std::string edit_account{"edit account"};
     static const std::string invalid_type{"invalid type"};
     static const std::string advanced_outout{"advanced output"};
 
@@ -301,8 +314,11 @@ namespace safexeg
         return collected_network_fee;
       case cryptonote::tx_out_type::out_advanced:
         return collected_network_fee;
+      case cryptonote::tx_out_type::out_safex_account:
+        return create_account;
+      case cryptonote::tx_out_type::out_safex_account_update:
+        return edit_account;
       case cryptonote::tx_out_type::out_invalid:
-        return advanced_outout;
       default:
         return invalid_type;
     }
