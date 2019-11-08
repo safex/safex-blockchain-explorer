@@ -344,7 +344,7 @@ pair<uint64_t, uint64_t> sum_cash_in_outputs(const json &_json)
 };
 
 
-  array<uint64_t, 10> summary_of_in_out(const transaction &tx, vector <pair<safexeg::displayable_output, uint64_t>> &output_pub_keys,
+  array<uint64_t, 12> summary_of_in_out(const transaction &tx, vector <pair<safexeg::displayable_output, uint64_t>> &output_pub_keys,
                                        vector <safexeg::displayable_input> &input_key_imgs)
   {
 
@@ -352,10 +352,12 @@ pair<uint64_t, uint64_t> sum_cash_in_outputs(const json &_json)
     uint64_t token_outputs{0};
     uint64_t staked_tokens_outputs{0};
     uint64_t network_fee_outputs{0};
+    uint64_t create_account_outputs{0};
     uint64_t cash_inputs{0};
     uint64_t token_inputs{0};
     uint64_t staked_token_inputs{0};
     uint64_t network_fee_inputs{0};
+    uint64_t create_account_inputs{0};
     uint64_t mixin_no{0};
     uint64_t token_mixin_no{0};
 
@@ -395,6 +397,11 @@ pair<uint64_t, uint64_t> sum_cash_in_outputs(const json &_json)
         {
           output_pub_keys.emplace_back(target, txout.amount);
           network_fee_outputs += txout.amount;
+        }
+        else if (output_type == tx_out_type::out_safex_account)
+        {
+          output_pub_keys.emplace_back(target, txout.token_amount);
+          create_account_outputs += txout.token_amount;
         }
       }
     }
@@ -449,6 +456,8 @@ pair<uint64_t, uint64_t> sum_cash_in_outputs(const json &_json)
           network_fee_inputs += input.amount;
         } else if (input.command_type == safex::command_t::token_collect) {
           staked_token_inputs += input.token_amount;
+        } else if (input.command_type == safex::command_t::create_account) {
+            create_account_inputs += input.token_amount;
         }
 
         input_key_imgs.emplace_back(input);
@@ -456,7 +465,7 @@ pair<uint64_t, uint64_t> sum_cash_in_outputs(const json &_json)
     }
 
     return {cash_outputs, token_outputs, cash_inputs, token_inputs, mixin_no,
-            token_mixin_no, staked_token_inputs, staked_tokens_outputs, network_fee_inputs, network_fee_outputs};
+            token_mixin_no, staked_token_inputs, staked_tokens_outputs, network_fee_inputs, network_fee_outputs, create_account_inputs, create_account_outputs};
   };
 
 
