@@ -28,8 +28,9 @@
 # (c) 2014-2016 cpp-ethereum contributors.
 #------------------------------------------------------------------------------
 
-set(LIBS common;blocks;cryptonote_basic;cryptonote_core;multisig;
-		cryptonote_protocol;daemonizer;mnemonics;epee;lmdb;device;
+
+set(LIBS randomx;common;blocks;cryptonote_basic;cryptonote_core;multisig;
+		cryptonote_protocol;safex_core;daemonizer;mnemonics;epee;lmdb;device;
 		blockchain_db;ringct;wallet;cncrypto;easylogging;version;checkpoints)
 
 	set(Xmr_INCLUDE_DIRS "${CPP_MONERO_DIR}")
@@ -44,7 +45,7 @@ foreach (l ${LIBS})
 	find_library(Xmr_${L}_LIBRARY
 		NAMES ${l}
 		PATHS ${CMAKE_LIBRARY_PATH} ${CPP_MONERO_DIR}
-		PATH_SUFFIXES "/src/${l}" "/src/" "/external/db_drivers/lib${l}" "/lib" "/src/crypto" "/contrib/epee/src" "/external/easylogging++/"
+		PATH_SUFFIXES "/src/${l}" "/external/randomx/" "/src/" "/external/db_drivers/lib${l}" "/lib" "/src/crypto" "/contrib/epee/src" "/external/easylogging++/" "/src/safex/"
 		NO_DEFAULT_PATH
 	)
 
@@ -70,8 +71,10 @@ message(STATUS ${MONERO_SOURCE_DIR}/build)
 # include monero headers
 include_directories(
 		${MONERO_SOURCE_DIR}/src
+		${MONERO_SOURCE_DIR}/src/crypto/
 		${MONERO_SOURCE_DIR}/external
 		${MONERO_SOURCE_DIR}/build
 		${MONERO_SOURCE_DIR}/external/easylogging++
 		${MONERO_SOURCE_DIR}/contrib/epee/include
-		${MONERO_SOURCE_DIR}/external/db_drivers/liblmdb)
+		${MONERO_SOURCE_DIR}/external/db_drivers/liblmdb
+		${MONERO_SOURCE_DIR}/external/randomx/src)

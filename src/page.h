@@ -11,6 +11,9 @@
 
 #include "monero_headers.h"
 
+extern "C"{
+#include "randomx.h"
+}
 #include "../gen/version.h"
 
 #include "MicroCore.h"
