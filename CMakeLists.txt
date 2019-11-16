@@ -126,6 +126,7 @@ set(LIBRARIES
         checkpoints
         version
         epee
+        randomx
         pcsclite
         ${Boost_LIBRARIES}
         pthread

@@ -9,7 +9,9 @@
 #include "mstch/mstch.hpp"
 
 #include "safex_headers.h"
-
+extern "C"{
+#include "randomx.h"
+}
 #include "../gen/version.h"
 
 #include "MicroCore.h"

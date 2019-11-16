@@ -27,7 +27,7 @@
 # (c) 2014-2016 cpp-ethereum contributors.
 #------------------------------------------------------------------------------
 
-set(LIBS common;blocks;cryptonote_basic;cryptonote_core;multisig;
+set(LIBS randomx;common;blocks;cryptonote_basic;cryptonote_core;multisig;
 		cryptonote_protocol;safex_core;daemonizer;mnemonics;epee;lmdb;device;
 		blockchain_db;ringct;wallet;cncrypto;easylogging;version;checkpoints)
 
@@ -43,7 +43,7 @@ foreach (l ${LIBS})
 	find_library(Safex_${L}_LIBRARY
 		NAMES ${l}
 		PATHS ${CMAKE_LIBRARY_PATH} ${CPP_SAFEX_DIR}
-		PATH_SUFFIXES "/src/${l}" "/src/" "/external/db_drivers/lib${l}" "/lib" "/src/crypto" "/contrib/epee/src" "/external/easylogging++/" "/src/safex/"
+		PATH_SUFFIXES "/src/${l}" "/external/randomx/" "/src/" "/external/db_drivers/lib${l}" "/lib" "/src/crypto" "/contrib/epee/src" "/external/easylogging++/" "/src/safex/"
 		NO_DEFAULT_PATH
 	)
 
@@ -69,8 +69,10 @@ message(STATUS ${SAFEX_SOURCE_DIR}/build)
 # include safex headers
 include_directories(
 		${SAFEX_SOURCE_DIR}/src
+		${SAFEX_SOURCE_DIR}/src/crypto/
 		${SAFEX_SOURCE_DIR}/external
 		${SAFEX_SOURCE_DIR}/build
 		${SAFEX_SOURCE_DIR}/external/easylogging++
 		${SAFEX_SOURCE_DIR}/contrib/epee/include
-		${SAFEX_SOURCE_DIR}/external/db_drivers/liblmdb)
+		${SAFEX_SOURCE_DIR}/external/db_drivers/liblmdb
+		${SAFEX_SOURCE_DIR}/external/randomx/src)
