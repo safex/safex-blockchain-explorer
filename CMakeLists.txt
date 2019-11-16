@@ -42,6 +42,9 @@ include(MyUtils)
 
 find_package(Monero)
 
+include(FindProtobuf)
+find_package(Protobuf)
+
 # find boost
 find_package(Boost COMPONENTS
         system
@@ -124,6 +127,7 @@ set(LIBRARIES
         randomx
         pcsclite
         ${Boost_LIBRARIES}
+        ${PROTOBUF_LIBRARY}
         pthread
         unbound
         curl
