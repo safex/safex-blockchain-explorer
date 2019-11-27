@@ -42,6 +42,8 @@ include(MyUtils)
 
 find_package(Monero)
 
+option(Protobuf_USE_STATIC_LIBS "Build with protobuf static library" ON)
+
 include(FindProtobuf)
 find_package(Protobuf)
 
