@@ -7,7 +7,7 @@
 
 #define PATH_SEPARARTOR '/'
 
-#define XMR_AMOUNT(value) \
+#define SAFEX_AMOUNT(value) \
     static_cast<double>(value) / 1e10
 
 #define REMOVE_HASH_BRAKETS(a_hash) \
@@ -15,7 +15,7 @@
 
 
 
-#include "monero_headers.h"
+#include "safex_headers.h"
 #include "display_types.h"
 
 #include "../ext/fmt/ostream.h"
@@ -40,7 +40,7 @@
  * Names are rather self-explanatory, so I think
  * there is no reason for any detailed explanations here
  */
-namespace xmreg
+namespace safexeg
 {
 
 
@@ -144,21 +144,18 @@ get_blockchain_path(const boost::optional<string>& bc_path,
                     bf::path& blockchain_path,
                     cryptonote::network_type nettype = cryptonote::network_type::MAINNET);
 
-uint64_t
-sum_money_in_outputs(const transaction& tx);
+uint64_t sum_cash_in_outputs(const transaction &tx);
+uint64_t sum_token_in_outputs(const transaction &tx);
 
 pair<uint64_t, uint64_t>
-sum_money_in_outputs(const string& json_str);
+sum_cash_in_outputs(const string &json_str);
 
 pair<uint64_t, uint64_t>
-sum_money_in_outputs(const json& _json);
+sum_cash_in_outputs(const json &_json);
 
 
-array<uint64_t, 7>
-summary_of_in_out_rct(
-        const transaction &tx,
-        vector<pair<xmreg::displayable_output, uint64_t>> &output_pub_keys,
-        vector<xmreg::displayable_input> &input_token_key_imgs);
+array<uint64_t, 20> summary_of_in_out(const transaction &tx, vector<pair<safexeg::displayable_output, uint64_t>> &output_pub_keys,
+        vector<safexeg::displayable_input> &input_token_key_imgs);
 
 // this version for mempool txs from json
 array<uint64_t, 6>
@@ -275,18 +272,17 @@ public_key
 get_tx_pub_key_from_received_outs(const transaction &tx);
 
 static
-string
-xmr_amount_to_str(const uint64_t& xmr_amount,
-                  string _format="{:0.10f}",
-                  bool zero_to_question_mark=true,
-                  std::string const &zero_string="?")
+string safex_amount_to_str(const uint64_t &xmr_amount,
+                           string _format = "{:0.10f}",
+                           bool zero_to_question_mark = true,
+                           std::string const &zero_string = "0")
 {
     string amount_str = zero_string;
 
     if (!zero_to_question_mark) {
-        amount_str = fmt::format(_format, XMR_AMOUNT(xmr_amount));
+        amount_str = fmt::format(_format, SAFEX_AMOUNT(xmr_amount));
     } else if (xmr_amount > 0) {
-        amount_str = fmt::format(_format, XMR_AMOUNT(xmr_amount));
+        amount_str = fmt::format(_format, SAFEX_AMOUNT(xmr_amount));
     }
 
     return amount_str;
