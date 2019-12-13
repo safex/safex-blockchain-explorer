@@ -177,6 +177,12 @@ namespace safexeg
               return tx_out_type::out_safex_account;
           case safex::command_t::edit_account:
               return tx_out_type::out_safex_account_update;
+          case safex::command_t::create_offer:
+              return tx_out_type::out_safex_offer;
+            case safex::command_t::edit_offer:
+              return tx_out_type::out_safex_offer_update;
+            case safex::command_t::simple_purchase:
+              return tx_out_type::out_safex_purchase;
           case safex::command_t::nop:
           default:
             return tx_out_type::out_invalid;
@@ -244,6 +250,9 @@ namespace safexeg
     static std::string collected_network_fee{"collected network fee"};
     static std::string create_account{"create account"};
     static std::string edit_account{"edit account"};
+    static std::string create_offer{"create offer"};
+    static std::string edit_offer{"edit offer"};
+    static std::string create_purchase{"create purchase"};
     static std::string invalid_type{"invalid type"};
 
     struct visitor : public boost::static_visitor<std::string const &>
@@ -280,6 +289,12 @@ namespace safexeg
               return create_account;
           case safex::command_t::edit_account:
               return edit_account;
+          case safex::command_t::create_offer:
+              return create_offer;
+          case safex::command_t::edit_offer:
+              return edit_offer;
+          case safex::command_t::simple_purchase:
+              return create_purchase;
           case safex::command_t::nop:
           default:
             return invalid_type;
@@ -298,6 +313,9 @@ namespace safexeg
     static const std::string collected_network_fee{"collected network fee"};
     static const std::string create_account{"create account"};
     static const std::string edit_account{"edit account"};
+    static const std::string create_offer{"create offer"};
+    static const std::string edit_offer{"edit offer"};
+    static const std::string create_purchase{"create purchase"};
     static const std::string invalid_type{"invalid type"};
     static const std::string advanced_outout{"advanced output"};
 
@@ -318,6 +336,12 @@ namespace safexeg
         return create_account;
       case cryptonote::tx_out_type::out_safex_account_update:
         return edit_account;
+      case cryptonote::tx_out_type::out_safex_offer:
+        return create_offer;
+      case cryptonote::tx_out_type::out_safex_offer_update:
+        return edit_offer;
+      case cryptonote::tx_out_type::out_safex_purchase:
+        return create_purchase;
       case cryptonote::tx_out_type::out_invalid:
       default:
         return invalid_type;

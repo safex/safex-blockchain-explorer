@@ -151,6 +151,14 @@ namespace safexeg
     uint64_t network_fee_outputs;
     uint64_t create_account_inputs;
     uint64_t create_account_outputs;
+    uint64_t edit_account_inputs;
+    uint64_t edit_account_outputs;
+    uint64_t create_offer_inputs;
+    uint64_t create_offer_outputs;
+    uint64_t edit_offer_inputs;
+    uint64_t edit_offer_outputs;
+    uint64_t create_purchase_inputs;
+    uint64_t create_purchase_outputs;
     uint64_t fee;
     uint64_t cash_mixin_no;
     uint64_t token_mixin_no;
@@ -6099,7 +6107,15 @@ namespace safexeg
         txd.network_fee_inputs = sum_data[8];
         txd.network_fee_outputs = sum_data[9];
         txd.create_account_inputs = sum_data[10];
-        txd.create_account_inputs = sum_data[11];
+        txd.create_account_outputs = sum_data[11];
+        txd.edit_account_inputs = sum_data[12];
+        txd.edit_account_outputs = sum_data[13];
+        txd.create_offer_inputs = sum_data[14];
+        txd.create_offer_outputs = sum_data[15];
+        txd.edit_offer_inputs = sum_data[16];
+        txd.edit_offer_outputs = sum_data[17];
+        txd.create_purchase_inputs = sum_data[18];
+        txd.create_purchase_outputs = sum_data[19];
 
         txd.fee = 0;
         if (!coinbase && !tx.vin.empty())
