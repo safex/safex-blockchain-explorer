@@ -82,6 +82,7 @@ struct MempoolStatus
         uint64_t info_timestamp  {0};
 
         uint64_t issued_coins{0};
+        uint64_t issued_tokens{0};
         uint64_t migrated_tokens{0};
 
         bool current {false};
