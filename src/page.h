@@ -11,6 +11,9 @@
 
 #include "monero_headers.h"
 
+extern "C"{
+#include "randomx.h"
+}
 #include "../gen/version.h"
 
 #include "MicroCore.h"
@@ -859,6 +862,7 @@ public:
                 {"age_format"        , network_info_age.second},
                 {"issued_coins"      , xmreg::xmr_amount_to_str(current_network_info.issued_coins, "{:0.2f}", true)},
                 {"migrated_tokens"    , current_network_info.migrated_tokens},
+                {"issued_tokens"    , current_network_info.issued_tokens},
         };
 
         // median size of 100 blocks
@@ -5250,7 +5254,7 @@ public:
     uint64_t get_total_SFT() {
       MempoolStatus::network_info local_copy_network_info
       = MempoolStatus::current_network_info;
-      return local_copy_network_info.migrated_tokens;
+      return local_copy_network_info.issued_tokens;
 
     }
 
@@ -6285,7 +6289,8 @@ private:
            {"fee_per_kb"                , local_copy_network_info.fee_per_kb},
            {"current_hf_version"        , local_copy_network_info.current_hf_version},
            {"issued_coins"              , local_copy_network_info.issued_coins},
-           {"migrated_tokens"           , local_copy_network_info.migrated_tokens}
+           {"migrated_tokens"           , local_copy_network_info.migrated_tokens},
+           {"issued_tokens"             , local_copy_network_info.issued_tokens}
         };
 
         return local_copy_network_info.current;

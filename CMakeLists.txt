@@ -42,6 +42,11 @@ include(MyUtils)
 
 find_package(Monero)
 
+option(Protobuf_USE_STATIC_LIBS "Build with protobuf static library" ON)
+
+include(FindProtobuf)
+find_package(Protobuf)
+
 # find boost
 find_package(Boost COMPONENTS
         system
@@ -121,8 +126,10 @@ set(LIBRARIES
         checkpoints
         version
         epee
+        randomx
         pcsclite
         ${Boost_LIBRARIES}
+        ${PROTOBUF_LIBRARY}
         pthread
         unbound
         curl
