@@ -344,7 +344,7 @@ pair<uint64_t, uint64_t> sum_cash_in_outputs(const json &_json)
 };
 
 
-  array<uint64_t, 20> summary_of_in_out(const transaction &tx, vector <pair<safexeg::displayable_output, uint64_t>> &output_pub_keys,
+  array<uint64_t, 24> summary_of_in_out(const transaction &tx, vector <pair<safexeg::displayable_output, uint64_t>> &output_pub_keys,
                                        vector <safexeg::displayable_input> &input_key_imgs)
   {
 
@@ -357,6 +357,8 @@ pair<uint64_t, uint64_t> sum_cash_in_outputs(const json &_json)
     uint64_t create_offer_outputs{0};
     uint64_t edit_offer_outputs{0};
     uint64_t create_purchase_outputs{0};
+    uint64_t create_feedback_token_outputs{0};
+    uint64_t create_feedback_outputs{0};
     uint64_t cash_inputs{0};
     uint64_t token_inputs{0};
     uint64_t staked_token_inputs{0};
@@ -366,6 +368,8 @@ pair<uint64_t, uint64_t> sum_cash_in_outputs(const json &_json)
     uint64_t create_offer_inputs{0};
     uint64_t edit_offer_inputs{0};
     uint64_t create_purchase_inputs{0};
+    uint64_t create_feedback_token_inputs{0};
+    uint64_t create_feedback_inputs{0};
     uint64_t mixin_no{0};
     uint64_t token_mixin_no{0};
 
@@ -429,7 +433,17 @@ pair<uint64_t, uint64_t> sum_cash_in_outputs(const json &_json)
         else if (output_type == tx_out_type::out_safex_purchase)
         {
             output_pub_keys.emplace_back(target, txout.amount);
-            create_account_outputs += txout.amount;
+            create_purchase_outputs += txout.amount;
+        }
+        else if (output_type == tx_out_type::out_safex_feedback_token)
+        {
+          output_pub_keys.emplace_back(target, txout.amount);
+          create_feedback_token_outputs += txout.amount;
+        }
+        else if (output_type == tx_out_type::out_safex_feedback)
+        {
+          output_pub_keys.emplace_back(target, txout.amount);
+          create_feedback_outputs += txout.amount;
         }
       }
     }
@@ -493,7 +507,9 @@ pair<uint64_t, uint64_t> sum_cash_in_outputs(const json &_json)
         } else if (input.command_type == safex::command_t::edit_offer) {
             create_account_inputs += input.amount;
         } else if (input.command_type == safex::command_t::simple_purchase) {
-            create_account_inputs += input.amount;
+            create_purchase_inputs += input.amount;
+        } else if (input.command_type == safex::command_t::create_feedback) {
+          create_feedback_inputs += input.amount;
         }
 
         input_key_imgs.emplace_back(input);
@@ -502,7 +518,7 @@ pair<uint64_t, uint64_t> sum_cash_in_outputs(const json &_json)
 
     return {cash_outputs, token_outputs, cash_inputs, token_inputs, mixin_no,
             token_mixin_no, staked_token_inputs, staked_tokens_outputs, network_fee_inputs, network_fee_outputs, create_account_inputs, create_account_outputs, edit_account_inputs,
-            edit_account_outputs, create_offer_inputs, create_offer_outputs, edit_offer_inputs, edit_offer_outputs, create_purchase_inputs, create_purchase_outputs};
+            edit_account_outputs, create_offer_inputs, create_offer_outputs, edit_offer_inputs, edit_offer_outputs, create_purchase_inputs, create_purchase_outputs, create_feedback_token_inputs, create_feedback_outputs, create_feedback_inputs, create_feedback_outputs};
   };
 
 

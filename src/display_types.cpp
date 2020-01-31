@@ -183,6 +183,8 @@ namespace safexeg
               return tx_out_type::out_safex_offer_update;
             case safex::command_t::simple_purchase:
               return tx_out_type::out_safex_purchase;
+          case safex::command_t::create_feedback:
+            return tx_out_type::out_safex_feedback;
           case safex::command_t::nop:
           default:
             return tx_out_type::out_invalid;
@@ -253,6 +255,7 @@ namespace safexeg
     static std::string create_offer{"create offer"};
     static std::string edit_offer{"edit offer"};
     static std::string create_purchase{"create purchase"};
+    static std::string create_feedback{"create feedback"};
     static std::string invalid_type{"invalid type"};
 
     struct visitor : public boost::static_visitor<std::string const &>
@@ -295,6 +298,8 @@ namespace safexeg
               return edit_offer;
           case safex::command_t::simple_purchase:
               return create_purchase;
+          case safex::command_t::create_feedback:
+            return create_feedback;
           case safex::command_t::nop:
           default:
             return invalid_type;
@@ -316,6 +321,8 @@ namespace safexeg
     static const std::string create_offer{"create offer"};
     static const std::string edit_offer{"edit offer"};
     static const std::string create_purchase{"create purchase"};
+    static const std::string create_feedback{"create feedback"};
+    static const std::string create_feedback_token{"create feedback token"};
     static const std::string invalid_type{"invalid type"};
     static const std::string advanced_outout{"advanced output"};
 
@@ -342,6 +349,10 @@ namespace safexeg
         return edit_offer;
       case cryptonote::tx_out_type::out_safex_purchase:
         return create_purchase;
+      case cryptonote::tx_out_type::out_safex_feedback:
+        return create_feedback;
+      case cryptonote::tx_out_type::out_safex_feedback_token:
+        return create_feedback_token;
       case cryptonote::tx_out_type::out_invalid:
       default:
         return invalid_type;

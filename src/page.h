@@ -159,6 +159,10 @@ namespace safexeg
     uint64_t edit_offer_outputs;
     uint64_t create_purchase_inputs;
     uint64_t create_purchase_outputs;
+    uint64_t create_feedback_token_inputs;
+    uint64_t create_feedback_token_outputs;
+    uint64_t create_feedback_inputs;
+    uint64_t create_feedback_outputs;
     uint64_t fee;
     uint64_t cash_mixin_no;
     uint64_t token_mixin_no;
@@ -6116,6 +6120,10 @@ namespace safexeg
         txd.edit_offer_outputs = sum_data[17];
         txd.create_purchase_inputs = sum_data[18];
         txd.create_purchase_outputs = sum_data[19];
+        txd.create_feedback_token_inputs = sum_data[20];
+        txd.create_feedback_token_outputs = sum_data[21];
+        txd.create_feedback_inputs = sum_data[22];
+        txd.create_feedback_outputs = sum_data[23];
 
         txd.fee = 0;
         if (!coinbase && !tx.vin.empty())
