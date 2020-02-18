@@ -5710,28 +5710,16 @@ namespace safexeg
             // check how many outputs there are for that amount
             // go to next input if a too large offset was found
 
-            if ((output_type == tx_out_type::out_network_fee)) {
-              output_advanced_data_t adv_temp{0};
-              adv_temp.output_type = static_cast<uint64_t>(tx_out_type::out_network_fee);
-              advanced_outputs.push_back(adv_temp);
-              //do nothing
-            }
-            else if(is_advanced_output){
-                output_advanced_data_t adv_temp{0};
+            if(is_advanced_output){
+              for (int i = 0; i < absolute_offsets.size(); i++) {
+                if (!are_absolute_offsets_good(absolute_offsets, in_key))
+                  continue;
+                output_advanced_data_t adv_temp = core_storage->get_db().get_output_key(output_type,
+                                                                                        absolute_offsets[i]);
                 adv_temp.output_type = static_cast<uint64_t>(output_type);
                 advanced_outputs.push_back(adv_temp);
+              }
             }
-//            else if (is_advanced_output)
-//            {
-//                if (!are_absolute_offsets_good(absolute_offsets, in_key))
-//                    continue;
-//
-//              for (int i = 0; i < absolute_offsets.size(); i++)
-//              {
-//                output_advanced_data_t adv_temp = core_storage->get_db().get_output_key(output_type, absolute_offsets[i]);
-//                advanced_outputs.push_back(adv_temp);
-//              }
-//            }
             else
             {
               if (!are_absolute_offsets_good(absolute_offsets, in_key))
