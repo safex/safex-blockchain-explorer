@@ -185,6 +185,10 @@ namespace safexeg
               return tx_out_type::out_safex_purchase;
           case safex::command_t::create_feedback:
             return tx_out_type::out_safex_feedback;
+          case safex::command_t::create_price_peg:
+            return tx_out_type::out_safex_price_peg;
+          case safex::command_t::update_price_peg:
+            return tx_out_type::out_safex_price_peg_update;
           case safex::command_t::nop:
           default:
             return tx_out_type::out_invalid;
@@ -256,6 +260,8 @@ namespace safexeg
     static std::string edit_offer{"edit offer"};
     static std::string create_purchase{"create purchase"};
     static std::string create_feedback{"create feedback"};
+    static std::string create_price_peg{"create price peg"};
+    static std::string update_price_peg{"update price peg"};
     static std::string invalid_type{"invalid type"};
 
     struct visitor : public boost::static_visitor<std::string const &>
@@ -300,6 +306,10 @@ namespace safexeg
               return create_purchase;
           case safex::command_t::create_feedback:
             return create_feedback;
+          case safex::command_t::create_price_peg:
+            return create_price_peg;
+          case safex::command_t::update_price_peg:
+            return update_price_peg;
           case safex::command_t::nop:
           default:
             return invalid_type;
@@ -323,6 +333,8 @@ namespace safexeg
     static const std::string create_purchase{"create purchase"};
     static const std::string create_feedback{"create feedback"};
     static const std::string create_feedback_token{"create feedback token"};
+    static const std::string create_price_peg{"create price peg"};
+    static const std::string update_price_peg{"update price peg"};
     static const std::string invalid_type{"invalid type"};
     static const std::string advanced_outout{"advanced output"};
 
@@ -353,6 +365,10 @@ namespace safexeg
         return create_feedback;
       case cryptonote::tx_out_type::out_safex_feedback_token:
         return create_feedback_token;
+      case cryptonote::tx_out_type::out_safex_price_peg:
+        return create_price_peg;
+      case cryptonote::tx_out_type::out_safex_price_peg_update:
+        return update_price_peg;
       case cryptonote::tx_out_type::out_invalid:
       default:
         return invalid_type;

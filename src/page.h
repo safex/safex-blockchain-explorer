@@ -163,6 +163,10 @@ namespace safexeg
     uint64_t create_feedback_token_outputs;
     uint64_t create_feedback_inputs;
     uint64_t create_feedback_outputs;
+    uint64_t create_price_peg_inputs;
+    uint64_t create_price_peg_outputs;
+    uint64_t update_price_peg_inputs;
+    uint64_t update_price_peg_outputs;
     uint64_t fee;
     uint64_t cash_mixin_no;
     uint64_t token_mixin_no;
@@ -5706,28 +5710,16 @@ namespace safexeg
             // check how many outputs there are for that amount
             // go to next input if a too large offset was found
 
-            if ((output_type == tx_out_type::out_network_fee)) {
-              output_advanced_data_t adv_temp{0};
-              adv_temp.output_type = static_cast<uint64_t>(tx_out_type::out_network_fee);
-              advanced_outputs.push_back(adv_temp);
-              //do nothing
-            }
-            else if(is_advanced_output){
-                output_advanced_data_t adv_temp{0};
+            if(is_advanced_output){
+              for (int i = 0; i < absolute_offsets.size(); i++) {
+                if (!are_absolute_offsets_good(absolute_offsets, in_key))
+                  continue;
+                output_advanced_data_t adv_temp = core_storage->get_db().get_output_key(output_type,
+                                                                                        absolute_offsets[i]);
                 adv_temp.output_type = static_cast<uint64_t>(output_type);
                 advanced_outputs.push_back(adv_temp);
+              }
             }
-//            else if (is_advanced_output)
-//            {
-//                if (!are_absolute_offsets_good(absolute_offsets, in_key))
-//                    continue;
-//
-//              for (int i = 0; i < absolute_offsets.size(); i++)
-//              {
-//                output_advanced_data_t adv_temp = core_storage->get_db().get_output_key(output_type, absolute_offsets[i]);
-//                advanced_outputs.push_back(adv_temp);
-//              }
-//            }
             else
             {
               if (!are_absolute_offsets_good(absolute_offsets, in_key))
@@ -6124,6 +6116,10 @@ namespace safexeg
         txd.create_feedback_token_outputs = sum_data[21];
         txd.create_feedback_inputs = sum_data[22];
         txd.create_feedback_outputs = sum_data[23];
+        txd.create_price_peg_inputs = sum_data[24];
+        txd.create_price_peg_outputs = sum_data[25];
+        txd.update_price_peg_inputs = sum_data[26];
+        txd.update_price_peg_outputs = sum_data[27];
 
         txd.fee = 0;
         if (!coinbase && !tx.vin.empty())
