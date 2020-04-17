@@ -5961,8 +5961,8 @@ namespace safexeg
 
           const auto output_type = get_out_type(output.first);
 
-          if ((output_type >= tx_out_type::out_advanced) || (output_type < tx_out_type::out_invalid)) {
-            //do nothing
+          if ((output_type >= tx_out_type::out_advanced) && (output_type < tx_out_type::out_invalid)) {
+            num_outputs_amount = core_storage->get_db().get_num_outputs(output_type);
           }
           else
           {
