@@ -174,21 +174,19 @@ namespace safexeg
           case safex::command_t::distribute_network_fee:
             return tx_out_type::out_network_fee;
           case safex::command_t::create_account:
-              return tx_out_type::out_safex_account;
+              return tx_out_type::out_token;
           case safex::command_t::edit_account:
-              return tx_out_type::out_safex_account_update;
           case safex::command_t::create_offer:
-              return tx_out_type::out_safex_offer;
-            case safex::command_t::edit_offer:
-              return tx_out_type::out_safex_offer_update;
-            case safex::command_t::simple_purchase:
-              return tx_out_type::out_safex_purchase;
-          case safex::command_t::create_feedback:
-            return tx_out_type::out_safex_feedback;
           case safex::command_t::create_price_peg:
-            return tx_out_type::out_safex_price_peg;
+              return tx_out_type::out_safex_account;
+            case safex::command_t::edit_offer:
+              return tx_out_type::out_safex_offer;
+          case safex::command_t::create_feedback:
+            return tx_out_type::out_safex_feedback_token;
           case safex::command_t::update_price_peg:
-            return tx_out_type::out_safex_price_peg_update;
+            return tx_out_type::out_safex_price_peg;
+          case safex::command_t::simple_purchase:
+              return tx_out_type::out_safex_purchase;
           case safex::command_t::nop:
           default:
             return tx_out_type::out_invalid;

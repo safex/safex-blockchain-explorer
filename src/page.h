@@ -5714,8 +5714,8 @@ namespace safexeg
               for (int i = 0; i < absolute_offsets.size(); i++) {
                 if (!are_absolute_offsets_good(absolute_offsets, in_key))
                   continue;
-                output_advanced_data_t adv_temp = core_storage->get_db().get_output_key(output_type,
-                                                                                        absolute_offsets[i]);
+                output_advanced_data_t adv_temp = core_storage->get_db().get_output_advanced_data(output_type,
+                                                                    absolute_offsets[i]);
                 adv_temp.output_type = static_cast<uint64_t>(output_type);
                 advanced_outputs.push_back(adv_temp);
               }
@@ -5807,7 +5807,7 @@ namespace safexeg
             {
               // get pair pair<crypto::hash, uint64_t> where first is tx hash and second is local index of the output i in that tx
               if (is_advanced_output) {
-                tx_out_idx = core_storage->get_db().get_output_tx_and_index_from_global(i);
+                tx_out_idx = core_storage->get_db().get_output_tx_and_index_from_global(output_advanced_data.output_id);
               }
               else
               {
