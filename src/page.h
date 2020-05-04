@@ -5978,7 +5978,7 @@ namespace safexeg
             out_amount_index_str = std::to_string(out_amount_indices.at(output_idx));
           }
 
-          if (output_type == tx_out_type::out_cash)
+          if (output_type == tx_out_type::out_cash || output_type == tx_out_type::out_network_fee)
           {
             outputs_safex_sum += output.second;
           }
