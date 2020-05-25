@@ -171,8 +171,6 @@ namespace safexeg
             return tx_out_type::out_token;
           case safex::command_t::token_unstake:
             return tx_out_type::out_staked_token;
-          case safex::command_t::distribute_network_fee:
-            return tx_out_type::out_network_fee;
           case safex::command_t::create_account:
               return tx_out_type::out_token;
           case safex::command_t::edit_account:
@@ -290,8 +288,6 @@ namespace safexeg
           case safex::command_t::token_unstake:
           case safex::command_t::token_collect:
             return staked_token;
-          case safex::command_t::distribute_network_fee:
-            return collected_network_fee;
           case safex::command_t::create_account:
               return create_account;
           case safex::command_t::edit_account:

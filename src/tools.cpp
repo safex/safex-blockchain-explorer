@@ -502,14 +502,13 @@ pair<uint64_t, uint64_t> sum_cash_in_outputs(const json &_json)
         if (input.command_type == safex::command_t::token_unstake)
         {
           staked_token_inputs += input.token_amount;
+          network_fee_inputs += input.amount;
         } else if (input.command_type == safex::command_t::token_stake) {
           token_inputs += input.token_amount;
           if (token_mixin_no == 0) token_mixin_no = input.key_offsets.size();
         } else if (input.command_type == safex::command_t::donate_network_fee) {
           cash_inputs += input.amount;
           if (mixin_no == 0) mixin_no = input.key_offsets.size();
-        } else if (input.command_type == safex::command_t::distribute_network_fee) {
-          network_fee_inputs += input.amount;
         } else if (input.command_type == safex::command_t::token_collect) {
           staked_token_inputs += input.token_amount;
         } else if (input.command_type == safex::command_t::create_account) {
