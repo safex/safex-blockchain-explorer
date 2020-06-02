@@ -24,7 +24,7 @@ namespace safexeg
 
       public_key const &operator()(const txout_to_script &txout) const
       {
-        return txout.keys[0];
+        return txout.key;
       }
     };
     return boost::apply_visitor(visitor{}, d_out);
