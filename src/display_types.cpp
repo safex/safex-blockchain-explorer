@@ -166,6 +166,7 @@ namespace safexeg
         //TODO: GRKI Token collect missing
         switch (txin.command_type) {
           case safex::command_t::donate_network_fee:
+          case safex::command_t::simple_purchase:
             return tx_out_type::out_cash;
           case safex::command_t::token_stake:
             return tx_out_type::out_token;
@@ -183,8 +184,6 @@ namespace safexeg
             return tx_out_type::out_safex_feedback_token;
           case safex::command_t::update_price_peg:
             return tx_out_type::out_safex_price_peg;
-          case safex::command_t::simple_purchase:
-              return tx_out_type::out_safex_purchase;
           case safex::command_t::nop:
           default:
             return tx_out_type::out_invalid;
