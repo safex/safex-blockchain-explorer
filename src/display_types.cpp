@@ -24,7 +24,7 @@ namespace safexeg
 
       public_key const &operator()(const txout_to_script &txout) const
       {
-        return txout.keys[0];
+        return txout.key;
       }
     };
     return boost::apply_visitor(visitor{}, d_out);
@@ -166,29 +166,24 @@ namespace safexeg
         //TODO: GRKI Token collect missing
         switch (txin.command_type) {
           case safex::command_t::donate_network_fee:
+          case safex::command_t::simple_purchase:
             return tx_out_type::out_cash;
           case safex::command_t::token_stake:
             return tx_out_type::out_token;
           case safex::command_t::token_unstake:
             return tx_out_type::out_staked_token;
-          case safex::command_t::distribute_network_fee:
-            return tx_out_type::out_network_fee;
           case safex::command_t::create_account:
-              return tx_out_type::out_safex_account;
+              return tx_out_type::out_token;
           case safex::command_t::edit_account:
-              return tx_out_type::out_safex_account_update;
           case safex::command_t::create_offer:
-              return tx_out_type::out_safex_offer;
-            case safex::command_t::edit_offer:
-              return tx_out_type::out_safex_offer_update;
-            case safex::command_t::simple_purchase:
-              return tx_out_type::out_safex_purchase;
-          case safex::command_t::create_feedback:
-            return tx_out_type::out_safex_feedback;
           case safex::command_t::create_price_peg:
-            return tx_out_type::out_safex_price_peg;
+              return tx_out_type::out_safex_account;
+            case safex::command_t::edit_offer:
+              return tx_out_type::out_safex_offer;
+          case safex::command_t::create_feedback:
+            return tx_out_type::out_safex_feedback_token;
           case safex::command_t::update_price_peg:
-            return tx_out_type::out_safex_price_peg_update;
+            return tx_out_type::out_safex_price_peg;
           case safex::command_t::nop:
           default:
             return tx_out_type::out_invalid;
@@ -292,8 +287,6 @@ namespace safexeg
           case safex::command_t::token_unstake:
           case safex::command_t::token_collect:
             return staked_token;
-          case safex::command_t::distribute_network_fee:
-            return collected_network_fee;
           case safex::command_t::create_account:
               return create_account;
           case safex::command_t::edit_account:
