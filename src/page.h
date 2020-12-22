@@ -528,7 +528,7 @@ namespace safexeg
         {
           json j_info;
 
-          get_monero_network_info(j_info);
+          get_safex_network_info(j_info);
 
           return j_info;
         });
@@ -1603,13 +1603,13 @@ namespace safexeg
           return string("Cant get tx hash due to parse error: " + tx_hash_str);
         }
 
-        // parse string representing given monero address
+        // parse string representing given Safex address
         cryptonote::address_parse_info address_info;
 
         if (!safexeg::parse_str_address(xmr_address_str, address_info, nettype))
         {
           cerr << "Cant parse string address: " << xmr_address_str << endl;
-          return string("Cant parse xmr address: " + xmr_address_str);
+          return string("Cant parse SFX address: " + xmr_address_str);
         }
 
         // parse string representing given private key
@@ -2642,8 +2642,7 @@ namespace safexeg
           {
 
             // ok, so its not signed tx data. but maybe it is raw tx data
-            // used in rpc call "/sendrawtransaction". This is for example
-            // used in mymonero and openmonero projects.
+            // used in rpc call "/sendrawtransaction".
 
             // to check this, first we need to encode data back to base64.
             // the reason is that txs submited to "/sendrawtransaction"
@@ -3003,7 +3002,7 @@ namespace safexeg
           ptx_vector.push_back({});
           ptx_vector.back().tx = parsed_tx;
         }
-          // if failed, treat raw_tx_data as base64 encoding of signed_monero_tx
+          // if failed, treat raw_tx_data as base64 encoding of signed_safex_tx
         else
         {
           string decoded_raw_tx_data = epee::string_encoding::base64_decode(raw_tx_data);
@@ -3658,11 +3657,11 @@ namespace safexeg
         result_html = default_txt;
 
 
-        // check if monero address is given based on its length
+        // check if Safex address is given based on its length
         // if yes, then we can only show its public components
         if (search_str_length == 95)
         {
-          // parse string representing given monero address
+          // parse string representing given Safex address
           address_parse_info address_info;
 
           cryptonote::network_type nettype_addr{cryptonote::network_type::MAINNET};
@@ -3682,7 +3681,7 @@ namespace safexeg
           return show_address_details(address_info, nettype_addr);
         }
 
-        // check if integrated monero address is given based on its length
+        // check if integrated Safex address is given based on its length
         // if yes, then show its public components search tx based on encrypted id
         if (search_str_length == 106)
         {
@@ -4207,7 +4206,7 @@ namespace safexeg
           }
         }
 
-        // get raw tx json as in monero
+        // get raw tx json as in Safex
 
         try
         {
@@ -4444,7 +4443,7 @@ namespace safexeg
           return j_response;
         }
 
-        // get raw tx json as in monero
+        // get raw tx json as in Safex
 
         try
         {
@@ -4819,7 +4818,7 @@ namespace safexeg
           return j_response;
         }
 
-        // parse string representing given monero address
+        // parse string representing given Safex address
         address_parse_info address_info;
 
         if (!safexeg::parse_str_address(address_str, address_info, nettype))
@@ -5023,7 +5022,7 @@ namespace safexeg
           return j_response;
         }
 
-        // parse string representing given monero address
+        // parse string representing given Safex address
         address_parse_info address_info;
 
         if (!safexeg::parse_str_address(address_str, address_info, nettype))
@@ -5175,7 +5174,7 @@ namespace safexeg
         json j_info;
 
         // get basic network info
-        if (!get_monero_network_info(j_info))
+        if (!get_safex_network_info(j_info))
         {
           j_response["status"] = "error";
           j_response["message"] = "Cant get safex network info";
@@ -6083,8 +6082,7 @@ namespace safexeg
 
         // get tx public key from extra
         // this check if there are two public keys
-        // due to previous bug with sining txs:
-        // https://github.com/monero-project/monero/pull/1358/commits/7abfc5474c0f86e16c405f154570310468b635c2
+        // due to previous bug with sining txs
         txd.pk = safexeg::get_tx_pub_key_from_received_outs(tx);
         txd.additional_pks = cryptonote::get_additional_tx_pub_keys_from_extra(tx);
 
@@ -6294,7 +6292,7 @@ namespace safexeg
       }
 
       bool
-      get_monero_network_info(json &j_info)
+      get_safex_network_info(json &j_info)
       {
         MempoolStatus::network_info local_copy_network_info
             = MempoolStatus::current_network_info;

@@ -25,7 +25,7 @@ rpccalls::rpccalls(string _deamon_url,
 }
 
 bool
-rpccalls::connect_to_monero_deamon()
+rpccalls::connect_to_safex_deamon()
 {
     //std::lock_guard<std::mutex> guard(m_daemon_rpc_mutex);
 
@@ -45,7 +45,7 @@ rpccalls::get_current_height()
 
     std::lock_guard<std::mutex> guard(m_daemon_rpc_mutex);
 
-    if (!connect_to_monero_deamon())
+    if (!connect_to_safex_deamon())
     {
         cerr << "get_current_height: not connected to deamon" << endl;
         return false;
@@ -77,7 +77,7 @@ rpccalls::get_mempool(vector<tx_info>& mempool_txs)
     {
         std::lock_guard<std::mutex> guard(m_daemon_rpc_mutex);
 
-        if (!connect_to_monero_deamon())
+        if (!connect_to_safex_deamon())
         {
             cerr << "get_mempool: not connected to deamon" << endl;
             return false;
@@ -124,7 +124,7 @@ rpccalls::commit_tx(tools::wallet::pending_tx& ptx, string& error_msg)
 
     std::lock_guard<std::mutex> guard(m_daemon_rpc_mutex);
 
-    if (!connect_to_monero_deamon())
+    if (!connect_to_safex_deamon())
     {
         cerr << "commit_tx: not connected to deamon" << endl;
         return false;
@@ -163,7 +163,7 @@ rpccalls::get_network_info(COMMAND_RPC_GET_INFO::response& response)
     {
         std::lock_guard<std::mutex> guard(m_daemon_rpc_mutex);
 
-        if (!connect_to_monero_deamon())
+        if (!connect_to_safex_deamon())
         {
             cerr << "get_network_info: not connected to deamon" << endl;
             return false;
@@ -223,7 +223,7 @@ rpccalls::get_hardfork_info(COMMAND_RPC_HARD_FORK_INFO::response& response)
     {
         std::lock_guard<std::mutex> guard(m_daemon_rpc_mutex);
 
-        if (!connect_to_monero_deamon())
+        if (!connect_to_safex_deamon())
         {
             cerr << "get_hardfork_info: not connected to deamon" << endl;
             return false;
@@ -291,7 +291,7 @@ rpccalls::get_dynamic_per_kb_fee_estimate(
     {
         std::lock_guard<std::mutex> guard(m_daemon_rpc_mutex);
 
-        if (!connect_to_monero_deamon())
+        if (!connect_to_safex_deamon())
         {
             cerr << "get_dynamic_per_kb_fee_estimate: not connected to deamon" << endl;
             return false;
@@ -354,7 +354,7 @@ rpccalls::get_block(string const& blk_hash, block& blk, string& error_msg)
     {
         std::lock_guard<std::mutex> guard(m_daemon_rpc_mutex);
 
-        if (!connect_to_monero_deamon())
+        if (!connect_to_safex_deamon())
         {
             cerr << "get_block: not connected to deamon" << endl;
             return false;
