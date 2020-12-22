@@ -16,7 +16,7 @@
 #include <mutex>
 #include <atomic>
 
-namespace xmreg
+namespace safexeg
 {
 
 struct MempoolStatus

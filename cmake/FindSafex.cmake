@@ -2,8 +2,7 @@
 # CMake helper for the majority of the cpp-ethereum modules.
 #
 # This module defines
-#     Monero_XXX_LIBRARIES, the libraries needed to use ethereum.
-#     Monero_FOUND, If false, do not try to use ethereum.
+#     Safex_XXX_LIBRARIES, Safex_FOUND
 #
 # File addetped from cpp-ethereum
 #
@@ -33,7 +32,7 @@ set(LIBS randomx;common;blocks;cryptonote_basic;cryptonote_core;multisig;
 		cryptonote_protocol;safex_core;daemonizer;mnemonics;epee;lmdb;device;
 		blockchain_db;ringct;wallet;cncrypto;easylogging;version;checkpoints)
 
-	set(Xmr_INCLUDE_DIRS "${CPP_MONERO_DIR}")
+	set(Safex_INCLUDE_DIRS "${CPP_SAFEX_DIR}")
 
 # if the project is a subset of main cpp-ethereum project
 # use same pattern for variables as Boost uses
@@ -42,39 +41,39 @@ foreach (l ${LIBS})
 
 	string(TOUPPER ${l} L)
 
-	find_library(Xmr_${L}_LIBRARY
+	find_library(Safex_${L}_LIBRARY
 		NAMES ${l}
-		PATHS ${CMAKE_LIBRARY_PATH} ${CPP_MONERO_DIR}
+		PATHS ${CMAKE_LIBRARY_PATH} ${CPP_SAFEX_DIR}
 		PATH_SUFFIXES "/src/${l}" "/external/randomx/" "/src/" "/external/db_drivers/lib${l}" "/lib" "/src/crypto" "/contrib/epee/src" "/external/easylogging++/" "/src/safex/"
 		NO_DEFAULT_PATH
 	)
 
-	set(Xmr_${L}_LIBRARIES ${Xmr_${L}_LIBRARY})
+	set(Safex_${L}_LIBRARIES ${Safex_${L}_LIBRARY})
 
-	message(STATUS FindMonero " Xmr_${L}_LIBRARIES ${Xmr_${L}_LIBRARY}")
+	message(STATUS FindSafex " Safex_${L}_LIBRARIES ${Safex_${L}_LIBRARY}")
 
 	add_library(${l} STATIC IMPORTED)
-	set_property(TARGET ${l} PROPERTY IMPORTED_LOCATION ${Xmr_${L}_LIBRARIES})
+	set_property(TARGET ${l} PROPERTY IMPORTED_LOCATION ${Safex_${L}_LIBRARIES})
 
 endforeach()
 
-if (EXISTS ${MONERO_BUILD_DIR}/src/ringct/libringct_basic.a)
-	message(STATUS FindMonero " found libringct_basic.a")
+if (EXISTS ${SAFEX_BUILD_DIR}/src/ringct/libringct_basic.a)
+	message(STATUS FindSafex " found libringct_basic.a")
 	add_library(ringct_basic STATIC IMPORTED)
 	set_property(TARGET ringct_basic
-			PROPERTY IMPORTED_LOCATION ${MONERO_BUILD_DIR}/src/ringct/libringct_basic.a)
+			PROPERTY IMPORTED_LOCATION ${SAFEX_BUILD_DIR}/src/ringct/libringct_basic.a)
 endif()
 
 
-message(STATUS ${MONERO_SOURCE_DIR}/build)
+message(STATUS ${SAFEX_SOURCE_DIR}/build)
 
-# include monero headers
+# include safex headers
 include_directories(
-		${MONERO_SOURCE_DIR}/src
-		${MONERO_SOURCE_DIR}/src/crypto/
-		${MONERO_SOURCE_DIR}/external
-		${MONERO_SOURCE_DIR}/build
-		${MONERO_SOURCE_DIR}/external/easylogging++
-		${MONERO_SOURCE_DIR}/contrib/epee/include
-		${MONERO_SOURCE_DIR}/external/db_drivers/liblmdb
-		${MONERO_SOURCE_DIR}/external/randomx/src)
+		${SAFEX_SOURCE_DIR}/src
+		${SAFEX_SOURCE_DIR}/src/crypto/
+		${SAFEX_SOURCE_DIR}/external
+		${SAFEX_SOURCE_DIR}/build
+		${SAFEX_SOURCE_DIR}/external/easylogging++
+		${SAFEX_SOURCE_DIR}/contrib/epee/include
+		${SAFEX_SOURCE_DIR}/external/db_drivers/liblmdb
+		${SAFEX_SOURCE_DIR}/external/randomx/src)

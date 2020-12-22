@@ -4,7 +4,7 @@
 
 #include "rpccalls.h"
 
-namespace xmreg
+namespace safexeg
 {
 
 

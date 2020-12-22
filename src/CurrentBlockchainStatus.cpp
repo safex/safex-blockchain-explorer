@@ -4,7 +4,7 @@
 
 #include "CurrentBlockchainStatus.h"
 
-namespace xmreg
+namespace safexeg
 {
 
 using namespace std;
@@ -135,7 +135,7 @@ CurrentBlockchainStatus::calculate_emission_in_blocks(
 
         mcore->get_block_by_height(start_blk, blk);
 
-        uint64_t coinbase_amount = get_outs_money_amount(blk.miner_tx);
+        uint64_t coinbase_amount = get_outs_cash_amount(blk.miner_tx);
 
         std::list<transaction> txs;
         std::list<crypto::hash> missed_txs;
@@ -190,7 +190,7 @@ CurrentBlockchainStatus::load_current_emission_amount()
 {
     string emmision_saved_file = get_output_file_path().string();
 
-    string last_saved_emmision = xmreg::read(emmision_saved_file);
+    string last_saved_emmision = safexeg::read(emmision_saved_file);
 
     if (last_saved_emmision.empty())
     {
@@ -318,5 +318,5 @@ boost::thread      CurrentBlockchainStatus::m_thread;
 atomic<bool>     CurrentBlockchainStatus::is_running {false};
 
 Blockchain*       CurrentBlockchainStatus::core_storage {nullptr};
-xmreg::MicroCore*  CurrentBlockchainStatus::mcore {nullptr};
+safexeg::MicroCore*  CurrentBlockchainStatus::mcore {nullptr};
 }

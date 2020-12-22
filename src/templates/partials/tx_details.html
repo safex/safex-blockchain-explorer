@@ -39,7 +39,6 @@
                     <th>Tx size</th>
                     <th>Tx version</th>
                     <th>No of confirmations</th>
-                    <th>RingCT/type</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,7 +54,6 @@
                     <td>{{tx_size}} kB</td>
                     <td>{{tx_version}}</td>
                     <td>{{confirmations}}</td>
-                    <td>{{#is_ringct}}yes/{{rct_type}}{{/is_ringct}}{{^is_ringct}}no{{/is_ringct}}</td>
                 </tr>
                 <tr>
                     <td colspan="9">Extra: {{extra}}</td>
@@ -65,7 +63,7 @@
     </div>
 
     <div class="table-head-wrap">
-        <h3>{{outputs_no}} output(s) for total of {{outputs_xmr_sum}} cash and {{outputs_token_sum}} token(s)</h3>
+        <h3>{{outputs_no}} output(s) for total of {{outputs_safex_sum}} cash and {{outputs_token_sum}} token(s)</h3>
     </div>
 
     <div class="table-wrap">
@@ -76,6 +74,7 @@
                     <th>amount</th>
                     <th>amount idx</th>
                     <th>token</th>
+                    <th>output type</th>
                 </tr>
             </thead>
             <tbody>
@@ -90,6 +89,7 @@
                         {{^token}}
                             <td class="red">{{token}}</td>
                         {{/token}}
+                        <td>{{output_type}}</td>
                     </tr>
                 {{/outputs}}
             </tbody>
@@ -105,8 +105,6 @@
                     <div class="content">
                         <h4 style="margin: 0px">Check which outputs belong to given Safex address/subaddress and viewkey</h4>
                         <h5 style="margin: 0px">
-                            For RingCT transactions, outputs' amounts are also decoded
-                            <br/>
                             {{#enable_js}}
                                 Note: address/subaddress and viewkey are NOT sent to the server, as the calculations are done on the client side
                             {{/enable_js}}
@@ -275,9 +273,6 @@
                                    add_tx_pub_keys,  multiple_tx_prv_keys, tx_prove) {
                 //console.log(tx_json);
 
-                var is_rct = (tx_json.version === 2);
-                var rct_type = (is_rct ? tx_json.rct_signatures.type : -1);
-
                 var key_derivation = "";
 
                 if (tx_prove)
@@ -343,20 +338,6 @@
 
                         mine_output_str = '<span style="color: #008009;font-weight: bold">true</span>';
 
-                        if (is_rct && rct_type > 0 /* not coinbase*/) {
-                            try {
-                                //var ecdh = decodeRct(tx_json.rct_signatures, output_idx, key_derivation);
-                                var ecdh = decodeRct(tx_json.rct_signatures, output_idx,
-                                                     (with_additional ? add_key_derivation[output_idx] : key_derivation));
-
-
-                                amount = parseInt(ecdh.amount);
-                            } catch (err) {
-                                decoding_results_str += "<span class='validNo'>RingCT amount for output " + i + " with pubkey: " + output_pub_key + "</span>" + "<br>"; //rct commitment != computed
-                                throw "invalid rct amount";
-                            }
-                        }
-
                         sum_outptus += amount;
                     }
 
@@ -412,18 +393,18 @@
     {{/enable_mixins_details}}
 
     <div class="table-head-wrap">
-        {{^inputs_xmr_sum_not_zero}}
-            <h3>{{inputs_no}} input(s) for total of {{inputs_xmr_sum}} cash and {{inputs_token_sum}} token(s)</h3>
-        {{/inputs_xmr_sum_not_zero}}
+        {{^inputs_safex_sum_not_zero}}
+            <h3>{{inputs_no}} input(s) for total of {{inputs_safex_sum}} cash and {{inputs_token_sum}} token(s)</h3>
+        {{/inputs_safex_sum_not_zero}}
 
-        {{#inputs_xmr_sum_not_zero}}
+        {{#inputs_safex_sum_not_zero}}
             {{^have_any_unknown_amount}}
-                <h3>{{inputs_no}} inputs(s) for total of {{inputs_xmr_sum}} cash and {{inputs_token_sum}} token(s)</h3>
+                <h3>{{inputs_no}} inputs(s) for total of {{inputs_safex_sum}} cash and {{inputs_token_sum}} token(s)</h3>
             {{/have_any_unknown_amount}}
             {{#have_any_unknown_amount}}
-                <h3>{{inputs_no}} inputs(s) for total of at least {{inputs_xmr_sum}} cash and {{inputs_token_sum}} token(s)</h3>
+                <h3>{{inputs_no}} inputs(s) for total of at least {{inputs_safex_sum}} cash and {{inputs_token_sum}} token(s)</h3>
             {{/have_any_unknown_amount}}
-        {{/inputs_xmr_sum_not_zero}}
+        {{/inputs_safex_sum_not_zero}}
 
         {{#show_part_of_inputs}}
             <h4>
@@ -456,8 +437,12 @@
                     {{/have_raw_tx}}
 
                     <tr>
-                        <td>Amount: </td>
-                        <td>{{amount}}</td>
+                        <td>Cash Amount: </td>
+                        <td>{{cash_amount}}</td>
+                    </tr>
+                    <tr>
+                        <td>Token Amount: </td>
+                        <td>{{token_amount}}</td>
                     </tr>
 
                     <tr>
